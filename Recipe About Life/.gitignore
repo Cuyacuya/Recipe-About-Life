@@ -1,0 +1,54 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Mm]emoryCaptures/
+[Uu]serSettings/
+Logs/
+ProjectSettings/UnityConnectSettings.asset
+
+# Package cache
+[Pp]ackageCache/
+
+# Rider / VS / JetBrains / VSCode 등 IDE 자동 생성 파일
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Crash / error reports
+sysinfo.txt
+
+# Unity Collaborate
+.collab/
+
+# Asset Store Tools
+Assets/AssetStoreTools*
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore build artifacts
+*.apk
+*.aab
+*.exe
+*.app
+*.ipa
+Build/
+
