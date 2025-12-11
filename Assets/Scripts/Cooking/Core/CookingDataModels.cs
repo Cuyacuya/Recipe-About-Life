@@ -28,6 +28,7 @@ namespace RecipeAboutLife.Cooking
     /// </summary>
     public enum FillingType
     {
+        None,
         Sausage,       // 소시지 핫도그
         Cheese,        // 치즈 핫도그
         Mixed          // 반반 핫도그
