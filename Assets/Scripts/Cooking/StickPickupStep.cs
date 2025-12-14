@@ -37,6 +37,7 @@ namespace RecipeAboutLife.Cooking
         
         private GameObject stickObject;          // 생성된 꼬치
         private DraggableObject stickDraggable;   // 꼬치의 DraggableObject
+        private int stickBaseSortingOrder = 0;
         private bool isStickCreated = false;
         private bool isStickOnBoard = false;
         
@@ -405,8 +406,16 @@ namespace RecipeAboutLife.Cooking
             SpriteRenderer stickRenderer = stickObject.GetComponent<SpriteRenderer>();
             if (stickRenderer != null)
             {
-                stickRenderer.sortingOrder = 4;
-                Debug.Log("[StickPickupStep] Stick SortingOrder set to 4");
+                int stationSortingOrder = 4;
+                SpriteRenderer stationRenderer = stickStation.GetComponentInChildren<SpriteRenderer>();
+                if (stationRenderer != null)
+                {
+                    stationSortingOrder = stationRenderer.sortingOrder;
+                }
+
+                stickBaseSortingOrder = stationSortingOrder - 1;
+                stickRenderer.sortingOrder = stickBaseSortingOrder;
+                Debug.Log($"[StickPickupStep] Stick SortingOrder set to {stickBaseSortingOrder} (station {stationSortingOrder})");
             }
             
             Debug.Log($"[StickPickupStep] 🎯 Stick created at {spawnPosition} with rotation Z=90");

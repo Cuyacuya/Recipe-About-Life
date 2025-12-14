@@ -310,6 +310,11 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         
         isReturning = true;
         
+         if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = originalSortingOrder;
+        }
+        
         // 이벤트 발생
         OnDragCancelled?.Invoke(this);
         
