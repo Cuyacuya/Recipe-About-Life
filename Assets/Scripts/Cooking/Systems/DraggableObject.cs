@@ -5,6 +5,7 @@ using System;
 /// <summary>
 /// 드래그 가능한 오브젝트 컴포넌트
 /// 꼬치, 핫도그, 재료 등 드래그할 수 있는 모든 오브젝트에 부착
+/// ⭐ Phase 2.2: 즉시 드래그 시작 기능 추가
 /// </summary>
 public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
@@ -309,6 +310,11 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         
         isReturning = true;
         
+         if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = originalSortingOrder;
+        }
+        
         // 이벤트 발생
         OnDragCancelled?.Invoke(this);
         
@@ -338,6 +344,17 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 isReturning = false;
             }
         }
+        
+        // ⭐ 드래그 중이면 마우스 위치를 계속 따라가기
+        if (isDragging && Input.GetMouseButton(0))
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = transform.position.z;
+            transform.position = worldPosition;
+            
+            // 드롭존 체크
+            CheckDropZone(worldPosition);
+        }
     }
     
     /// <summary>
@@ -355,5 +372,52 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         Debug.Log($"[DraggableObject] Destroying: {gameObject.name}");
         Destroy(gameObject);
+    }
+    
+    /// <summary>
+    /// 프로그래밍 방식으로 드래그 시작 (외부에서 호출)
+    /// ⭐ 꼬치통 클릭 시 즉시 드래그 시작용
+    /// </summary>
+    public void SimulateBeginDrag()
+    {
+        if (!isDraggable) return;
+        
+        // 원래 상태 저장
+        originalPosition = transform.position;
+        originalScale = transform.localScale;
+        originalParent = transform.parent;
+        
+        if (spriteRenderer != null)
+        {
+            originalSortingOrder = spriteRenderer.sortingOrder;
+        }
+        
+        isDragging = true;
+        isReturning = false;
+        
+        // 드래그 중 설정
+        if (canvasGroup != null)
+        {
+            canvasGroup.blocksRaycasts = false;
+        }
+        
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = draggingSortingOrder;
+        }
+        
+        // 스케일 변경
+        transform.localScale = originalScale * dragScale;
+        
+        // 이벤트 발생
+        OnDragStarted?.Invoke(this);
+        
+        // DragDropManager에 알림
+        if (DragDropManager.Instance != null)
+        {
+            DragDropManager.Instance.OnDragStart(this);
+        }
+        
+        Debug.Log($"[DraggableObject] Drag simulated: {gameObject.name}");
     }
 }

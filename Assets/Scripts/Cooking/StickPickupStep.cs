@@ -37,6 +37,7 @@ namespace RecipeAboutLife.Cooking
         
         private GameObject stickObject;          // 생성된 꼬치
         private DraggableObject stickDraggable;   // 꼬치의 DraggableObject
+        private int stickBaseSortingOrder = 0;
         private bool isStickCreated = false;
         private bool isStickOnBoard = false;
         
@@ -275,6 +276,18 @@ namespace RecipeAboutLife.Cooking
             
             Debug.Log($"[StickPickupStep] 📍 Stick dropped on: {zone.gameObject.name}");
             
+            // ⭐ 도마에 드롭되었을 때 회전 0도로 변경
+            CookingStation station = zone.GetComponent<CookingStation>();
+            if (station != null && station.stationType == StationType.CuttingBoard)
+            {
+                // Z축 회전을 0도로
+                if (stickObject != null)
+                {
+                    stickObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    Debug.Log("[StickPickupStep] 🔄 Stick rotation reset to 0 degrees");
+                }
+            }
+            
             // CookingManager에 Process 요청
             if (CookingManager.Instance != null)
             {
@@ -300,7 +313,7 @@ namespace RecipeAboutLife.Cooking
         private void LoadStickPrefab()
         {
             // Resources 폴더에서 Prefab 로드
-            stickPrefab = Resources.Load<GameObject>("Prefabs/Stick");
+            stickPrefab = Resources.Load<GameObject>("Prefabs/Stick");  
             
             if (stickPrefab == null)
             {
@@ -383,10 +396,29 @@ namespace RecipeAboutLife.Cooking
             
             // ItemPlacement 위치에 생성
             Vector3 spawnPosition = stickStation.GetItemPlacementPosition();
-            stickObject = GameObject.Instantiate(stickPrefab, spawnPosition, Quaternion.identity);
+            
+            // ⭐ Z축 90도 회전으로 생성
+            Quaternion rotation = Quaternion.Euler(0f, 0f, 90f);
+            stickObject = GameObject.Instantiate(stickPrefab, spawnPosition, rotation);
             stickObject.name = "Stick";
             
-            Debug.Log($"[StickPickupStep] 🎯 Stick created at {spawnPosition}");
+            // ⭐ SortingOrder 설정
+            SpriteRenderer stickRenderer = stickObject.GetComponent<SpriteRenderer>();
+            if (stickRenderer != null)
+            {
+                int stationSortingOrder = 4;
+                SpriteRenderer stationRenderer = stickStation.GetComponentInChildren<SpriteRenderer>();
+                if (stationRenderer != null)
+                {
+                    stationSortingOrder = stationRenderer.sortingOrder;
+                }
+
+                stickBaseSortingOrder = stationSortingOrder - 1;
+                stickRenderer.sortingOrder = stickBaseSortingOrder;
+                Debug.Log($"[StickPickupStep] Stick SortingOrder set to {stickBaseSortingOrder} (station {stationSortingOrder})");
+            }
+            
+            Debug.Log($"[StickPickupStep] 🎯 Stick created at {spawnPosition} with rotation Z=90");
             
             // DraggableObject 컴포넌트 추가/가져오기
             stickDraggable = stickObject.GetComponent<DraggableObject>();
@@ -399,13 +431,16 @@ namespace RecipeAboutLife.Cooking
             // DraggableObject 설정
             SetupStickDraggable();
             
+            // ⭐ 즉시 드래그 시작 (터치 위치로 이동)
+            StartDragImmediately();
+            
             // 생성 완료
             isStickCreated = true;
             
             // 효과음
             GameEvents.TriggerSFXRequested("StickPickup");
             
-            Debug.Log("[StickPickupStep] ✅ Stick creation complete - ready to drag!");
+            Debug.Log("[StickPickupStep] ✅ Stick creation complete - drag started!");
         }
         
         /// <summary>
@@ -431,6 +466,26 @@ namespace RecipeAboutLife.Cooking
             Debug.Log("[StickPickupStep] ✅ Stick draggable setup complete");
             Debug.Log("[StickPickupStep]    - Allowed drop zones: CuttingBoard");
             Debug.Log("[StickPickupStep]    - Drag scale: 1.1x");
+        }
+        
+        /// <summary>
+        /// 즉시 드래그 시작 (터치 위치 추적)
+        /// </summary>
+        private void StartDragImmediately()
+        {
+            if (stickDraggable == null || stickObject == null) return;
+            
+            // 마우스/터치 위치로 즉시 이동
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = stickObject.transform.position.z;
+            
+            // 꼬치를 마우스 위치로 이동
+            stickObject.transform.position = worldPosition;
+            
+            // 드래그 상태 강제 시작
+            stickDraggable.SimulateBeginDrag();
+            
+            Debug.Log("[StickPickupStep] 🚀 Stick drag started immediately at mouse position");
         }
     }
 }
