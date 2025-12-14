@@ -134,7 +134,7 @@ namespace RecipeAboutLife.Cooking
         private void InitializeCookingSteps()
         {
             // ===== Phase 2.2: StickPickupStep 등록 =====
-            // cookingSteps[CookingStepType.StickPickup] = new StickPickupStep(recipeConfig);
+             cookingSteps[CookingStepType.StickPickup] = new StickPickupStep(recipeConfig);
             
             // TODO Phase 2.3: 나머지 Step 등록
             // cookingSteps[CookingStepType.Ingredient] = new IngredientStep(recipeConfig);
