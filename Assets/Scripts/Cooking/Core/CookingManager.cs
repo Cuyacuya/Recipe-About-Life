@@ -19,7 +19,7 @@ namespace RecipeAboutLife.Cooking
     /// - ❌ 손님, 멘탈, 스테이지 등은 이벤트로만 통신
     /// 
     /// Phase 1 완료 (기본 구조)
-    /// Phase 2 대기: Step 클래스 구현
+    /// Phase 2 진행중: Station 관리 추가
     /// </summary>
     public class CookingManager : MonoBehaviour
     {
@@ -46,6 +46,21 @@ namespace RecipeAboutLife.Cooking
         
         [Header("Configuration")]
         [SerializeField] private RecipeConfigSO recipeConfig;
+
+        // ==========================================
+        // Station Management (Phase 2 추가)
+        // ==========================================
+        
+        [Header("Stations")]
+        [Tooltip("자동으로 씬의 Station 찾기")]
+        public bool autoFindStations = true;
+        
+        [Tooltip("수동으로 할당한 Station들")]
+        public List<CookingStation> manualStations = new List<CookingStation>();
+        
+        // Station 저장소
+        private Dictionary<StationType, CookingStation> stations = new Dictionary<StationType, CookingStation>();
+        private List<CookingStation> allStations = new List<CookingStation>();
 
         // ==========================================
         // Current State
@@ -93,12 +108,19 @@ namespace RecipeAboutLife.Cooking
 
             // 초기화
             cookingSteps = new Dictionary<CookingStepType, ICookingStep>();
+            
+            // Station 찾기 (Phase 2 추가)
+            FindAllStations();
+            
             InitializeCookingSteps();
         }
 
         private void Start()
         {
             ValidateConfiguration();
+            
+            // 초기 상태: 모든 Station 비활성화 (Phase 2 추가)
+            DeactivateAllStations();
         }
 
         // ==========================================
@@ -107,19 +129,21 @@ namespace RecipeAboutLife.Cooking
 
         /// <summary>
         /// 각 요리 단계 클래스 등록
-        /// TODO Phase 2: Step 클래스 생성 후 여기에 등록
+        /// Phase 2.2: StickPickupStep 등록 완료
         /// </summary>
         private void InitializeCookingSteps()
         {
-            // TODO Phase 2: Step 클래스 등록
-            // cookingSteps[CookingStepType.StickPickup] = new StickPickupStep();
-            // cookingSteps[CookingStepType.Ingredient] = new IngredientStep();
-            // cookingSteps[CookingStepType.Batter] = new BatterStep();
-            // cookingSteps[CookingStepType.Frying] = new FryingStep();
-            // cookingSteps[CookingStepType.Topping] = new ToppingStep();
-            // cookingSteps[CookingStepType.Completed] = new CompletionStep();
+            // ===== Phase 2.2: StickPickupStep 등록 =====
+            // cookingSteps[CookingStepType.StickPickup] = new StickPickupStep(recipeConfig);
+            
+            // TODO Phase 2.3: 나머지 Step 등록
+            // cookingSteps[CookingStepType.Ingredient] = new IngredientStep(recipeConfig);
+            // cookingSteps[CookingStepType.Batter] = new BatterStep(recipeConfig);
+            // cookingSteps[CookingStepType.Frying] = new FryingStep(recipeConfig);
+            // cookingSteps[CookingStepType.Topping] = new ToppingStep(recipeConfig);
+            // cookingSteps[CookingStepType.Completed] = new CompletionStep(recipeConfig);
 
-            Debug.Log("CookingManager: Steps initialized (placeholder)");
+            Debug.Log($"CookingManager: Initialized {cookingSteps.Count} cooking steps");
         }
 
         /// <summary>
@@ -130,6 +154,98 @@ namespace RecipeAboutLife.Cooking
             if (recipeConfig == null)
             {
                 Debug.LogError("CookingManager: RecipeConfigSO is not assigned! Please assign it in the Inspector.");
+            }
+        }
+
+        // ==========================================
+        // Station Management (Phase 2 추가)
+        // ==========================================
+
+        /// <summary>
+        /// 씬의 모든 CookingStation 찾기 및 등록
+        /// </summary>
+        private void FindAllStations()
+        {
+            // 기존 정리
+            stations.Clear();
+            allStations.Clear();
+            
+            // 자동 찾기
+            if (autoFindStations)
+            {
+                CookingStation[] foundStations = FindObjectsByType<CookingStation>(FindObjectsSortMode.None);
+                
+                foreach (var station in foundStations)
+                {
+                    RegisterStation(station);
+                }
+                
+                Debug.Log($"[CookingManager] Auto-found {foundStations.Length} stations");
+            }
+            
+            // 수동 할당된 Station 등록
+            foreach (var station in manualStations)
+            {
+                if (station != null)
+                {
+                    RegisterStation(station);
+                }
+            }
+            
+            Debug.Log($"[CookingManager] Total {allStations.Count} stations registered");
+            
+            // 등록된 Station 목록 출력
+            foreach (var kvp in stations)
+            {
+                Debug.Log($"  - {kvp.Key}: {kvp.Value.gameObject.name} (Step: {kvp.Value.requiredStepType})");
+            }
+        }
+
+        /// <summary>
+        /// Station 등록
+        /// </summary>
+        private void RegisterStation(CookingStation station)
+        {
+            if (station == null) return;
+            
+            // 타입별 Dictionary에 등록
+            if (!stations.ContainsKey(station.stationType))
+            {
+                stations[station.stationType] = station;
+            }
+            
+            // 전체 리스트에 추가
+            if (!allStations.Contains(station))
+            {
+                allStations.Add(station);
+            }
+        }
+
+        /// <summary>
+        /// 타입별로 Station 가져오기
+        /// </summary>
+        public CookingStation GetStation(StationType type)
+        {
+            if (stations.ContainsKey(type))
+            {
+                return stations[type];
+            }
+            
+            Debug.LogWarning($"[CookingManager] Station not found: {type}");
+            return null;
+        }
+
+        /// <summary>
+        /// 모든 Station 비활성화
+        /// </summary>
+        private void DeactivateAllStations()
+        {
+            foreach (var station in allStations)
+            {
+                if (station != null)
+                {
+                    station.SetActive(false);
+                }
             }
         }
 
@@ -246,6 +362,9 @@ namespace RecipeAboutLife.Cooking
             recipeQuality = 100f;
             currentStep = CookingStepType.None;
             currentStepInstance = null;
+            
+            // Station도 비활성화 (Phase 2 추가)
+            DeactivateAllStations();
         }
 
         // ==========================================
@@ -566,6 +685,22 @@ namespace RecipeAboutLife.Cooking
         private void TestDiscardRecipe()
         {
             DiscardRecipe();
+        }
+
+        [ContextMenu("Refresh Stations")]
+        private void RefreshStations()
+        {
+            FindAllStations();
+        }
+
+        [ContextMenu("Log Current State")]
+        private void LogCurrentState()
+        {
+            Debug.Log("=== CookingManager State ===");
+            Debug.Log($"Current Step: {currentStep}");
+            Debug.Log($"Is Cooking: {IsCooking()}");
+            Debug.Log($"Registered Stations: {allStations.Count}");
+            Debug.Log($"Quality: {recipeQuality}");
         }
 #endif
     }

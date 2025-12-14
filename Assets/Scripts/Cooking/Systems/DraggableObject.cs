@@ -231,11 +231,11 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else
         {
-            // 2D Physics Raycast
-            RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
-            if (hit.collider != null)
+             // 2D Physics Overlap (point-based)
+            Collider2D hitCollider = Physics2D.OverlapPoint(position);
+            if (hitCollider != null)
             {
-                foundDropZone = hit.collider.GetComponent<DropZone>();
+               foundDropZone = hitCollider.GetComponent<DropZone>();
             }
         }
         
