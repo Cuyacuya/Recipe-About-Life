@@ -1343,7 +1343,7 @@ GameObject:
   - component: {fileID: 1435913289}
   - component: {fileID: 1435913288}
   m_Layer: 0
-  m_Name: 00_34_0
+  m_Name: SausageStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1430,7 +1430,7 @@ GameObject:
   - component: {fileID: 1651388918}
   - component: {fileID: 1651388917}
   m_Layer: 0
-  m_Name: 00_35_0
+  m_Name: CheeseStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
