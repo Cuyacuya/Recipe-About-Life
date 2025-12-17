@@ -87,16 +87,38 @@ namespace RecipeAboutLife.Events
         public static event Action<float> OnQualityCalculated;
 
         // ===== 손님 이벤트 =====
-        
+
         /// <summary>
         /// 손님이 도착했을 때 발생 (CustomerManager가 발생)
         /// </summary>
         public static event Action<object> OnCustomerArrived;
-        
+
         /// <summary>
         /// 모든 손님 서빙 완료 (CustomerManager가 발생)
         /// </summary>
         public static event Action OnAllCustomersServed;
+
+        // ===== NPC 이벤트 =====
+
+        /// <summary>
+        /// NPC가 주문 준비 완료 (말풍선 표시)
+        /// </summary>
+        public static event Action<Cooking.CustomerOrder> OnNPCOrderReady;
+
+        /// <summary>
+        /// NPC에게 음식 서빙 완료 (npcID, 정확도)
+        /// </summary>
+        public static event Action<int, bool> OnNPCServed;
+
+        /// <summary>
+        /// 스테이지 클리어 후 대화 시작 (성공 여부)
+        /// </summary>
+        public static event Action<bool> OnStageDialogueStart;
+
+        /// <summary>
+        /// 재료 해금 (재료 이름)
+        /// </summary>
+        public static event Action<string> OnIngredientUnlocked;
 
         // ===== 멘탈 이벤트 =====
         
@@ -210,6 +232,26 @@ namespace RecipeAboutLife.Events
             OnSFXRequested?.Invoke(sfxName);
         }
 
+        public static void TriggerNPCOrderReady(Cooking.CustomerOrder order)
+        {
+            OnNPCOrderReady?.Invoke(order);
+        }
+
+        public static void TriggerNPCServed(int npcID, bool isCorrect)
+        {
+            OnNPCServed?.Invoke(npcID, isCorrect);
+        }
+
+        public static void TriggerStageDialogueStart(bool isSuccess)
+        {
+            OnStageDialogueStart?.Invoke(isSuccess);
+        }
+
+        public static void TriggerIngredientUnlocked(string ingredientName)
+        {
+            OnIngredientUnlocked?.Invoke(ingredientName);
+        }
+
         /// <summary>
         /// 모든 이벤트 리스너 제거 (씬 전환 시 호출)
         /// </summary>
@@ -221,6 +263,10 @@ namespace RecipeAboutLife.Events
             OnQualityCalculated = null;
             OnCustomerArrived = null;
             OnAllCustomersServed = null;
+            OnNPCOrderReady = null;
+            OnNPCServed = null;
+            OnStageDialogueStart = null;
+            OnIngredientUnlocked = null;
             OnMistakeMade = null;
             OnMentalChanged = null;
             OnSaturationChanged = null;
