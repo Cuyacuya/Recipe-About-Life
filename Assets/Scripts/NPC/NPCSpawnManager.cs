@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using RecipeAboutLife.Events;
+using RecipeAboutLife.Managers;
+using RecipeAboutLife.Cooking;
 
 namespace RecipeAboutLife.NPC
 {
     /// <summary>
     /// NPC 스폰 관리자
     /// 스테이지마다 10명 중 랜덤 5명을 순차적으로 스폰
+    /// ScoreManager와 연동하여 재화 관리
     /// </summary>
     public class NPCSpawnManager : MonoBehaviour
     {
@@ -56,6 +60,18 @@ namespace RecipeAboutLife.NPC
             {
                 StartStage();
             }
+        }
+
+        private void OnEnable()
+        {
+            // 레시피 완료 이벤트 구독
+            GameEvents.OnRecipeCompleted += OnRecipeCompleted;
+        }
+
+        private void OnDisable()
+        {
+            // 이벤트 구독 해제
+            GameEvents.OnRecipeCompleted -= OnRecipeCompleted;
         }
 
         /// <summary>
@@ -131,6 +147,18 @@ namespace RecipeAboutLife.NPC
         }
 
         /// <summary>
+        /// 레시피 완료 이벤트 처리
+        /// CookingManager에서 요리가 완료되면 자동으로 호출됨
+        /// </summary>
+        private void OnRecipeCompleted(HotdogRecipe recipe)
+        {
+            Debug.Log($"[NPCSpawnManager] 레시피 완료! 품질: {recipe.quality:F1}, 보상: {recipe.CalculateReward(null)}");
+
+            // ScoreManager가 보상을 처리하므로 여기서는 다음 NPC만 스폰
+            OnNPCOrderComplete();
+        }
+
+        /// <summary>
         /// 현재 NPC가 주문을 완료했을 때 호출
         /// </summary>
         public void OnNPCOrderComplete()
@@ -156,8 +184,19 @@ namespace RecipeAboutLife.NPC
             isStageActive = false;
             Debug.Log("[NPCSpawnManager] 스테이지 완료! 모든 NPC가 주문을 마쳤습니다.");
 
-            // 여기에 스테이지 완료 로직 추가 가능
-            // 예: UI 표시, 점수 계산 등
+            // ScoreManager에서 총 점수 및 대화 잠금 해제 처리
+            if (ScoreManager.Instance != null)
+            {
+                int totalReward = ScoreManager.Instance.GetTotalReward();
+                int targetReward = ScoreManager.Instance.GetTargetReward();
+                bool isUnlocked = ScoreManager.Instance.IsDialogueUnlocked();
+
+                Debug.Log($"[NPCSpawnManager] 최종 재화: {totalReward}/{targetReward}, 대화 잠금 해제: {isUnlocked}");
+            }
+            else
+            {
+                Debug.LogWarning("[NPCSpawnManager] ScoreManager를 찾을 수 없습니다!");
+            }
         }
 
         /// <summary>
@@ -182,6 +221,12 @@ namespace RecipeAboutLife.NPC
             selectedNPCPrefabs.Clear();
             currentNPCIndex = 0;
             isStageActive = false;
+
+            // ScoreManager 초기화
+            if (ScoreManager.Instance != null)
+            {
+                ScoreManager.Instance.RestartStage();
+            }
 
             // 새 스테이지 시작
             StartStage();

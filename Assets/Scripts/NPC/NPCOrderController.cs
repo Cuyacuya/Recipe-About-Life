@@ -1,11 +1,14 @@
 using UnityEngine;
 using RecipeAboutLife.Orders;
+using RecipeAboutLife.Cooking;
+using RecipeAboutLife.Events;
 
 namespace RecipeAboutLife.NPC
 {
     /// <summary>
     /// NPC 주문 컨트롤러
-    /// NPC가 정지했을 때 주문을 받아서 말풍선 UI에 표시
+    /// NPC가 정지했을 때 주문을 받아서 말풍선 UI에 표시하고
+    /// 요리 시스템에 주문 전달
     /// </summary>
     public class NPCOrderController : MonoBehaviour
     {
@@ -20,7 +23,9 @@ namespace RecipeAboutLife.NPC
 
         [Header("상태")]
         private OrderData currentOrder;
+        private CustomerOrder currentCustomerOrder;
         private bool hasOrder = false;
+        private bool isWaitingForFood = false;
 
         private void Awake()
         {
@@ -74,11 +79,46 @@ namespace RecipeAboutLife.NPC
             {
                 hasOrder = true;
                 DisplayOrder();
+
+                // 주문을 요리 시스템으로 전달
+                SendOrderToCookingSystem();
+
                 Debug.Log($"[NPCOrderController] 주문 받음: {currentOrder.OrderName}");
             }
             else
             {
                 Debug.LogError("[NPCOrderController] 주문을 받지 못했습니다!");
+            }
+        }
+
+        /// <summary>
+        /// 주문을 요리 시스템으로 전달
+        /// </summary>
+        private void SendOrderToCookingSystem()
+        {
+            // OrderData를 CustomerOrder로 변환
+            currentCustomerOrder = OrderDataConverter.ToCustomerOrder(currentOrder);
+
+            if (currentCustomerOrder == null)
+            {
+                Debug.LogError("[NPCOrderController] 주문 변환 실패!");
+                return;
+            }
+
+            // CookingManager에 주문 전달
+            if (CookingManager.Instance != null)
+            {
+                CookingManager.Instance.StartCooking(currentCustomerOrder);
+                isWaitingForFood = true;
+
+                Debug.Log($"[NPCOrderController] 요리 시스템에 주문 전달: {currentOrder.OrderName}");
+
+                // 고객 도착 이벤트 발생
+                GameEvents.TriggerCustomerArrived(currentCustomerOrder);
+            }
+            else
+            {
+                Debug.LogError("[NPCOrderController] CookingManager를 찾을 수 없습니다!");
             }
         }
 
@@ -110,12 +150,30 @@ namespace RecipeAboutLife.NPC
         public void ClearOrder()
         {
             currentOrder = null;
+            currentCustomerOrder = null;
             hasOrder = false;
+            isWaitingForFood = false;
 
             if (orderBubbleUI != null)
             {
                 orderBubbleUI.Hide();
             }
+        }
+
+        /// <summary>
+        /// 음식 제공 대기 중인지 확인
+        /// </summary>
+        public bool IsWaitingForFood()
+        {
+            return isWaitingForFood;
+        }
+
+        /// <summary>
+        /// CustomerOrder 가져오기
+        /// </summary>
+        public Cooking.CustomerOrder GetCustomerOrder()
+        {
+            return currentCustomerOrder;
         }
 
     }
