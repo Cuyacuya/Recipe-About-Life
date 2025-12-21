@@ -1258,6 +1258,7 @@ Transform:
   - {fileID: 1454794666}
   - {fileID: 899826747}
   - {fileID: 1515504689}
+  - {fileID: 2093264370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &830751369
@@ -2555,6 +2556,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -1058, y: -418}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2093264369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2093264370}
+  - component: {fileID: 2093264371}
+  m_Layer: 0
+  m_Name: StageDialogueController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2093264370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093264369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 803346911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2093264371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093264369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2353f485094f383438a4bea25071a54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageDialogues:
+  - {fileID: 11400000, guid: 592f10dc6ee17ce4eb476c6d2ce4322c, type: 2}
+  lineDisplayTime: 3
+  linePauseDuration: 0.5
 --- !u!1 &2100706903
 GameObject:
   m_ObjectHideFlags: 0

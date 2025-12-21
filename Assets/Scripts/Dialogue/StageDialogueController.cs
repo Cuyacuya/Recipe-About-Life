@@ -38,19 +38,6 @@ namespace RecipeAboutLife.Dialogue
         [Tooltip("스테이지별 대화 데이터 목록")]
         private List<StageDialogueData> stageDialogues = new List<StageDialogueData>();
 
-        [Header("UI 참조")]
-        [SerializeField]
-        [Tooltip("대화 패널 (Screen Space Canvas)")]
-        private GameObject dialoguePanel;
-
-        [SerializeField]
-        [Tooltip("대화 텍스트 (TextMeshProUGUI)")]
-        private TextMeshProUGUI dialogueText;
-
-        [SerializeField]
-        [Tooltip("발화자 이름 표시 텍스트 (선택 사항)")]
-        private TextMeshProUGUI speakerNameText;
-
         [Header("표시 설정")]
         [SerializeField]
         [Tooltip("각 대화 라인 표시 시간 (초)")]
@@ -66,6 +53,7 @@ namespace RecipeAboutLife.Dialogue
 
         private bool isDialogueActive = false;
         private Coroutine currentDialogueCoroutine = null;
+        private UI.DialogueBubbleUI currentDialogueBubble = null;
 
         // ==========================================
         // Events
@@ -97,9 +85,6 @@ namespace RecipeAboutLife.Dialogue
                 Destroy(gameObject);
                 return;
             }
-
-            // UI 초기화
-            HideDialoguePanel();
         }
 
         private void OnEnable()
@@ -167,6 +152,14 @@ namespace RecipeAboutLife.Dialogue
                 return false;
             }
 
+            // 현재 NPC의 DialogueBubbleUI 찾기
+            currentDialogueBubble = FindCurrentNPCDialogueBubble();
+            if (currentDialogueBubble == null)
+            {
+                Debug.LogWarning("[StageDialogueController] 현재 NPC의 DialogueBubbleUI를 찾을 수 없습니다!");
+                return false;
+            }
+
             // 이미 대화 중이면 중단
             if (isDialogueActive)
             {
@@ -191,7 +184,14 @@ namespace RecipeAboutLife.Dialogue
             }
 
             isDialogueActive = false;
-            HideDialoguePanel();
+
+            // DialogueBubbleUI 숨기기
+            if (currentDialogueBubble != null)
+            {
+                currentDialogueBubble.Hide();
+            }
+
+            currentDialogueBubble = null;
 
             Debug.Log("[StageDialogueController] 대화 중단");
         }
@@ -212,8 +212,11 @@ namespace RecipeAboutLife.Dialogue
             // 이벤트 발생
             OnStageDialogueStarted?.Invoke(stageID, isSuccess);
 
-            // 대화 패널 표시
-            ShowDialoguePanel();
+            // Canvas 활성화
+            if (currentDialogueBubble != null && !currentDialogueBubble.gameObject.activeSelf)
+            {
+                currentDialogueBubble.gameObject.SetActive(true);
+            }
 
             // 각 대화 라인 재생
             for (int i = 0; i < lines.Count; i++)
@@ -241,18 +244,21 @@ namespace RecipeAboutLife.Dialogue
                 }
             }
 
-            // TODO: 다음 대화로 넘기는 버튼/터치 로직 구현
-            // 현재는 자동 진행만 지원
-
             // 대화 종료
             isDialogueActive = false;
-            HideDialoguePanel();
+
+            // DialogueBubbleUI 숨기기
+            if (currentDialogueBubble != null)
+            {
+                currentDialogueBubble.Hide();
+            }
 
             Debug.Log($"[StageDialogueController] 스테이지 {stageID} 대화 종료");
 
             // 이벤트 발생
             OnStageDialogueEnded?.Invoke(stageID, isSuccess);
 
+            currentDialogueBubble = null;
             currentDialogueCoroutine = null;
         }
 
@@ -261,82 +267,54 @@ namespace RecipeAboutLife.Dialogue
         /// </summary>
         private void DisplayDialogueLine(DialogueLine line)
         {
-            if (dialogueText == null)
+            if (currentDialogueBubble == null)
             {
-                Debug.LogError("[StageDialogueController] DialogueText가 없어서 대화를 표시할 수 없습니다!");
+                Debug.LogError("[StageDialogueController] DialogueBubbleUI가 없어서 대화를 표시할 수 없습니다!");
                 return;
             }
 
-            // 대화 텍스트 설정
-            dialogueText.text = line.text;
-
-            // 발화자 이름 표시 (선택 사항)
-            if (speakerNameText != null)
-            {
-                speakerNameText.text = GetSpeakerName(line.speaker);
-            }
+            // DialogueBubbleUI를 통해 대화 표시
+            currentDialogueBubble.ShowDialogue(line.text);
 
             Debug.Log($"[StageDialogueController] [{line.speaker}] {line.text}");
 
             // TODO: 발화자에 따른 추가 연출
-            // - SpeakerType.NPC: 마지막 손님 캐릭터 표시
-            // - SpeakerType.Player: 플레이어 캐릭터 표시
-            // - SpeakerType.System: 시스템 메시지 스타일
-            // - 효과음, 애니메이션 등
+            // - SpeakerType.NPC: NPC 애니메이션
+            // - SpeakerType.Player: 플레이어 반응
+            // - SpeakerType.System: UI 스타일 변경
         }
 
         /// <summary>
-        /// 발화자 이름 가져오기
+        /// 현재 NPC의 DialogueBubbleUI 찾기
         /// </summary>
-        private string GetSpeakerName(SpeakerType speaker)
+        private UI.DialogueBubbleUI FindCurrentNPCDialogueBubble()
         {
-            switch (speaker)
+            // NPCSpawnManager를 통해 현재 NPC 가져오기
+            NPC.NPCSpawnManager spawnManager = FindFirstObjectByType<NPC.NPCSpawnManager>();
+            if (spawnManager == null)
             {
-                case SpeakerType.NPC:
-                    return "손님";
-                case SpeakerType.Player:
-                    return "플레이어";
-                case SpeakerType.System:
-                    return "";
-                default:
-                    return "";
-            }
-        }
-
-        // ==========================================
-        // UI Control
-        // ==========================================
-
-        /// <summary>
-        /// 대화 패널 표시
-        /// </summary>
-        private void ShowDialoguePanel()
-        {
-            if (dialoguePanel != null)
-            {
-                dialoguePanel.SetActive(true);
-            }
-        }
-
-        /// <summary>
-        /// 대화 패널 숨김
-        /// </summary>
-        private void HideDialoguePanel()
-        {
-            if (dialoguePanel != null)
-            {
-                dialoguePanel.SetActive(false);
+                Debug.LogWarning("[StageDialogueController] NPCSpawnManager를 찾을 수 없습니다!");
+                return null;
             }
 
-            if (dialogueText != null)
+            // 현재 NPC 가져오기
+            GameObject currentNPC = spawnManager.GetCurrentNPC();
+            if (currentNPC == null)
             {
-                dialogueText.text = "";
+                Debug.LogWarning("[StageDialogueController] 현재 NPC가 없습니다!");
+                return null;
             }
 
-            if (speakerNameText != null)
+            // DialogueBubbleUI 찾기
+            UI.DialogueBubbleUI dialogueBubble = currentNPC.GetComponentInChildren<UI.DialogueBubbleUI>(true);
+            if (dialogueBubble == null)
             {
-                speakerNameText.text = "";
+                Debug.LogWarning($"[StageDialogueController] {currentNPC.name}에 DialogueBubbleUI가 없습니다!");
+                return null;
             }
+
+            Debug.Log($"[StageDialogueController] {currentNPC.name}의 DialogueBubbleUI를 찾았습니다.");
+            return dialogueBubble;
         }
 
         // ==========================================
@@ -405,14 +383,7 @@ namespace RecipeAboutLife.Dialogue
     /*
      * === 스테이지 종료 대화 트리거 예시 ===
      *
-     * 1. ScoreManager.OnAllNPCsServed()에서 호출
-     *    - 기존 코드:
-     *      private void OnAllNPCsServed()
-     *      {
-     *          bool success = totalReward >= targetTotalReward;
-     *          OnStageCompleted?.Invoke(success);
-     *      }
-     *
+     * 1. ScoreManager.OnAllNPCsServed()에서 자동 호출
      *    - StageDialogueController가 자동으로 OnStageCompleted 이벤트를 구독하여 처리
      *    - 추가 코드 필요 없음!
      *
@@ -424,25 +395,39 @@ namespace RecipeAboutLife.Dialogue
      *          controller.StartStageFinalDialogue(currentStageID, isSuccess);
      *      }
      *
-     * === UI 설정 예시 ===
+     * === UI 설정 (NPC World Space Canvas 사용) ===
      *
-     * Canvas (Screen Space)
-     * └─ DialoguePanel (GameObject)
-     *    ├─ Background (Image)
-     *    ├─ SpeakerNameText (TextMeshProUGUI)
-     *    └─ DialogueText (TextMeshProUGUI)
+     * NPC Prefab
+     * └─ Canvas (DialogueCanvas, World Space)
+     *    └─ DialogueBubbleUI
+     *       └─ Text (TMP)
      *
-     * StageDialogueController에 다음을 연결:
-     * - dialoguePanel: DialoguePanel GameObject
-     * - dialogueText: DialogueText (TextMeshProUGUI)
-     * - speakerNameText: SpeakerNameText (TextMeshProUGUI, 선택 사항)
+     * - StageDialogueController는 NPCSpawnManager를 통해 현재 NPC를 찾습니다
+     * - 현재 NPC의 DialogueBubbleUI를 자동으로 사용합니다
+     * - Screen Space UI 설정 불필요!
+     *
+     * === ScriptableObject 설정 ===
+     *
+     * StageDialogueController Inspector:
+     * - stageDialogues: Stage1_Dialogue, Stage2_Dialogue... 추가
+     * - lineDisplayTime: 3
+     * - linePauseDuration: 0.5
+     *
+     * === 작동 흐름 ===
+     *
+     * 1. 모든 NPC 서빙 완료
+     * 2. ScoreManager.OnStageCompleted 이벤트 발생
+     * 3. StageDialogueController.OnStageCompleted() 자동 호출
+     * 4. NPCSpawnManager.GetCurrentNPC()로 마지막 NPC 찾기
+     * 5. 해당 NPC의 DialogueBubbleUI 사용
+     * 6. 스테이지 성공/실패 대화 순차 재생
+     * 7. 대화 종료 후 DialogueBubbleUI.Hide()
      *
      * === TODO: 향후 구현 ===
      * 1. 다음 대화로 넘기는 버튼 (현재는 자동 진행만 지원)
      * 2. 대화 중 게임 입력 차단
-     * 3. 마지막 손님 캐릭터 표시
-     * 4. 효과음, 배경음악 연출
-     * 5. 대화 타이핑 효과 (한 글자씩 표시)
-     * 6. 스킵 기능
+     * 3. 효과음, 배경음악 연출
+     * 4. 대화 타이핑 효과 (한 글자씩 표시)
+     * 5. 스킵 기능
      */
 }
