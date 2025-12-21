@@ -103,10 +103,10 @@ TextureImporter:
       name: NPC_13_0
       rect:
         serializedVersion: 2
-        x: 123
+        x: 0
         y: 0
-        width: 1506
-        height: 1799
+        width: 1504
+        height: 1798
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -11,11 +11,11 @@ namespace RecipeAboutLife.NPC
         [Header("이동 설정")]
         [SerializeField]
         [Tooltip("시작 위치 (오른쪽)")]
-        private Vector3 startPosition = new Vector3(8f, 2.55f, 0f);
+        private Vector3 startPosition = new Vector3(8.5f, 2.3f, 0f);
 
         [SerializeField]
         [Tooltip("목표 위치 (중간)")]
-        private Vector3 targetPosition = new Vector3(0f, 2.55f, 0f);
+        private Vector3 targetPosition = new Vector3(-2f, 2.3f, 0f);
 
         [SerializeField]
         [Tooltip("이동 속도")]

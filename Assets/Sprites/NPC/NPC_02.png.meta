@@ -5,6 +5,21 @@ TextureImporter:
   - first:
       213: 464233440939836597
     second: NPC_02_0
+  - first:
+      213: -2197530454464506571
+    second: NPC_02_1
+  - first:
+      213: 849657252115468258
+    second: NPC_02_2
+  - first:
+      213: -687972577407984295
+    second: NPC_02_3
+  - first:
+      213: 1688313970423692372
+    second: NPC_02_4
+  - first:
+      213: 1279987332281126138
+    second: NPC_02_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,10 +118,10 @@ TextureImporter:
       name: NPC_02_0
       rect:
         serializedVersion: 2
-        x: 150
+        x: 0
         y: 0
-        width: 1451
-        height: 1854
+        width: 1620
+        height: 1832
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,6 +132,116 @@ TextureImporter:
       bones: []
       spriteID: 5b4831cdad9417600800000000000000
       internalID: 464233440939836597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_02_1
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 1819
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5355a86d1bdc081e0800000000000000
+      internalID: -2197530454464506571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_02_2
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 1826
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ef4d25e4c69acb00800000000000000
+      internalID: 849657252115468258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_02_3
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 1825
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d136cf594d376f0800000000000000
+      internalID: -687972577407984295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_02_4
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 1819
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45cfe6c6c981e6710800000000000000
+      internalID: 1688313970423692372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NPC_02_5
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 1821
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afccd9172bd63c110800000000000000
+      internalID: 1279987332281126138
       vertices: []
       indices: 
       edges: []
@@ -136,6 +261,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       NPC_02_0: 464233440939836597
+      NPC_02_1: -2197530454464506571
+      NPC_02_2: 849657252115468258
+      NPC_02_3: -687972577407984295
+      NPC_02_4: 1688313970423692372
+      NPC_02_5: 1279987332281126138
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -33,17 +33,31 @@ namespace RecipeAboutLife.Dialogue
 
         [Header("대화 설정")]
         [SerializeField]
-        [Tooltip("대화 UI 패널")]
-        private GameObject dialoguePanel;
+        [Tooltip("대화를 표시할 캐릭터 (NPC 또는 플레이어)")]
+        private GameObject dialogueCharacter;
 
         [SerializeField]
-        [Tooltip("잠금 상태 메시지 UI")]
+        [Tooltip("대화 말풍선 UI (캐릭터의 DialogueBubbleUI)")]
+        private UI.DialogueBubbleUI dialogueBubble;
+
+        [SerializeField]
+        [Tooltip("잠금 상태 메시지 UI (Screen Space Canvas)")]
         private GameObject lockedMessagePanel;
 
-        [Header("플레이어 캐릭터")]
+        [Header("대화 내용")]
         [SerializeField]
-        [Tooltip("대화할 플레이어 게임오브젝트")]
-        private GameObject playerCharacter;
+        [TextArea(3, 10)]
+        [Tooltip("대화 메시지들")]
+        private string[] dialogueMessages = new string[]
+        {
+            "잘했어! 오늘 정말 바빴지?",
+            "5명의 손님을 모두 대접했네!",
+            "목표 금액도 달성했고, 정말 수고했어!"
+        };
+
+        [SerializeField]
+        [Tooltip("각 대화 메시지 표시 시간 (초)")]
+        private float messageDisplayTime = 3f;
 
         // ==========================================
         // State
@@ -55,6 +69,8 @@ namespace RecipeAboutLife.Dialogue
 
         [SerializeField]
         private bool isDialogueActive = false;
+
+        private int currentMessageIndex = 0;
 
         // ==========================================
         // Events
@@ -88,8 +104,19 @@ namespace RecipeAboutLife.Dialogue
             }
 
             // UI 초기화
-            if (dialoguePanel != null)
-                dialoguePanel.SetActive(false);
+            if (dialogueBubble != null)
+            {
+                dialogueBubble.Hide();
+            }
+            else if (dialogueCharacter != null)
+            {
+                // DialogueBubbleUI 자동 찾기
+                dialogueBubble = dialogueCharacter.GetComponentInChildren<UI.DialogueBubbleUI>();
+                if (dialogueBubble != null)
+                {
+                    dialogueBubble.Hide();
+                }
+            }
 
             if (lockedMessagePanel != null)
                 lockedMessagePanel.SetActive(false);
@@ -173,21 +200,45 @@ namespace RecipeAboutLife.Dialogue
         /// </summary>
         private void StartDialogue()
         {
-            isDialogueActive = true;
-
-            // UI 표시
-            if (dialoguePanel != null)
+            if (dialogueBubble == null)
             {
-                dialoguePanel.SetActive(true);
+                Debug.LogError("[DialogueManager] DialogueBubbleUI가 없습니다! Dialogue Character에 DialogueBubbleUI를 추가하세요.");
+                return;
             }
+
+            isDialogueActive = true;
+            currentMessageIndex = 0;
 
             Debug.Log("[DialogueManager] 대화 시작!");
 
             // 이벤트 발생
             OnDialogueStarted?.Invoke();
 
-            // TODO: 실제 대화 스크립트 재생
-            // 예: DialogueScript.Play();
+            // 첫 대화 표시
+            ShowNextMessage();
+        }
+
+        /// <summary>
+        /// 다음 대화 메시지 표시
+        /// </summary>
+        private void ShowNextMessage()
+        {
+            if (currentMessageIndex >= dialogueMessages.Length)
+            {
+                // 모든 대화 완료
+                EndDialogue();
+                return;
+            }
+
+            string message = dialogueMessages[currentMessageIndex];
+            dialogueBubble.ShowDialogue(message);
+
+            Debug.Log($"[DialogueManager] 대화 {currentMessageIndex + 1}/{dialogueMessages.Length}: {message}");
+
+            currentMessageIndex++;
+
+            // 다음 메시지로 자동 진행
+            Invoke(nameof(ShowNextMessage), messageDisplayTime);
         }
 
         /// <summary>
@@ -201,12 +252,16 @@ namespace RecipeAboutLife.Dialogue
                 return;
             }
 
-            isDialogueActive = false;
+            // Invoke 취소
+            CancelInvoke(nameof(ShowNextMessage));
 
-            // UI 숨김
-            if (dialoguePanel != null)
+            isDialogueActive = false;
+            currentMessageIndex = 0;
+
+            // 말풍선 숨김
+            if (dialogueBubble != null)
             {
-                dialoguePanel.SetActive(false);
+                dialogueBubble.Hide();
             }
 
             Debug.Log("[DialogueManager] 대화 종료!");
@@ -286,11 +341,14 @@ namespace RecipeAboutLife.Dialogue
         /// </summary>
         public void ResetDialogueSystem()
         {
+            CancelInvoke(nameof(ShowNextMessage));
+
             isDialogueUnlocked = false;
             isDialogueActive = false;
+            currentMessageIndex = 0;
 
-            if (dialoguePanel != null)
-                dialoguePanel.SetActive(false);
+            if (dialogueBubble != null)
+                dialogueBubble.Hide();
 
             if (lockedMessagePanel != null)
                 lockedMessagePanel.SetActive(false);

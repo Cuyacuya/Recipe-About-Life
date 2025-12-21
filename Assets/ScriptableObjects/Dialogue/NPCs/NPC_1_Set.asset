@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8d8d9cd02810f4ea0b00a05a49bd7b, type: 3}
+  m_Name: NPC_1_Set
+  m_EditorClassIdentifier: 
+  npcID: 1
+  npcDisplayName: "\uC5EC\uACE0\uC0DD"
+  description: 
+  npcOrder: {fileID: 11400000, guid: 31056d16a546fa0488a97fbf60fea422, type: 2}
+  dialogueGroups:
+  - type: 0
+    lines:
+    - speaker: 0
+      text: "\uC548\uB155\uD558\uC138\uC694! \uC8FC\uBB38\uD560\uAC8C\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC624\uB298\uC740 \uC2DC\uD5D8\uC5D0 \uB9DD\uCCD0\uC11C..."
+      displayDuration: 0
+  - type: 1
+    lines:
+    - speaker: 0
+      text: "\uC774\uAC78\uB85C \uC8FC\uC138\uC694!"
+      displayDuration: 0
+  - type: 2
+    lines:
+    - speaker: 0
+      text: "\uB9DB\uC788\uACA0\uB2E4!"
+      displayDuration: 0
+  - type: 3
+    lines:
+    - speaker: 0
+      text: "\uC74C... \uC81C\uAC00 \uC8FC\uBB38\uD55C \uAC8C \uC544\uB2CC\uB370\uC694?"
+      displayDuration: 0
+  - type: 4
+    lines:
+    - speaker: 0
+      text: "\uC798 \uBA39\uACA0\uC2B5\uB2C8\uB2E4!"
+      displayDuration: 0

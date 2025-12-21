@@ -7,19 +7,19 @@ namespace RecipeAboutLife.NPC
 {
     /// <summary>
     /// NPC 주문 컨트롤러
-    /// NPC가 정지했을 때 주문을 받아서 말풍선 UI에 표시하고
+    /// NPC가 정지했을 때 DialogueSet에서 주문을 가져와 말풍선 UI에 표시하고
     /// 요리 시스템에 주문 전달
     /// </summary>
     public class NPCOrderController : MonoBehaviour
     {
         [Header("참조")]
         [SerializeField]
-        [Tooltip("주문 관리자")]
-        private OrderManager orderManager;
+        [Tooltip("NPC 대화 세트 (주문 정보 포함)")]
+        private Dialogue.NPCDialogueSet dialogueSet;
 
         [SerializeField]
-        [Tooltip("말풍선 UI")]
-        private OrderBubbleUI orderBubbleUI;
+        [Tooltip("말풍선 UI (DialogueBubbleUI 사용)")]
+        private UI.DialogueBubbleUI dialogueBubbleUI;
 
         [Header("상태")]
         private OrderData currentOrder;
@@ -29,21 +29,28 @@ namespace RecipeAboutLife.NPC
 
         private void Awake()
         {
-            if (orderManager == null)
+            // DialogueBubbleUI 자동 찾기 (비활성화된 것도 찾기)
+            if (dialogueBubbleUI == null)
             {
-                orderManager = FindObjectOfType<OrderManager>();
-                if (orderManager == null)
+                dialogueBubbleUI = GetComponentInChildren<UI.DialogueBubbleUI>(true);
+                if (dialogueBubbleUI == null)
                 {
-                    Debug.LogError("[NPCOrderController] OrderManager를 찾을 수 없습니다!");
+                    Debug.LogWarning("[NPCOrderController] DialogueBubbleUI를 찾을 수 없습니다!");
                 }
             }
 
-            if (orderBubbleUI == null)
+            // DialogueSet 자동 찾기 (NPCDialogueController에서 가져오기)
+            if (dialogueSet == null)
             {
-                orderBubbleUI = GetComponentInChildren<OrderBubbleUI>();
-                if (orderBubbleUI == null)
+                var dialogueController = GetComponent<Dialogue.NPCDialogueController>();
+                if (dialogueController != null)
                 {
-                    Debug.LogWarning("[NPCOrderController] OrderBubbleUI를 찾을 수 없습니다!");
+                    dialogueSet = dialogueController.GetDialogueSet();
+                }
+
+                if (dialogueSet == null)
+                {
+                    Debug.LogError("[NPCOrderController] DialogueSet을 찾을 수 없습니다!");
                 }
             }
         }
@@ -63,17 +70,18 @@ namespace RecipeAboutLife.NPC
         }
 
         /// <summary>
-        /// 주문 요청
+        /// 주문 요청 - DialogueSet에서 주문 가져오기
         /// </summary>
         private void RequestOrder()
         {
-            if (orderManager == null)
+            if (dialogueSet == null)
             {
-                Debug.LogError("[NPCOrderController] OrderManager가 없어서 주문을 받을 수 없습니다!");
+                Debug.LogError("[NPCOrderController] DialogueSet이 없어서 주문을 받을 수 없습니다!");
                 return;
             }
 
-            currentOrder = orderManager.RequestRandomOrder();
+            // DialogueSet에서 주문 가져오기
+            currentOrder = dialogueSet.npcOrder;
 
             if (currentOrder != null)
             {
@@ -83,11 +91,11 @@ namespace RecipeAboutLife.NPC
                 // 주문을 요리 시스템으로 전달
                 SendOrderToCookingSystem();
 
-                Debug.Log($"[NPCOrderController] 주문 받음: {currentOrder.OrderName}");
+                Debug.Log($"[NPCOrderController] DialogueSet에서 주문 받음: {currentOrder.OrderName}");
             }
             else
             {
-                Debug.LogError("[NPCOrderController] 주문을 받지 못했습니다!");
+                Debug.LogError($"[NPCOrderController] DialogueSet({dialogueSet.npcID})에 주문 정보가 없습니다!");
             }
         }
 
@@ -127,13 +135,21 @@ namespace RecipeAboutLife.NPC
         /// </summary>
         private void DisplayOrder()
         {
-            if (orderBubbleUI == null)
+            if (dialogueBubbleUI == null)
             {
-                Debug.LogWarning("[NPCOrderController] OrderBubbleUI가 없어서 주문을 표시할 수 없습니다!");
+                Debug.LogWarning("[NPCOrderController] DialogueBubbleUI가 없어서 주문을 표시할 수 없습니다!");
                 return;
             }
 
-            orderBubbleUI.SetOrder(currentOrder);
+            // Canvas가 꺼져있으면 켜기
+            if (!dialogueBubbleUI.gameObject.activeSelf)
+            {
+                dialogueBubbleUI.gameObject.SetActive(true);
+                Debug.Log("[NPCOrderController] DialogueCanvas를 활성화했습니다.");
+            }
+
+            // DialogueBubbleUI의 ShowOrder 메서드 사용
+            dialogueBubbleUI.ShowOrder(currentOrder);
         }
 
         /// <summary>
@@ -154,9 +170,9 @@ namespace RecipeAboutLife.NPC
             hasOrder = false;
             isWaitingForFood = false;
 
-            if (orderBubbleUI != null)
+            if (dialogueBubbleUI != null)
             {
-                orderBubbleUI.Hide();
+                dialogueBubbleUI.Hide();
             }
         }
 

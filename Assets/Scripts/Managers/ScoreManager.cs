@@ -337,6 +337,227 @@ namespace RecipeAboutLife.Managers
         }
 
         // ==========================================
+        // Public Test Methods (버튼에서 호출 가능)
+        // ==========================================
+
+        /// <summary>
+        /// 테스트용: 완벽한 요리로 NPC 서빙 (최고 재화 획득)
+        /// UI 버튼에서 호출 가능
+        /// </summary>
+        public void TestServePerfectFood()
+        {
+            if (currentNPCIndex >= maxNPCCount)
+            {
+                Debug.Log("[TestButton] 모든 NPC 완료!");
+                return;
+            }
+
+            // 완벽한 레시피 생성
+            HotdogRecipe perfectRecipe = new HotdogRecipe
+            {
+                hasStick = true,
+                fillingType = Cooking.FillingType.Sausage,
+                batterAmount = 100f,
+                fryingTime = 8f, // Golden 구간
+                fryingColor = Cooking.FryingColor.Golden,
+                hasSugar = false,
+                quality = 100f,
+                matchesOrder = true
+            };
+
+            // RecipeConfig 찾기
+            RecipeConfigSO config = FindRecipeConfig();
+            if (config == null)
+            {
+                Debug.LogError("[TestButton] RecipeConfigSO를 찾을 수 없습니다!");
+                return;
+            }
+
+            // 최고 보상 계산 (100 * 1.0 * 1.5 = 150원)
+            int reward = perfectRecipe.CalculateReward(config);
+
+            // NPC 보상 데이터 저장
+            NPCRewardData npcData = npcRewards[currentNPCIndex];
+            npcData.reward = reward;
+            npcData.quality = 100f;
+            npcData.orderMatched = true;
+            npcData.isServed = true;
+
+            // 총 재화 증가
+            totalReward += reward;
+
+            Debug.Log($"[TestButton] NPC {currentNPCIndex + 1} 완벽 서빙! 보상: {reward}원 (총: {totalReward}원)");
+
+            // 이벤트 발생
+            OnNPCRewarded?.Invoke(currentNPCIndex + 1, reward);
+            OnTotalRewardChanged?.Invoke(totalReward);
+
+            // 다음 NPC로
+            currentNPCIndex++;
+
+            // 레시피 완료 이벤트 발생 (다음 NPC 스폰 트리거)
+            GameEvents.TriggerRecipeCompleted(perfectRecipe);
+
+            // 모든 NPC 완료 확인
+            if (currentNPCIndex >= maxNPCCount)
+            {
+                OnAllNPCsServed();
+            }
+        }
+
+        /// <summary>
+        /// 테스트용: 현재 NPC의 주문에 완벽히 맞는 음식 제공 (최고 재화 획득)
+        /// UI 버튼에서 호출 가능
+        /// </summary>
+        public void TestServePerfectFoodForCurrentOrder()
+        {
+            if (currentNPCIndex >= maxNPCCount)
+            {
+                Debug.Log("[TestButton] 모든 NPC 완료!");
+                return;
+            }
+
+            // 현재 NPC 가져오기
+            NPC.NPCSpawnManager spawnManager = FindFirstObjectByType<NPC.NPCSpawnManager>();
+            if (spawnManager == null)
+            {
+                Debug.LogError("[TestButton] NPCSpawnManager를 찾을 수 없습니다!");
+                return;
+            }
+
+            GameObject currentNPC = spawnManager.GetCurrentNPC();
+            if (currentNPC == null)
+            {
+                Debug.LogError("[TestButton] 현재 NPC가 없습니다!");
+                return;
+            }
+
+            // NPC의 주문 가져오기
+            NPC.NPCOrderController orderController = currentNPC.GetComponent<NPC.NPCOrderController>();
+            if (orderController == null)
+            {
+                Debug.LogError("[TestButton] NPCOrderController를 찾을 수 없습니다!");
+                return;
+            }
+
+            CustomerOrder currentOrder = orderController.GetCustomerOrder();
+            if (currentOrder == null)
+            {
+                Debug.LogError("[TestButton] 현재 주문이 없습니다!");
+                return;
+            }
+
+            // 주문에 맞는 완벽한 레시피 생성
+            HotdogRecipe perfectRecipe = CreatePerfectRecipe(currentOrder);
+
+            // RecipeConfig 찾기
+            RecipeConfigSO config = FindRecipeConfig();
+            if (config == null)
+            {
+                Debug.LogError("[TestButton] RecipeConfigSO를 찾을 수 없습니다!");
+                return;
+            }
+
+            // 최고 보상 계산
+            int reward = perfectRecipe.CalculateReward(config);
+
+            // NPC 보상 데이터 저장
+            NPCRewardData npcData = npcRewards[currentNPCIndex];
+            npcData.reward = reward;
+            npcData.quality = 100f;
+            npcData.orderMatched = true;
+            npcData.isServed = true;
+
+            // 총 재화 증가
+            totalReward += reward;
+
+            Debug.Log($"[TestButton] NPC {currentNPCIndex + 1} 완벽 서빙! 주문: {currentOrder.GetDescription()}, 보상: {reward}원 (총: {totalReward}원)");
+
+            // 이벤트 발생
+            OnNPCRewarded?.Invoke(currentNPCIndex + 1, reward);
+            OnTotalRewardChanged?.Invoke(totalReward);
+
+            // NPC 퇴장 처리 (currentNPCIndex 증가 전에 실행)
+            if (currentNPC != null)
+            {
+                NPC.NPCMovement movement = currentNPC.GetComponent<NPC.NPCMovement>();
+                if (movement != null)
+                {
+                    movement.OnOrderComplete(); // NPC 퇴장 시작 (퇴장 완료 시 자동으로 다음 NPC 스폰됨)
+                    Debug.Log("[TestButton] NPC 퇴장 명령 전송");
+                }
+                else
+                {
+                    Debug.LogWarning("[TestButton] NPCMovement를 찾을 수 없습니다!");
+                }
+            }
+
+            // 다음 NPC로 (인덱스만 증가, 스폰은 NPC 퇴장 완료 후 자동으로 처리됨)
+            currentNPCIndex++;
+
+            // 모든 NPC 완료 확인
+            if (currentNPCIndex >= maxNPCCount)
+            {
+                OnAllNPCsServed();
+            }
+
+            // 주의: TestButton은 정상 플레이를 우회하므로 GameEvents.TriggerRecipeCompleted를 호출하지 않음
+            // 정상 플레이에서는 CookingManager가 이벤트를 발생시켜 ScoreManager.OnRecipeCompleted가 호출됨
+            // TestButton에서는 이미 보상을 직접 처리했으므로 이벤트 발생 시 중복 처리가 발생함
+        }
+
+        /// <summary>
+        /// 주문에 완벽히 맞는 레시피 생성
+        /// </summary>
+        private HotdogRecipe CreatePerfectRecipe(CustomerOrder order)
+        {
+            HotdogRecipe recipe = new HotdogRecipe
+            {
+                hasStick = true,
+                fillingType = order.filling,
+                batterAmount = 100f, // 완벽한 반죽 양
+                fryingTime = 8f, // Golden 구간 (7-9초)
+                fryingColor = Cooking.FryingColor.Golden,
+                hasSugar = order.requiresSugar,
+                quality = 100f,
+                matchesOrder = true
+            };
+
+            // 소스 추가 (주문에 맞게)
+            recipe.sauces = new System.Collections.Generic.List<Cooking.SauceType>();
+            recipe.sauceAmounts = new System.Collections.Generic.Dictionary<Cooking.SauceType, float>();
+
+            foreach (var sauceReq in order.sauces)
+            {
+                recipe.sauces.Add(sauceReq.type);
+
+                // 소스 양을 정확히 맞춤
+                float amount = GetPerfectSauceAmount(sauceReq.amount);
+                recipe.sauceAmounts[sauceReq.type] = amount;
+            }
+
+            return recipe;
+        }
+
+        /// <summary>
+        /// SauceAmount에 맞는 완벽한 소스 양 반환
+        /// </summary>
+        private float GetPerfectSauceAmount(Cooking.SauceAmount amount)
+        {
+            switch (amount)
+            {
+                case Cooking.SauceAmount.Low:
+                    return 20f; // Low: 0-33%, 중간값 사용
+                case Cooking.SauceAmount.Medium:
+                    return 50f; // Medium: 34-66%, 중간값 사용
+                case Cooking.SauceAmount.High:
+                    return 85f; // High: 67-100%, 중간값 사용
+                default:
+                    return 50f;
+            }
+        }
+
+        // ==========================================
         // Debug
         // ==========================================
 

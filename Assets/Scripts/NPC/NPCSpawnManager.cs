@@ -154,18 +154,37 @@ namespace RecipeAboutLife.NPC
         {
             Debug.Log($"[NPCSpawnManager] 레시피 완료! 품질: {recipe.quality:F1}, 보상: {recipe.CalculateReward(null)}");
 
-            // ScoreManager가 보상을 처리하므로 여기서는 다음 NPC만 스폰
-            OnNPCOrderComplete();
+            // ScoreManager가 보상을 처리하므로 여기서는 NPC 퇴장만 처리
+            // 현재 NPC에게 퇴장 명령
+            if (currentNPCInstance != null)
+            {
+                NPCMovement movement = currentNPCInstance.GetComponent<NPCMovement>();
+                if (movement != null)
+                {
+                    movement.OnOrderComplete(); // 퇴장 시작 (퇴장 완료 시 OnNPCOrderComplete 자동 호출됨)
+                    Debug.Log("[NPCSpawnManager] NPC 퇴장 시작");
+                }
+                else
+                {
+                    // Movement가 없으면 바로 다음 NPC 스폰
+                    Debug.LogWarning("[NPCSpawnManager] NPCMovement를 찾을 수 없어 바로 처리합니다.");
+                    OnNPCOrderComplete();
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[NPCSpawnManager] 현재 NPC가 없습니다!");
+            }
         }
 
         /// <summary>
-        /// 현재 NPC가 주문을 완료했을 때 호출
+        /// 현재 NPC가 주문을 완료했을 때 호출 (NPCMovement.OnExitComplete에서 호출됨)
         /// </summary>
         public void OnNPCOrderComplete()
         {
-            Debug.Log("[NPCSpawnManager] NPC 주문 완료! 다음 NPC 스폰 준비");
+            Debug.Log("[NPCSpawnManager] NPC 퇴장 완료! 다음 NPC 스폰 준비");
 
-            // 현재 NPC 제거
+            // 현재 NPC 제거 (퇴장이 완료되었으므로)
             if (currentNPCInstance != null)
             {
                 Destroy(currentNPCInstance);
