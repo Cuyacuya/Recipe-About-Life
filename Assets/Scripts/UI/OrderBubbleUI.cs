@@ -64,8 +64,6 @@ namespace RecipeAboutLife.NPC
             // 표시
             gameObject.SetActive(true);
 
-            Debug.Log($"[OrderBubbleUI] 주문 표시: {order.OrderName}");
-
             // 1.5초 후 자동으로 숨기기
             CancelInvoke(nameof(Hide)); // 기존 Invoke 취소
             Invoke(nameof(Hide), autoHideDelay);
@@ -80,7 +78,6 @@ namespace RecipeAboutLife.NPC
             CancelInvoke(nameof(Hide));
 
             gameObject.SetActive(false);
-            Debug.Log("[OrderBubbleUI] 주문 UI 숨김");
         }
 
         /// <summary>

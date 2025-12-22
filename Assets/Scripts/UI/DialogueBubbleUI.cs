@@ -67,8 +67,6 @@ namespace RecipeAboutLife.UI
             // 표시
             gameObject.SetActive(true);
 
-            Debug.Log($"[DialogueBubbleUI] 대화 표시: {message}");
-
             // 자동 숨김
             if (autoHide)
             {
@@ -99,7 +97,6 @@ namespace RecipeAboutLife.UI
         {
             CancelInvoke(nameof(Hide));
             gameObject.SetActive(false);
-            Debug.Log("[DialogueBubbleUI] 대화 UI 숨김");
         }
 
         /// <summary>
@@ -153,8 +150,6 @@ namespace RecipeAboutLife.UI
 
             // 표시
             gameObject.SetActive(true);
-
-            Debug.Log($"[DialogueBubbleUI] 주문 표시: {order.OrderName}");
 
             // 자동 숨김
             if (autoHide)

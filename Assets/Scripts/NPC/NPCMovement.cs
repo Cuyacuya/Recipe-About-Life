@@ -39,6 +39,10 @@ namespace RecipeAboutLife.NPC
         private NPCOrderController orderController;
 
         [SerializeField]
+        [Tooltip("NPC 대화 컨트롤러")]
+        private Dialogue.NPCDialogueController dialogueController;
+
+        [SerializeField]
         [Tooltip("스프라이트 렌더러 (좌우 반전용)")]
         private SpriteRenderer spriteRenderer;
 
@@ -60,6 +64,15 @@ namespace RecipeAboutLife.NPC
                 }
             }
 
+            if (dialogueController == null)
+            {
+                dialogueController = GetComponent<Dialogue.NPCDialogueController>();
+                if (dialogueController == null)
+                {
+                    Debug.LogWarning("[NPCMovement] NPCDialogueController를 찾을 수 없습니다!");
+                }
+            }
+
             if (spriteRenderer == null)
             {
                 spriteRenderer = GetComponent<SpriteRenderer>();
@@ -67,6 +80,16 @@ namespace RecipeAboutLife.NPC
                 {
                     Debug.LogWarning("[NPCMovement] SpriteRenderer를 찾을 수 없습니다!");
                 }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // 이벤트 구독 해제 (메모리 누수 방지)
+            if (dialogueController != null)
+            {
+                dialogueController.OnDialogueEnded -= OnIntroDialogueEnded;
+                dialogueController.OnDialogueEnded -= OnExitDialogueEnded;
             }
         }
 
@@ -123,13 +146,57 @@ namespace RecipeAboutLife.NPC
         /// </summary>
         private void OnArrived()
         {
+            // 이미 도착 처리했으면 중복 실행 방지
+            if (hasArrived)
+            {
+                return;
+            }
+
             isMoving = false;
             hasArrived = true;
 
-            Debug.Log($"[NPCMovement] NPC 도착! {orderDelay}초 후 주문 시작");
+            Debug.Log($"[NPCMovement] NPC 도착!");
 
-            // 1초 후 주문 시작
-            Invoke(nameof(StartOrder), orderDelay);
+            // Intro 대화 시작
+            if (dialogueController != null)
+            {
+                bool hasIntroDialogue = dialogueController.StartDialogue(Dialogue.DialogueType.Intro);
+
+                if (hasIntroDialogue)
+                {
+                    // Intro 대화가 있으면 대화 종료 후 주문 시작
+                    dialogueController.OnDialogueEnded += OnIntroDialogueEnded;
+                }
+                else
+                {
+                    // Intro 대화가 없으면 바로 주문 시작
+                    Invoke(nameof(StartOrder), orderDelay);
+                }
+            }
+            else
+            {
+                // DialogueController가 없으면 바로 주문 시작
+                Invoke(nameof(StartOrder), orderDelay);
+            }
+        }
+
+        /// <summary>
+        /// Intro 대화 종료 시 호출
+        /// </summary>
+        private void OnIntroDialogueEnded(Dialogue.DialogueType type)
+        {
+            // Intro 대화가 끝났을 때만 처리
+            if (type == Dialogue.DialogueType.Intro)
+            {
+                // 이벤트 구독 해제
+                if (dialogueController != null)
+                {
+                    dialogueController.OnDialogueEnded -= OnIntroDialogueEnded;
+                }
+
+                // orderDelay 후 주문 시작
+                Invoke(nameof(StartOrder), orderDelay);
+            }
         }
 
         /// <summary>
@@ -202,6 +269,53 @@ namespace RecipeAboutLife.NPC
         /// 퇴장 시작
         /// </summary>
         private void StartExit()
+        {
+            // Exit 대화 시작
+            if (dialogueController != null)
+            {
+                bool hasExitDialogue = dialogueController.StartDialogue(Dialogue.DialogueType.Exit);
+
+                if (hasExitDialogue)
+                {
+                    // Exit 대화가 있으면 대화 종료 후 퇴장 이동 시작
+                    dialogueController.OnDialogueEnded += OnExitDialogueEnded;
+                }
+                else
+                {
+                    // Exit 대화가 없으면 바로 퇴장 이동 시작
+                    BeginExitMovement();
+                }
+            }
+            else
+            {
+                // DialogueController가 없으면 바로 퇴장 이동 시작
+                BeginExitMovement();
+            }
+        }
+
+        /// <summary>
+        /// Exit 대화 종료 시 호출
+        /// </summary>
+        private void OnExitDialogueEnded(Dialogue.DialogueType type)
+        {
+            // Exit 대화가 끝났을 때만 처리
+            if (type == Dialogue.DialogueType.Exit)
+            {
+                // 이벤트 구독 해제
+                if (dialogueController != null)
+                {
+                    dialogueController.OnDialogueEnded -= OnExitDialogueEnded;
+                }
+
+                // 퇴장 이동 시작
+                BeginExitMovement();
+            }
+        }
+
+        /// <summary>
+        /// 퇴장 이동 시작 (Exit 대화 종료 후 호출)
+        /// </summary>
+        private void BeginExitMovement()
         {
             isExiting = true;
             isMoving = false;

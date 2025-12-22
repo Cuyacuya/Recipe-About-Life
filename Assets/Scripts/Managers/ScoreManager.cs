@@ -183,6 +183,9 @@ namespace RecipeAboutLife.Managers
             OnNPCRewarded?.Invoke(currentNPCIndex + 1, reward);
             OnTotalRewardChanged?.Invoke(totalReward);
 
+            // NPC에게 음식 서빙 완료 알림 (ServedSuccess/ServedFail 대화 트리거)
+            NotifyNPCFoodServed(recipe.matchesOrder);
+
             // 다음 NPC로
             currentNPCIndex++;
 
@@ -191,6 +194,39 @@ namespace RecipeAboutLife.Managers
             {
                 OnAllNPCsServed();
             }
+        }
+
+        /// <summary>
+        /// NPC에게 음식 서빙 완료 알림
+        /// </summary>
+        /// <param name="isSuccess">서빙 성공 여부</param>
+        private void NotifyNPCFoodServed(bool isSuccess)
+        {
+            // 현재 NPC 찾기
+            NPC.NPCSpawnManager spawnManager = FindFirstObjectByType<NPC.NPCSpawnManager>();
+            if (spawnManager == null)
+            {
+                Debug.LogWarning("[ScoreManager] NPCSpawnManager를 찾을 수 없습니다!");
+                return;
+            }
+
+            GameObject currentNPC = spawnManager.GetCurrentNPC();
+            if (currentNPC == null)
+            {
+                Debug.LogWarning("[ScoreManager] 현재 NPC가 없습니다!");
+                return;
+            }
+
+            // NPCOrderController 찾기
+            NPC.NPCOrderController orderController = currentNPC.GetComponent<NPC.NPCOrderController>();
+            if (orderController == null)
+            {
+                Debug.LogWarning("[ScoreManager] NPCOrderController를 찾을 수 없습니다!");
+                return;
+            }
+
+            // 음식 서빙 완료 알림 (대화 트리거)
+            orderController.OnFoodServed(isSuccess);
         }
 
         // ==========================================
@@ -476,6 +512,13 @@ namespace RecipeAboutLife.Managers
             // 이벤트 발생
             OnNPCRewarded?.Invoke(currentNPCIndex + 1, reward);
             OnTotalRewardChanged?.Invoke(totalReward);
+
+            // NPC에게 음식 서빙 완료 알림 (ServedSuccess 대화 트리거)
+            if (orderController != null)
+            {
+                orderController.OnFoodServed(true); // 테스트는 항상 성공
+                Debug.Log("[TestButton] NPC 서빙 완료 알림 (ServedSuccess 대화)");
+            }
 
             // NPC 퇴장 처리 (currentNPCIndex 증가 전에 실행)
             if (currentNPC != null)

@@ -156,14 +156,9 @@ namespace RecipeAboutLife.Dialogue
                     if (!dialogueBubble.gameObject.activeSelf)
                     {
                         dialogueBubble.gameObject.SetActive(true);
-                        Debug.Log($"[NPCDialogueController] {gameObject.name}의 DialogueCanvas를 활성화했습니다.");
                     }
 
                     dialogueBubble.ShowOrder(dialogueSet.npcOrder);
-                    Debug.Log($"[NPCDialogueController] {dialogueSet.npcID} 주문 표시: {dialogueSet.npcOrder.OrderName}");
-
-                    // 주문을 요리 시스템에 전달 (기존 OrderManager 우회)
-                    SendOrderToCookingSystem(dialogueSet.npcOrder);
 
                     // 주문 표시 시간만큼 대기
                     yield return new WaitForSeconds(lineDisplayTime);
@@ -228,7 +223,6 @@ namespace RecipeAboutLife.Dialogue
             if (!dialogueBubble.gameObject.activeSelf)
             {
                 dialogueBubble.gameObject.SetActive(true);
-                Debug.Log($"[NPCDialogueController] {gameObject.name}의 DialogueCanvas를 활성화했습니다.");
             }
 
             // 말풍선에 텍스트 표시
@@ -240,42 +234,6 @@ namespace RecipeAboutLife.Dialogue
             // - SpeakerType.NPC: NPC 애니메이션 재생
             // - SpeakerType.Player: 플레이어 반응 연출
             // - SpeakerType.System: UI 스타일 변경
-        }
-
-        /// <summary>
-        /// 주문을 요리 시스템으로 전달
-        /// DialogueBubbleUI 통합 방식 사용 시 기존 OrderManager 우회
-        /// </summary>
-        private void SendOrderToCookingSystem(Orders.OrderData orderData)
-        {
-            if (orderData == null)
-            {
-                Debug.LogError("[NPCDialogueController] OrderData가 null입니다!");
-                return;
-            }
-
-            // OrderData를 CustomerOrder로 변환
-            Cooking.CustomerOrder customerOrder = Orders.OrderDataConverter.ToCustomerOrder(orderData);
-
-            if (customerOrder == null)
-            {
-                Debug.LogError("[NPCDialogueController] 주문 변환 실패!");
-                return;
-            }
-
-            // CookingManager에 주문 전달
-            if (Cooking.CookingManager.Instance != null)
-            {
-                Cooking.CookingManager.Instance.StartCooking(customerOrder);
-                Debug.Log($"[NPCDialogueController] 요리 시스템에 주문 전달: {orderData.OrderName}");
-
-                // 고객 도착 이벤트 발생
-                Events.GameEvents.TriggerCustomerArrived(customerOrder);
-            }
-            else
-            {
-                Debug.LogError("[NPCDialogueController] CookingManager를 찾을 수 없습니다!");
-            }
         }
 
         // ==========================================

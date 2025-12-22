@@ -18,6 +18,10 @@ namespace RecipeAboutLife.NPC
         private Dialogue.NPCDialogueSet dialogueSet;
 
         [SerializeField]
+        [Tooltip("NPC 대화 컨트롤러")]
+        private Dialogue.NPCDialogueController dialogueController;
+
+        [SerializeField]
         [Tooltip("말풍선 UI (DialogueBubbleUI 사용)")]
         private UI.DialogueBubbleUI dialogueBubbleUI;
 
@@ -39,15 +43,20 @@ namespace RecipeAboutLife.NPC
                 }
             }
 
-            // DialogueSet 자동 찾기 (NPCDialogueController에서 가져오기)
-            if (dialogueSet == null)
+            // NPCDialogueController 자동 찾기
+            if (dialogueController == null)
             {
-                var dialogueController = GetComponent<Dialogue.NPCDialogueController>();
-                if (dialogueController != null)
+                dialogueController = GetComponent<Dialogue.NPCDialogueController>();
+                if (dialogueController == null)
                 {
-                    dialogueSet = dialogueController.GetDialogueSet();
+                    Debug.LogWarning("[NPCOrderController] NPCDialogueController를 찾을 수 없습니다!");
                 }
+            }
 
+            // DialogueSet 자동 찾기 (NPCDialogueController에서 가져오기)
+            if (dialogueSet == null && dialogueController != null)
+            {
+                dialogueSet = dialogueController.GetDialogueSet();
                 if (dialogueSet == null)
                 {
                     Debug.LogError("[NPCOrderController] DialogueSet을 찾을 수 없습니다!");
@@ -86,7 +95,26 @@ namespace RecipeAboutLife.NPC
             if (currentOrder != null)
             {
                 hasOrder = true;
-                DisplayOrder();
+
+                // Order 대화 시작 (NPCDialogueController가 주문 + 대화를 함께 표시)
+                if (dialogueController != null)
+                {
+                    bool hasOrderDialogue = dialogueController.StartDialogue(Dialogue.DialogueType.Order);
+                    if (hasOrderDialogue)
+                    {
+                        Debug.Log("[NPCOrderController] Order 대화 시작");
+                    }
+                    else
+                    {
+                        // 대화가 없으면 주문만 표시 (기존 방식)
+                        DisplayOrder();
+                    }
+                }
+                else
+                {
+                    // DialogueController가 없으면 주문만 표시 (기존 방식)
+                    DisplayOrder();
+                }
 
                 // 주문을 요리 시스템으로 전달
                 SendOrderToCookingSystem();
@@ -190,6 +218,45 @@ namespace RecipeAboutLife.NPC
         public Cooking.CustomerOrder GetCustomerOrder()
         {
             return currentCustomerOrder;
+        }
+
+        /// <summary>
+        /// 음식 서빙 완료 처리 (외부에서 호출)
+        /// </summary>
+        /// <param name="isSuccess">서빙 성공 여부 (true: 성공, false: 실패)</param>
+        public void OnFoodServed(bool isSuccess)
+        {
+            if (!isWaitingForFood)
+            {
+                Debug.LogWarning("[NPCOrderController] 음식을 기다리고 있지 않습니다!");
+                return;
+            }
+
+            isWaitingForFood = false;
+
+            // 서빙 결과에 따라 대화 시작
+            if (dialogueController != null)
+            {
+                Dialogue.DialogueType dialogueType = isSuccess ?
+                    Dialogue.DialogueType.ServedSuccess :
+                    Dialogue.DialogueType.ServedFail;
+
+                bool hasDialogue = dialogueController.StartDialogue(dialogueType);
+                if (hasDialogue)
+                {
+                    Debug.Log($"[NPCOrderController] {dialogueType} 대화 시작");
+                }
+                else
+                {
+                    Debug.LogWarning($"[NPCOrderController] {dialogueType} 대화가 없습니다!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[NPCOrderController] NPCDialogueController가 없어서 서빙 대화를 표시할 수 없습니다!");
+            }
+
+            Debug.Log($"[NPCOrderController] 음식 서빙 완료 - 성공: {isSuccess}");
         }
 
     }
