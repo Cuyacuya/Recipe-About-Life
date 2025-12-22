@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - CuttingBoard
+  - StickDropZone
+  - Sausage
+  - Cheese
   layers:
   - Default
   - TransparentFX
