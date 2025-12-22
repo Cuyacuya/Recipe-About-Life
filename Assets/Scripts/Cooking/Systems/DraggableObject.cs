@@ -14,10 +14,10 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public bool isDraggable = true;
     
     [Tooltip("드래그 중 레이어 순서 (높을수록 앞에 표시)")]
-    public int draggingSortingOrder = 4;
+    public int draggingSortingOrder = 10;
     
     [Tooltip("원상복귀 애니메이션 속도")]
-    public float returnSpeed = 10f;
+    public float returnSpeed = 20f;
     
     [Tooltip("드래그 중 스케일")]
     public float dragScale = 1.1f;
