@@ -30,8 +30,8 @@ public class IngredientPopup : PopupBase
     public GameObject cheeseIcon;
     
     [Header("Drop Zone")]
-    [Tooltip("꼬치 드롭존 (1개, 넓은 영역)")]
-    public DropZone stickDropZone;
+    [Tooltip("도마 드롭존 (choppingBoard_02)")]
+    public DropZone cuttingBoardDropZone;
     
     [Tooltip("꼬치 이미지 (재료의 부모가 됨)")]
     public Transform stickImage;
@@ -74,9 +74,9 @@ public class IngredientPopup : PopupBase
         popupId = "IngredientPopup";
         
         // 드롭존 이벤트 구독
-        if (stickDropZone != null)
+        if (cuttingBoardDropZone != null)
         {
-            stickDropZone.OnObjectReceived += OnStickDropZoneReceived;
+            cuttingBoardDropZone.OnObjectReceived += OnCuttingBoardDropZoneReceived;
         }
         
         // Prefab 로드
@@ -97,9 +97,9 @@ public class IngredientPopup : PopupBase
         ClearPlacedIngredients();
         
         // 드롭존 활성화
-        if (stickDropZone != null)
+        if (cuttingBoardDropZone != null)
         {
-            stickDropZone.SetDroppable(true);
+            cuttingBoardDropZone.SetDroppable(true);
         }
         
         // 버튼 클릭 이벤트 설정
@@ -331,7 +331,7 @@ public class IngredientPopup : PopupBase
         draggable.draggingSortingOrder = 100;
         draggable.returnSpeed = 10f;
         draggable.dragScale = 1.2f;
-        draggable.allowedDropZoneTags = new string[] { "StickDropZone" };
+        draggable.allowedDropZoneTags = new string[] { "CuttingBoard" };
         
         // 이벤트 구독
         draggable.OnDropped += (obj, zone) => OnIngredientDropped(obj, zone, fillingType);
@@ -349,7 +349,7 @@ public class IngredientPopup : PopupBase
     private void OnIngredientDropped(DraggableObject obj, DropZone zone, FillingType fillingType)
     {
         // 드롭존이 아닌 곳에 드롭하면 삭제
-        if (zone == null || zone != stickDropZone)
+        if (zone == null || zone != cuttingBoardDropZone)
         {
             Debug.Log($"[IngredientPopup] Ingredient dropped on wrong zone, destroying");
             Destroy(obj.gameObject);
@@ -357,13 +357,13 @@ public class IngredientPopup : PopupBase
             return;
         }
         
-        // 꼬치에 정상 드롭됨
-        Debug.Log($"[IngredientPopup] Ingredient dropped on stick!");
+        // 도마(꼬치)에 정상 드롭됨
+        Debug.Log($"[IngredientPopup] Ingredient dropped on cutting board!");
         
         // 드래그 중인 재료 참조 제거
         currentDraggingIngredient = null;
         
-        // OnStickDropZoneReceived는 자동 호출되지 않으므로 직접 처리
+        // OnCuttingBoardDropZoneReceived는 자동 호출되지 않으므로 직접 처리
         PlaceIngredientOnStick(obj, fillingType);
     }
     
@@ -378,9 +378,9 @@ public class IngredientPopup : PopupBase
     }
     
     /// <summary>
-    /// 꼬치 드롭존에 재료가 들어옴 (DropZone 이벤트용)
+    /// 도마 드롭존에 재료가 들어옴 (DropZone 이벤트용)
     /// </summary>
-    private void OnStickDropZoneReceived(DraggableObject obj)
+    private void OnCuttingBoardDropZoneReceived(DraggableObject obj)
     {
         // Button 방식에서는 이 이벤트 사용 안 함
         // OnIngredientDropped에서 직접 처리
@@ -472,9 +472,9 @@ public class IngredientPopup : PopupBase
         }
         
         // 드롭존 비활성화
-        if (stickDropZone != null)
+        if (cuttingBoardDropZone != null)
         {
-            stickDropZone.SetDroppable(false);
+            cuttingBoardDropZone.SetDroppable(false);
         }
         
         // 이벤트 발생
