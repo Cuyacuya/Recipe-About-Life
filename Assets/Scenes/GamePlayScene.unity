@@ -1257,8 +1257,8 @@ Transform:
   - {fileID: 1421164740}
   - {fileID: 1454794666}
   - {fileID: 899826747}
-  - {fileID: 1515504689}
   - {fileID: 2093264370}
+  - {fileID: 859361691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &830751369
@@ -1454,6 +1454,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839990902}
   m_CullTransparentMesh: 1
+--- !u!1 &859361690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 859361691}
+  - component: {fileID: 859361692}
+  m_Layer: 0
+  m_Name: StageStoryController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &859361691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859361690}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.3282337, y: 6.4205875, z: -0.05790433}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 803346911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &859361692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859361690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090aa996eeb7014ab315c45938cb9a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storyNPCConfig: {fileID: 11400000, guid: 03ca585727d9aba4188e14042d1344a5, type: 2}
+  currentStageID: 1
+  delayBeforeStoryDialogue: 1
+  isStoryDialogueTriggered: 0
 --- !u!1 &899826746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2090,6 +2138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454794666}
   - component: {fileID: 1454794665}
+  - component: {fileID: 1454794667}
   m_Layer: 0
   m_Name: NPCSpawnManager
   m_TagString: Untagged
@@ -2133,60 +2182,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 803346911}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1515504688
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1515504689}
-  - component: {fileID: 1515504690}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1515504689
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515504688}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.785291, y: 5.0071363, z: -0.06051941}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 803346911}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1515504690
+--- !u!114 &1454794667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515504688}
-  m_Enabled: 1
+  m_GameObject: {fileID: 1454794664}
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a5f51b941db63419ca05086aeef34b, type: 3}
+  m_Script: {fileID: 11500000, guid: 72f1ce75cdc074444b101fee5be5a411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueCharacter: {fileID: 0}
-  dialogueBubble: {fileID: 0}
-  lockedMessagePanel: {fileID: 500997815}
-  dialogueMessages:
-  - "\uC798\uD588\uC5B4! \uC624\uB298 \uC815\uB9D0 \uBC14\uBE74\uC9C0?"
-  - "5\uBA85\uC758 \uC190\uB2D8\uC744 \uBAA8\uB450 \uB300\uC811\uD588\uB124!"
-  - "\uBAA9\uD45C \uAE08\uC561\uB3C4 \uB2EC\uC131\uD588\uACE0, \uC815\uB9D0 \uC218\uACE0\uD588\uC5B4!"
-  messageDisplayTime: 3
-  isDialogueUnlocked: 0
-  isDialogueActive: 0
+  storyNPCConfig: {fileID: 11400000, guid: 03ca585727d9aba4188e14042d1344a5, type: 2}
+  currentStageID: 1
+  replaceLastNPCWithStory: 1
 --- !u!1 &1651388916
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,7 +2605,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093264369}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2353f485094f383438a4bea25071a54d, type: 3}
   m_Name: 

@@ -105,11 +105,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 8.5, y: 2.3, z: 0}
   targetPosition: {x: -2, y: 2.3, z: 0}
-  moveSpeed: 2
+  moveSpeed: 5.07
   arrivalDistance: 0.1
   orderDelay: 1
   exitPosition: {x: -8.6, y: 2.3, z: 0}
   orderController: {fileID: 0}
+  dialogueController: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!114 &5410046802771525884
 MonoBehaviour:
@@ -118,14 +119,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2334446213212190865}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99f4cdda4287fe245800721042b3b9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSet: {fileID: 11400000, guid: 58b730f2248fa384db1f7a438108bada, type: 2}
   dialogueBubble: {fileID: 202190400865630005}
-  lineDisplayTime: 3
+  lineDisplayTime: 1
   linePauseDuration: 0.5
 --- !u!114 &1817918408943730405
 MonoBehaviour:
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSet: {fileID: 11400000, guid: 58b730f2248fa384db1f7a438108bada, type: 2}
+  dialogueController: {fileID: 0}
   dialogueBubbleUI: {fileID: 202190400865630005}
 --- !u!1 &5104607974786410163
 GameObject:

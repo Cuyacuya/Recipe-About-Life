@@ -51,3 +51,11 @@ MonoBehaviour:
     - speaker: 0
       text: "\uC57C\uBB34\uC9C0\uAC8C\uBA39\uC5B4\uC57C\uC9C0!"
       displayDuration: 0
+  - type: 9
+    lines:
+    - speaker: 0
+      text: "\uC798 \uBA39\uACA0\uC2B5\uB2C8\uB2E4!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC57C\uBB34\uC9C0\uAC8C\uBA39\uC5B4\uC57C\uC9C0!"
+      displayDuration: 0

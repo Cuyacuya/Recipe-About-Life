@@ -37,6 +37,16 @@ namespace RecipeAboutLife.NPC
         private GameObject currentNPCInstance = null;
         private bool isStageActive = false;
 
+        // ==========================================
+        // Events (확장 포인트)
+        // ==========================================
+
+        /// <summary>
+        /// NPC 선택 완료 후 호출되는 이벤트
+        /// 스토리 NPC 교체 등 확장 기능을 위한 Hook
+        /// </summary>
+        public System.Action<List<GameObject>> OnNPCsSelected;
+
         private void Awake()
         {
             // NPC 부모가 없으면 새로 생성
@@ -122,6 +132,10 @@ namespace RecipeAboutLife.NPC
             }
 
             Debug.Log($"[NPCSpawnManager] {selectedNPCPrefabs.Count}명의 NPC를 랜덤 선택했습니다.");
+
+            // 확장 포인트: NPC 선택 완료 이벤트 발생
+            // (스토리 NPC 교체 등을 위한 Hook)
+            OnNPCsSelected?.Invoke(selectedNPCPrefabs);
         }
 
         /// <summary>
