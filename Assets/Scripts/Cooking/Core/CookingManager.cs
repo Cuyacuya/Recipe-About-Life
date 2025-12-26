@@ -19,7 +19,8 @@ namespace RecipeAboutLife.Cooking
     /// - ❌ 손님, 멘탈, 스테이지 등은 이벤트로만 통신
     /// 
     /// Phase 1 완료 (기본 구조)
-    /// Phase 2 진행중: Station 관리 추가
+    /// Phase 2.2 완료: StickPickupStep
+    /// Phase 2.3 완료: IngredientStep ⭐
     /// </summary>
     public class CookingManager : MonoBehaviour
     {
@@ -130,20 +131,23 @@ namespace RecipeAboutLife.Cooking
         /// <summary>
         /// 각 요리 단계 클래스 등록
         /// Phase 2.2: StickPickupStep 등록 완료
+        /// Phase 2.3: IngredientStep 등록 완료 ⭐
         /// </summary>
         private void InitializeCookingSteps()
         {
             // ===== Phase 2.2: StickPickupStep 등록 =====
-             cookingSteps[CookingStepType.StickPickup] = new StickPickupStep(recipeConfig);
+            cookingSteps[CookingStepType.StickPickup] = new StickPickupStep(recipeConfig);
             
-            // TODO Phase 2.3: 나머지 Step 등록
-            // cookingSteps[CookingStepType.Ingredient] = new IngredientStep(recipeConfig);
+            // ===== Phase 2.3: IngredientStep 등록 ===== ⭐
+            cookingSteps[CookingStepType.Ingredient] = new IngredientStep(recipeConfig);
+            
+            // TODO Phase 2.4: 나머지 Step 등록
             // cookingSteps[CookingStepType.Batter] = new BatterStep(recipeConfig);
             // cookingSteps[CookingStepType.Frying] = new FryingStep(recipeConfig);
             // cookingSteps[CookingStepType.Topping] = new ToppingStep(recipeConfig);
             // cookingSteps[CookingStepType.Completed] = new CompletionStep(recipeConfig);
 
-            Debug.Log($"CookingManager: Initialized {cookingSteps.Count} cooking steps");
+            Debug.Log($"[CookingManager] Initialized {cookingSteps.Count} cooking steps");
         }
 
         /// <summary>
@@ -153,7 +157,7 @@ namespace RecipeAboutLife.Cooking
         {
             if (recipeConfig == null)
             {
-                Debug.LogError("CookingManager: RecipeConfigSO is not assigned! Please assign it in the Inspector.");
+                Debug.LogError("[CookingManager] RecipeConfigSO is not assigned! Please assign it in the Inspector.");
             }
         }
 
@@ -261,7 +265,7 @@ namespace RecipeAboutLife.Cooking
         {
             if (order == null)
             {
-                Debug.LogError("CookingManager: Cannot start cooking with null order!");
+                Debug.LogError("[CookingManager] Cannot start cooking with null order!");
                 return;
             }
 
@@ -271,7 +275,7 @@ namespace RecipeAboutLife.Cooking
 
             ChangeStep(CookingStepType.StickPickup);
 
-            Debug.Log($"CookingManager: Started cooking. Order: {order.GetDescription()}");
+            Debug.Log($"[CookingManager] Started cooking. Order: {order.GetDescription()}");
         }
 
         /// <summary>
@@ -281,7 +285,7 @@ namespace RecipeAboutLife.Cooking
         {
             if (currentStepInstance == null)
             {
-                Debug.LogWarning("CookingManager: No active step to process!");
+                Debug.LogWarning("[CookingManager] No active step to process!");
                 return;
             }
 
@@ -319,7 +323,7 @@ namespace RecipeAboutLife.Cooking
             // 보상 계산
             int reward = currentRecipe.CalculateReward(recipeConfig);
 
-            Debug.Log($"CookingManager: Recipe completed! Quality: {finalQuality:F1}, Matches: {matchesOrder}, Reward: {reward}");
+            Debug.Log($"[CookingManager] Recipe completed! Quality: {finalQuality:F1}, Matches: {matchesOrder}, Reward: {reward}");
 
             // ===== 이벤트 발생 (외부 시스템과 통신) =====
             GameEvents.TriggerRecipeCompleted(currentRecipe);
@@ -337,7 +341,7 @@ namespace RecipeAboutLife.Cooking
         /// </summary>
         public void DiscardRecipe()
         {
-            Debug.Log("CookingManager: Recipe discarded!");
+            Debug.Log("[CookingManager] Recipe discarded!");
 
             // ===== 이벤트 발생 =====
             GameEvents.TriggerRecipeDiscarded();
@@ -398,7 +402,7 @@ namespace RecipeAboutLife.Cooking
             // ===== 이벤트 발생 =====
             GameEvents.TriggerCookingStepChanged(newStep);
 
-            Debug.Log($"CookingManager: Changed to step {newStep}");
+            Debug.Log($"[CookingManager] Changed to step {newStep}");
         }
 
         /// <summary>
@@ -441,7 +445,7 @@ namespace RecipeAboutLife.Cooking
             isDragging = true;
             isServingDrag = false;
 
-            Debug.Log($"CookingManager: Started dragging {hotdog.name}");
+            Debug.Log($"[CookingManager] Started dragging {hotdog.name}");
         }
 
         /// <summary>
@@ -456,7 +460,7 @@ namespace RecipeAboutLife.Cooking
             isDragging = true;
             isServingDrag = true;
 
-            Debug.Log($"CookingManager: Started serving drag {hotdog.name}");
+            Debug.Log($"[CookingManager] Started serving drag {hotdog.name}");
         }
 
         /// <summary>
@@ -499,7 +503,7 @@ namespace RecipeAboutLife.Cooking
 
             if (validDrop)
             {
-                Debug.Log("CookingManager: Valid drop!");
+                Debug.Log("[CookingManager] Valid drop!");
                 // 다음 단계로 진행 등...
             }
             else
@@ -519,7 +523,7 @@ namespace RecipeAboutLife.Cooking
 
             if (servedToCustomer)
             {
-                Debug.Log("CookingManager: Served to customer!");
+                Debug.Log("[CookingManager] Served to customer!");
                 CompleteCooking();
             }
             else
@@ -557,7 +561,7 @@ namespace RecipeAboutLife.Cooking
             {
                 // TODO Phase 3: DraggableHotdog 컴포넌트 사용
                 currentDragObject.transform.position = dragStartPosition;
-                Debug.Log("CookingManager: Returned to original position");
+                Debug.Log("[CookingManager] Returned to original position");
             }
         }
 
@@ -633,7 +637,7 @@ namespace RecipeAboutLife.Cooking
         /// </summary>
         private void RegisterMistake(string message)
         {
-            Debug.LogWarning($"CookingManager: Mistake - {message}");
+            Debug.LogWarning($"[CookingManager] Mistake - {message}");
 
             // ===== 이벤트 발생 (MentalManager가 구독) =====
             GameEvents.TriggerMistakeMade();
