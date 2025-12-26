@@ -6,6 +6,7 @@ using System;
 /// 드래그 가능한 오브젝트 컴포넌트
 /// 꼬치, 핫도그, 재료 등 드래그할 수 있는 모든 오브젝트에 부착
 /// ⭐ Phase 2.2: 즉시 드래그 시작 기능 추가
+/// ⭐ 수동 드롭 처리 추가 (SimulateBeginDrag 호환)
 /// </summary>
 public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
@@ -345,15 +346,24 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
         }
         
-        // ⭐ 드래그 중이면 마우스 위치를 계속 따라가기
-        if (isDragging && Input.GetMouseButton(0))
+        // ⭐ 드래그 중 처리
+        if (isDragging)
         {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = transform.position.z;
-            transform.position = worldPosition;
-            
-            // 드롭존 체크
-            CheckDropZone(worldPosition);
+            if (Input.GetMouseButton(0))
+            {
+                // 마우스 버튼을 누르고 있으면 계속 따라가기
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                worldPosition.z = transform.position.z;
+                transform.position = worldPosition;
+                
+                // 드롭존 체크
+                CheckDropZone(worldPosition);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                // ⭐ 마우스 버튼을 놓았을 때 수동으로 드롭 처리
+                SimulateEndDrag();
+            }
         }
     }
     
@@ -419,5 +429,57 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         
         Debug.Log($"[DraggableObject] Drag simulated: {gameObject.name}");
+    }
+    
+    /// <summary>
+    /// ⭐ 프로그래밍 방식으로 드래그 종료 (수동 드롭 처리용)
+    /// SimulateBeginDrag()와 쌍으로 사용
+    /// Update()에서 마우스 버튼을 놓았을 때 자동 호출
+    /// </summary>
+    private void SimulateEndDrag()
+    {
+        if (!isDragging) return;
+        
+        Debug.Log($"[DraggableObject] 🛑 Simulating end drag for {gameObject.name}");
+        
+        isDragging = false;
+        
+        // 드래그 중 설정 복원
+        if (canvasGroup != null)
+        {
+            canvasGroup.blocksRaycasts = true;
+        }
+        
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = originalSortingOrder;
+        }
+        
+        // 스케일 복원
+        transform.localScale = originalScale;
+        
+        // 현재 위치에서 드롭존 최종 확인
+        Vector2 currentPos = transform.position;
+        CheckDropZone(currentPos);
+        
+        // 드롭존 체크
+        if (currentDropZone != null && IsValidDropZone(currentDropZone))
+        {
+            // 드롭 성공
+            Debug.Log($"[DraggableObject] ✅ Valid drop zone found: {currentDropZone.gameObject.name}");
+            OnDropSuccess(currentDropZone);
+        }
+        else
+        {
+            // 드롭 실패 - 원상복귀
+            Debug.Log($"[DraggableObject] ❌ No valid drop zone, returning to origin");
+            ReturnToOriginalPosition();
+        }
+        
+        // DragDropManager에 알림
+        if (DragDropManager.Instance != null)
+        {
+            DragDropManager.Instance.OnDragEnd(this, currentDropZone);
+        }
     }
 }
