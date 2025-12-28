@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8d8d9cd02810f4ea0b00a05a49bd7b, type: 3}
+  m_Name: NPC_7_HoodieGirl
+  m_EditorClassIdentifier: 
+  npcID: 7
+  npcDisplayName: HoodieGirl
+  description: 
+  npcOrder: {fileID: 11400000, guid: b1bf92c5744a4684798e376ec503e259, type: 2}
+  dialogueGroups:
+  - type: 0
+    lines:
+    - speaker: 0
+      text: "\uD5C9! \uBC29\uAE08 \uC644\uBCBD\uD558\uAC8C \uC6B4\uB3D9\uC744 \uB05D\uB0C8\uB294\uB370"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uBC14\uB85C \uC55E\uC5D0 \uD56B\uB3C4\uADF8\uB97C \uD314\uACE0 \uACC4\uC2DC\uB2E4\uB1E8!"
+      displayDuration: 0
+  - type: 1
+    lines:
+    - speaker: 0
+      text: "\uBA39\uC744\uAE4C.. \uB9D0\uAE4C.. \uBA39\uC744\uAE4C.. \uB9D0\uAE4C.."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC73C\uC545!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uBC14\uD504 \uCC0D\uC5B4\uC57C\uD558\uB294\uB370 \uD558\uB098\uB9CC...?"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC5D0\uC787! \uCE58\uC988 \uD56B\uB3C4\uADF8 \uD558\uB098 \uC8FC\uC138\uC694!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uCF00\uCC39 \uC124\uD0D5 \uC804\uBD80 \uB9CE\uC774\uC694!!"
+      displayDuration: 0
+  - type: 2
+    lines:
+    - speaker: 0
+      text: "\uB9DB\uC788\uAC8C \uBA39\uACE0 \uC6B4\uB3D9\uC744 \uB354\uD558\uBA74
+        \uB418\uC8E0!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uADF8\uB807\uC8E0?"
+      displayDuration: 0
+  - type: 3
+    lines:
+    - speaker: 0
+      text: "\uAD1C\uD788 \uC0B4\uB9CC \uCC0C\uC6E0\uB124\uC694.. \uC73C\uC73C..."
+      displayDuration: 0

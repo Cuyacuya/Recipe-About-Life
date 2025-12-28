@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce1c692d47a3364a8c26195b2bd0529, type: 3}
+  m_Name: StoryNPCConfig
+  m_EditorClassIdentifier: 
+  stageStoryNPCs:
+  - stageID: 1
+    isAfterStoryOnly: 0
+    dialogueSet: {fileID: 11400000, guid: 6936ebda4cda02d4e86941eee458e08e, type: 2}
+    npcSprite: {fileID: 1746355324434431825, guid: 3f51dec3580602b44a9a609e4613ac88, type: 3}
+    storyNPCPrefab: {fileID: 2334446213212190865, guid: 7adb69adf18af0b4bb6ff4b9ecf98346, type: 3}
+    description: 
+  - stageID: 2
+    isAfterStoryOnly: 0
+    dialogueSet: {fileID: 11400000, guid: 055e3afdcf3a351498efa5979d34ae29, type: 2}
+    npcSprite: {fileID: -8622532157766846222, guid: 5bcf42aa6bc47704fb81ff4f37f9ef83, type: 3}
+    storyNPCPrefab: {fileID: 2334446213212190865, guid: 851eb4f9606dbbe4b8d53037e2b37ac9, type: 3}
+    description: 
+  - stageID: 3
+    isAfterStoryOnly: 0
+    dialogueSet: {fileID: 11400000, guid: e53913aadfe683a49b24a17c4badd176, type: 2}
+    npcSprite: {fileID: 5955039021427560917, guid: 5c7efea8a8618fb45b64bf49d7fbff27, type: 3}
+    storyNPCPrefab: {fileID: 2334446213212190865, guid: 391717081d5f60d449615324a27c7cd7, type: 3}
+    description: 
+  - stageID: 3
+    isAfterStoryOnly: 1
+    dialogueSet: {fileID: 11400000, guid: 6684d611ef8e6a243945b015ab2d1438, type: 2}
+    npcSprite: {fileID: 2050816113860836997, guid: a90ead08e269cfb4a85e47eec4019262, type: 3}
+    storyNPCPrefab: {fileID: 2334446213212190865, guid: 862c7143e17e2934e9e1960622da6d5a, type: 3}
+    description: 
