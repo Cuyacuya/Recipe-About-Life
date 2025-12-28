@@ -165,9 +165,20 @@ namespace RecipeAboutLife.Cooking
                 // 튀김 종료
                 StopFrying();
 
-                // 다음 단계로
+                // 다음 단계로 (Topping)
                 manager.NextPhase();
-                manager.ShowToppingPopup();
+                
+                // 핫도그에 클릭 핸들러 추가 (클릭 시 토핑 팝업 열기)
+                CoolingRackClickHandler clickHandler = d.gameObject.GetComponent<CoolingRackClickHandler>();
+                if (clickHandler == null)
+                {
+                    clickHandler = d.gameObject.AddComponent<CoolingRackClickHandler>();
+                }
+                
+                // 드래그 비활성화 (클릭만 가능)
+                d.isDraggable = false;
+                
+                Debug.Log("[FryingHandler] 핫도그 클릭하면 토핑 팝업 열림");
             }
             else
             {

@@ -48,6 +48,15 @@ namespace RecipeAboutLife.Cooking
         [Header("=== Frying Effect ===")]
         public GameObject fryingBubblePrefab; // 보글보글 이펙트
 
+        [Header("=== Topping Settings ===")]
+        public Sprite sugarOverlaySprite;      // 설탕 오버레이 스프라이트
+        public Vector3 sugarPositionOffset = new Vector3(0f, 0f, 0f);  // 설탕 위치 오프셋
+        public Vector3 sugarScale = new Vector3(1f, 1f, 1f);           // 설탕 스케일
+        public Sprite ketchupDotSprite;        // 케첩 점 스프라이트
+        public Sprite mustardDotSprite;        // 머스타드 점 스프라이트
+        public float sauceScaleRatio = 0.5f;   // 팝업→메인 소스 스케일 비율
+        public Vector3 saucePositionOffset = new Vector3(0f, 0f, 0f); // 메인 화면 소스 위치 오프셋
+
         [Header("=== Popups ===")]
         public GameObject ingredientPopup;  // 재료 선택 팝업
         public GameObject toppingPopup;     // 토핑 팝업

@@ -38,6 +38,7 @@ namespace RecipeAboutLife.Cooking
 
         private void OnMouseDown()
         {
+            Debug.Log($"[SimpleDraggable] OnMouseDown 호출됨: {gameObject.name}, isDraggable: {isDraggable}");
             if (!isDraggable) return;
             StartDrag();
         }
