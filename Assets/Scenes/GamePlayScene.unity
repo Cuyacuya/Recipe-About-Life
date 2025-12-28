@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4348,8 +4348,8 @@ MonoBehaviour:
   gaugeFill: {fileID: 612147149}
   ketchupFillSprite: {fileID: -8705798204074543797, guid: f98c86573696a7f4ebd8747b7a3d393f, type: 3}
   mustardFillSprite: {fileID: -6399377875656792447, guid: 71b8d4cb23fbf6b488acebed0a3128f1, type: 3}
-  maxSauceAmount: 10
-  sauceDecreaseRate: 0.02
+  maxSauceAmount: 1
+  sauceDecreaseRate: 0.001
   closeButton: {fileID: 2002593041}
   hotdogDraggable: {fileID: 1110596823}
 --- !u!4 &2022404060
