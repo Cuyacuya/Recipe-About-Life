@@ -24,7 +24,59 @@ namespace RecipeAboutLife.NPC
         // ==========================================
 
         /// <summary>
-        /// 특정 스테이지의 스토리 NPC 프리팹 가져오기
+        /// 특정 스테이지의 스토리 NPC DialogueSet 가져오기
+        /// </summary>
+        /// <param name="stageID">스테이지 번호 (1, 2, 3...)</param>
+        /// <param name="afterStoryOnly">AfterStory 전용 NPC를 가져올지 여부 (기본: false)</param>
+        /// <returns>DialogueSet (없으면 null)</returns>
+        public Dialogue.NPCDialogueSet GetDialogueSetForStage(int stageID, bool afterStoryOnly = false)
+        {
+            var stageNPC = stageStoryNPCs.FirstOrDefault(s => s.stageID == stageID && s.isAfterStoryOnly == afterStoryOnly);
+
+            if (stageNPC == null)
+            {
+                string npcType = afterStoryOnly ? "AfterStory 전용" : "일반 스토리";
+                Debug.LogWarning($"[StoryNPCConfig] Stage {stageID}에 {npcType} NPC가 설정되지 않았습니다!");
+                return null;
+            }
+
+            if (stageNPC.dialogueSet == null)
+            {
+                Debug.LogError($"[StoryNPCConfig] Stage {stageID}의 DialogueSet이 null입니다!");
+                return null;
+            }
+
+            return stageNPC.dialogueSet;
+        }
+
+        /// <summary>
+        /// 특정 스테이지의 스토리 NPC 스프라이트 가져오기
+        /// </summary>
+        /// <param name="stageID">스테이지 번호 (1, 2, 3...)</param>
+        /// <param name="afterStoryOnly">AfterStory 전용 NPC를 가져올지 여부 (기본: false)</param>
+        /// <returns>NPC Sprite (없으면 null)</returns>
+        public Sprite GetSpriteForStage(int stageID, bool afterStoryOnly = false)
+        {
+            var stageNPC = stageStoryNPCs.FirstOrDefault(s => s.stageID == stageID && s.isAfterStoryOnly == afterStoryOnly);
+
+            if (stageNPC == null)
+            {
+                string npcType = afterStoryOnly ? "AfterStory 전용" : "일반 스토리";
+                Debug.LogWarning($"[StoryNPCConfig] Stage {stageID}에 {npcType} NPC가 설정되지 않았습니다!");
+                return null;
+            }
+
+            if (stageNPC.npcSprite == null)
+            {
+                Debug.LogError($"[StoryNPCConfig] Stage {stageID}의 NPC Sprite가 null입니다!");
+                return null;
+            }
+
+            return stageNPC.npcSprite;
+        }
+
+        /// <summary>
+        /// 특정 스테이지의 스토리 NPC 프리팹 가져오기 (레거시, 사용 안 함)
         /// </summary>
         /// <param name="stageID">스테이지 번호 (1, 2, 3...)</param>
         /// <returns>스토리 NPC 프리팹 (없으면 null)</returns>
@@ -80,11 +132,12 @@ namespace RecipeAboutLife.NPC
         /// 특정 스테이지에 스토리 NPC가 설정되어 있는지 확인
         /// </summary>
         /// <param name="stageID">스테이지 번호</param>
+        /// <param name="afterStoryOnly">AfterStory 전용 NPC를 확인할지 여부 (기본: false)</param>
         /// <returns>설정되어 있으면 true</returns>
-        public bool HasStoryNPCForStage(int stageID)
+        public bool HasStoryNPCForStage(int stageID, bool afterStoryOnly = false)
         {
-            var stageNPC = stageStoryNPCs.FirstOrDefault(s => s.stageID == stageID);
-            return stageNPC != null && stageNPC.storyNPCPrefab != null;
+            var stageNPC = stageStoryNPCs.FirstOrDefault(s => s.stageID == stageID && s.isAfterStoryOnly == afterStoryOnly);
+            return stageNPC != null && stageNPC.dialogueSet != null && stageNPC.npcSprite != null;
         }
 
         /// <summary>
@@ -131,16 +184,16 @@ namespace RecipeAboutLife.NPC
                 return false;
             }
 
-            // 중복 스테이지 ID 확인
+            // 중복 스테이지 ID 확인 (isAfterStoryOnly가 다르면 허용)
             var duplicateStages = stageStoryNPCs
-                .GroupBy(s => s.stageID)
+                .GroupBy(s => new { s.stageID, s.isAfterStoryOnly })
                 .Where(g => g.Count() > 1)
-                .Select(g => g.Key)
+                .Select(g => $"Stage {g.Key.stageID} (AfterStoryOnly: {g.Key.isAfterStoryOnly})")
                 .ToList();
 
             if (duplicateStages.Count > 0)
             {
-                errorMessage = $"중복된 스테이지 ID: {string.Join(", ", duplicateStages)}";
+                errorMessage = $"중복된 스테이지 설정: {string.Join(", ", duplicateStages)}";
                 return false;
             }
 
@@ -153,17 +206,26 @@ namespace RecipeAboutLife.NPC
                     return false;
                 }
 
-                if (stageNPC.storyNPCPrefab == null)
+                // DialogueSet 확인 (필수)
+                if (stageNPC.dialogueSet == null)
                 {
-                    errorMessage = $"Stage {stageNPC.stageID}의 스토리 NPC 프리팹이 설정되지 않았습니다.";
+                    string npcType = stageNPC.isAfterStoryOnly ? "AfterStory 전용" : "일반 스토리";
+                    errorMessage = $"Stage {stageNPC.stageID} ({npcType})의 DialogueSet이 설정되지 않았습니다.";
                     return false;
                 }
 
-                // DialogueSet 확인
-                var dialogueController = stageNPC.storyNPCPrefab.GetComponent<Dialogue.NPCDialogueController>();
-                if (dialogueController == null)
+                // NPC Sprite 확인 (필수)
+                if (stageNPC.npcSprite == null)
                 {
-                    errorMessage = $"Stage {stageNPC.stageID}의 스토리 NPC에 NPCDialogueController가 없습니다.";
+                    string npcType = stageNPC.isAfterStoryOnly ? "AfterStory 전용" : "일반 스토리";
+                    errorMessage = $"Stage {stageNPC.stageID} ({npcType})의 NPC Sprite가 설정되지 않았습니다.";
+                    return false;
+                }
+
+                // 프리팹 확인 (일반 스토리 NPC만 필수, AfterStory 전용은 선택)
+                if (!stageNPC.isAfterStoryOnly && stageNPC.storyNPCPrefab == null)
+                {
+                    errorMessage = $"Stage {stageNPC.stageID} (일반 스토리)의 스토리 NPC 프리팹이 설정되지 않았습니다.";
                     return false;
                 }
             }
@@ -186,8 +248,9 @@ namespace RecipeAboutLife.NPC
 
             foreach (var stageNPC in stageStoryNPCs)
             {
-                string npcName = stageNPC.storyNPCPrefab != null ? stageNPC.storyNPCPrefab.name : "NULL";
-                Debug.Log($"  Stage {stageNPC.stageID}: {npcName}");
+                string npcName = stageNPC.dialogueSet != null ? stageNPC.dialogueSet.npcID : "NULL";
+                string npcType = stageNPC.isAfterStoryOnly ? "AfterStory 전용" : "일반 스토리";
+                Debug.Log($"  Stage {stageNPC.stageID} ({npcType}): {npcName}");
                 if (!string.IsNullOrEmpty(stageNPC.description))
                 {
                     Debug.Log($"    Description: {stageNPC.description}");
@@ -231,8 +294,19 @@ namespace RecipeAboutLife.NPC
         [Tooltip("스테이지 번호 (1, 2, 3...)")]
         public int stageID = 1;
 
-        [Header("스토리 NPC")]
-        [Tooltip("이 스테이지 마지막에 등장하는 스토리 NPC 프리팹")]
+        [Header("NPC 타입")]
+        [Tooltip("AfterStory만 진행하는 특별 NPC인지 여부 (true면 5번째 손님으로 등장하지 않고 결산 후에만 등장)")]
+        public bool isAfterStoryOnly = false;
+
+        [Header("스토리 NPC 데이터")]
+        [Tooltip("NPC 대화 세트 (DialogueSet)")]
+        public Dialogue.NPCDialogueSet dialogueSet;
+
+        [Tooltip("NPC 스프라이트 (정면 이미지)")]
+        public Sprite npcSprite;
+
+        [Header("레거시 (사용 안 함)")]
+        [Tooltip("이 스테이지 마지막에 등장하는 스토리 NPC 프리팹 (더 이상 사용하지 않음)")]
         public GameObject storyNPCPrefab;
 
         [Header("설명 (선택)")]

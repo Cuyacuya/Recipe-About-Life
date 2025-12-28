@@ -96,7 +96,7 @@ namespace RecipeAboutLife.NPC
             {
                 hasOrder = true;
 
-                // Order 대화 시작 (NPCDialogueController가 주문 + 대화를 함께 표시)
+                // Order 대화 시작 (주문 내용은 대화문에 포함됨)
                 if (dialogueController != null)
                 {
                     bool hasOrderDialogue = dialogueController.StartDialogue(Dialogue.DialogueType.Order);
@@ -106,15 +106,16 @@ namespace RecipeAboutLife.NPC
                     }
                     else
                     {
-                        // 대화가 없으면 주문만 표시 (기존 방식)
-                        DisplayOrder();
+                        Debug.LogWarning("[NPCOrderController] Order 대화가 없습니다!");
                     }
                 }
                 else
                 {
-                    // DialogueController가 없으면 주문만 표시 (기존 방식)
-                    DisplayOrder();
+                    Debug.LogWarning("[NPCOrderController] DialogueController가 없습니다!");
                 }
+
+                // 주문 UI는 표시하지 않음 (대화문에 이미 주문 내용 포함)
+                // DisplayOrder(); // 주석 처리
 
                 // 주문을 요리 시스템으로 전달
                 SendOrderToCookingSystem();

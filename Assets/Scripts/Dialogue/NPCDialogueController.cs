@@ -40,6 +40,9 @@ namespace RecipeAboutLife.Dialogue
 
         private bool isDialogueActive = false;
         private Coroutine currentDialogueCoroutine = null;
+        private bool waitingForInput = false;
+        private bool inputReceived = false;
+        private DialogueType currentDialogueType; // 현재 진행 중인 대화 타입
 
         // ==========================================
         // Events
@@ -69,6 +72,24 @@ namespace RecipeAboutLife.Dialogue
                 {
                     Debug.LogWarning($"[NPCDialogueController] {gameObject.name}에 DialogueBubbleUI가 없습니다!");
                 }
+            }
+        }
+
+        private void Update()
+        {
+            // 대화 진행 중이고 입력 대기 중일 때만 체크
+            if (!waitingForInput || inputReceived)
+                return;
+
+            // 모바일 터치 입력 감지
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                inputReceived = true;
+            }
+            // PC 마우스 클릭 입력 감지 (테스트용)
+            else if (Input.GetMouseButtonDown(0))
+            {
+                inputReceived = true;
             }
         }
 
@@ -122,7 +143,18 @@ namespace RecipeAboutLife.Dialogue
             }
 
             isDialogueActive = false;
+            waitingForInput = false;
+            inputReceived = false;
 
+            // 모든 UI 숨기기 (어떤 대화가 진행 중이었는지 모르므로)
+            if (UI.NPCDialogueUI.Instance != null)
+            {
+                UI.NPCDialogueUI.Instance.Hide();
+            }
+            if (UI.PlayerDialogueUI.Instance != null)
+            {
+                UI.PlayerDialogueUI.Instance.Hide();
+            }
             if (dialogueBubble != null)
             {
                 dialogueBubble.Hide();
@@ -141,30 +173,16 @@ namespace RecipeAboutLife.Dialogue
         private IEnumerator PlayDialogueSequence(DialogueType type, DialogueLine[] lines)
         {
             isDialogueActive = true;
+            currentDialogueType = type; // 현재 대화 타입 저장
 
             Debug.Log($"[NPCDialogueController] {dialogueSet.npcID} {type} 대화 시작 ({lines.Length} 라인)");
 
             // 이벤트 발생
             OnDialogueStarted?.Invoke(type);
 
-            // Order 타입일 때 주문 정보 먼저 표시
-            if (type == DialogueType.Order && dialogueSet.npcOrder != null)
-            {
-                if (dialogueBubble != null)
-                {
-                    // Canvas가 꺼져있으면 켜기
-                    if (!dialogueBubble.gameObject.activeSelf)
-                    {
-                        dialogueBubble.gameObject.SetActive(true);
-                    }
-
-                    dialogueBubble.ShowOrder(dialogueSet.npcOrder);
-
-                    // 주문 표시 시간만큼 대기
-                    yield return new WaitForSeconds(lineDisplayTime);
-                    yield return new WaitForSeconds(linePauseDuration);
-                }
-            }
+            // Order 타입일 때 주문 UI 표시하지 않음
+            // 주문 내용은 대화문에 이미 포함되어 있으므로 별도 UI 불필요
+            // 주문 정보는 NPCOrderController에서 내부적으로 요리 시스템에 전달됨
 
             // 각 대화 라인 재생
             for (int i = 0; i < lines.Length; i++)
@@ -181,9 +199,9 @@ namespace RecipeAboutLife.Dialogue
                 // 대화 표시
                 DisplayDialogueLine(line);
 
-                // 표시 시간만큼 대기
+                // 터치 입력 대기 (최대 표시 시간까지)
                 float displayTime = line.displayDuration > 0 ? line.displayDuration : lineDisplayTime;
-                yield return new WaitForSeconds(displayTime);
+                yield return WaitForInputOrTime(displayTime);
 
                 // 마지막 라인이 아니면 짧은 간격
                 if (i < lines.Length - 1)
@@ -195,9 +213,25 @@ namespace RecipeAboutLife.Dialogue
             // 대화 종료
             isDialogueActive = false;
 
-            if (dialogueBubble != null)
+            // StoryAfterSummary였다면 Overlay Canvas 숨기기
+            if (currentDialogueType == DialogueType.StoryAfterSummary)
             {
-                dialogueBubble.Hide();
+                if (UI.NPCDialogueUI.Instance != null)
+                {
+                    UI.NPCDialogueUI.Instance.Hide();
+                }
+                if (UI.PlayerDialogueUI.Instance != null)
+                {
+                    UI.PlayerDialogueUI.Instance.Hide();
+                }
+            }
+            else
+            {
+                // 일반 대화는 World Space 말풍선만 숨기기
+                if (dialogueBubble != null)
+                {
+                    dialogueBubble.Hide();
+                }
             }
 
             Debug.Log($"[NPCDialogueController] {dialogueSet.npcID} {type} 대화 종료");
@@ -213,6 +247,40 @@ namespace RecipeAboutLife.Dialogue
         /// </summary>
         private void DisplayDialogueLine(DialogueLine line)
         {
+            // StoryAfterSummary 대화일 때만 Overlay Canvas 사용
+            if (currentDialogueType == DialogueType.StoryAfterSummary)
+            {
+                // Speaker에 따라 다른 UI 사용 (Overlay Canvas)
+                switch (line.speaker)
+                {
+                    case SpeakerType.NPC:
+                        DisplayNPCDialogueOverlay(line.text);
+                        break;
+
+                    case SpeakerType.Player:
+                        DisplayPlayerDialogue(line.text);
+                        break;
+
+                    case SpeakerType.System:
+                        DisplayNPCDialogueOverlay(line.text);
+                        break;
+                }
+            }
+            else
+            {
+                // 일반 대화는 기존 World Space 말풍선 사용
+                DisplayNPCDialogueWorldSpace(line.text);
+            }
+
+            Debug.Log($"[NPCDialogueController] [{line.speaker}] {line.text}");
+        }
+
+        /// <summary>
+        /// NPC 대화 표시 - World Space (기존 방식)
+        /// 일반 대화 (Intro, Order, Exit 등)에 사용
+        /// </summary>
+        private void DisplayNPCDialogueWorldSpace(string text)
+        {
             if (dialogueBubble == null)
             {
                 Debug.LogError($"[NPCDialogueController] DialogueBubbleUI가 없어서 대화를 표시할 수 없습니다!");
@@ -226,14 +294,87 @@ namespace RecipeAboutLife.Dialogue
             }
 
             // 말풍선에 텍스트 표시
-            dialogueBubble.ShowDialogue(line.text);
+            dialogueBubble.ShowDialogue(text);
+        }
 
-            Debug.Log($"[NPCDialogueController] [{line.speaker}] {line.text}");
+        /// <summary>
+        /// NPC 대화 표시 - Overlay Canvas
+        /// StoryAfterSummary 대화에만 사용
+        /// </summary>
+        private void DisplayNPCDialogueOverlay(string text)
+        {
+            // Player 대화 UI 숨기기
+            if (UI.PlayerDialogueUI.Instance != null)
+            {
+                UI.PlayerDialogueUI.Instance.Hide();
+            }
 
-            // TODO: 발화자에 따른 추가 연출
-            // - SpeakerType.NPC: NPC 애니메이션 재생
-            // - SpeakerType.Player: 플레이어 반응 연출
-            // - SpeakerType.System: UI 스타일 변경
+            // NPC 대화 UI 표시 (Overlay)
+            if (UI.NPCDialogueUI.Instance != null)
+            {
+                // NPC 이름 가져오기 (dialogueSet에서)
+                string npcName = dialogueSet != null ? dialogueSet.npcDisplayName : null;
+
+                // NPC 스프라이트 가져오기 (SpriteRenderer에서)
+                Sprite npcSprite = null;
+                SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    npcSprite = spriteRenderer.sprite;
+                }
+
+                UI.NPCDialogueUI.Instance.Show(text, npcName, npcSprite);
+            }
+            else
+            {
+                Debug.LogWarning("[NPCDialogueController] NPCDialogueUI를 찾을 수 없습니다! 폴백으로 World Space 말풍선 사용.");
+                // 폴백: World Space 말풍선 사용
+                DisplayNPCDialogueWorldSpace(text);
+            }
+        }
+
+        /// <summary>
+        /// Player 대화 표시 (화면 하단)
+        /// StoryAfterSummary 대화에만 사용
+        /// </summary>
+        private void DisplayPlayerDialogue(string text)
+        {
+            // NPC 대화 UI 숨기기 (Overlay)
+            if (UI.NPCDialogueUI.Instance != null)
+            {
+                UI.NPCDialogueUI.Instance.Hide();
+            }
+
+            // Player 대화 UI 표시
+            if (UI.PlayerDialogueUI.Instance != null)
+            {
+                UI.PlayerDialogueUI.Instance.Show(text);
+            }
+            else
+            {
+                Debug.LogWarning("[NPCDialogueController] PlayerDialogueUI를 찾을 수 없습니다! 씬에 PlayerDialogueUI를 추가하세요.");
+            }
+        }
+
+        /// <summary>
+        /// 터치 입력 또는 시간 대기
+        /// 터치하면 즉시 진행, 안하면 maxTime까지 대기
+        /// </summary>
+        private IEnumerator WaitForInputOrTime(float maxTime)
+        {
+            waitingForInput = true;
+            inputReceived = false;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < maxTime && !inputReceived)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            waitingForInput = false;
+            inputReceived = false;
         }
 
         // ==========================================

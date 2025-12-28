@@ -46,6 +46,15 @@ namespace RecipeAboutLife.NPC
         [Tooltip("스프라이트 렌더러 (좌우 반전용)")]
         private SpriteRenderer spriteRenderer;
 
+        [Header("스프라이트 설정")]
+        [SerializeField]
+        [Tooltip("정면 스프라이트 (도착 시 사용)")]
+        private Sprite frontSprite;
+
+        [SerializeField]
+        [Tooltip("측면 스프라이트 (이동 시 사용)")]
+        private Sprite sideSprite;
+
         [Header("상태")]
         private bool isMoving = true;
         private bool hasArrived = false;
@@ -98,9 +107,11 @@ namespace RecipeAboutLife.NPC
             // 시작 위치로 이동
             transform.position = startPosition;
 
-            // 왼쪽으로 이동할 것이므로 스프라이트 반전
-            if (spriteRenderer != null)
+            // 측면 스프라이트로 시작 (이동 중)
+            if (spriteRenderer != null && sideSprite != null)
             {
+                spriteRenderer.sprite = sideSprite;
+                // 왼쪽으로 이동할 것이므로 스프라이트 반전
                 spriteRenderer.flipX = true;
             }
 
@@ -155,7 +166,14 @@ namespace RecipeAboutLife.NPC
             isMoving = false;
             hasArrived = true;
 
-            Debug.Log($"[NPCMovement] NPC 도착!");
+            // 정면 스프라이트로 변경 (정지 시)
+            if (spriteRenderer != null && frontSprite != null)
+            {
+                spriteRenderer.sprite = frontSprite;
+                spriteRenderer.flipX = false; // 정면은 반전하지 않음
+            }
+
+            Debug.Log($"[NPCMovement] NPC 도착! 정면으로 전환");
 
             // Intro 대화 시작
             if (dialogueController != null)
@@ -319,7 +337,15 @@ namespace RecipeAboutLife.NPC
         {
             isExiting = true;
             isMoving = false;
-            Debug.Log("[NPCMovement] NPC 퇴장 중...");
+
+            // 측면 스프라이트로 변경 (이동 시)
+            if (spriteRenderer != null && sideSprite != null)
+            {
+                spriteRenderer.sprite = sideSprite;
+                spriteRenderer.flipX = true; // 왼쪽으로 이동하므로 반전
+            }
+
+            Debug.Log("[NPCMovement] NPC 퇴장 중... 측면으로 전환");
         }
 
         /// <summary>

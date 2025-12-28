@@ -8,7 +8,8 @@ namespace RecipeAboutLife.NPC
     ///
     /// 역할:
     /// 1. NPCSpawnManager가 랜덤 NPC를 선택한 후
-    /// 2. 마지막 NPC(5번째)를 현재 스테이지의 스토리 NPC로 교체
+    /// 2. 마지막 NPC(5번째)를 현재 스테이지의 일반 스토리 NPC로 교체
+    /// 3. AfterStory 전용 NPC는 교체하지 않음 (StageStoryController가 처리)
     ///
     /// ※ NPCSpawnManager를 수정하지 않고 이벤트 구독으로만 동작
     /// </summary>
@@ -28,11 +29,6 @@ namespace RecipeAboutLife.NPC
         [SerializeField]
         [Tooltip("현재 스테이지 번호 (1, 2, 3...)")]
         private int currentStageID = 1;
-
-        [Header("교체 설정")]
-        [SerializeField]
-        [Tooltip("마지막 NPC를 스토리 NPC로 교체할지 여부")]
-        private bool replaceLastNPCWithStory = true;
 
         // ==========================================
         // References
@@ -85,17 +81,11 @@ namespace RecipeAboutLife.NPC
 
         /// <summary>
         /// NPCSpawnManager가 NPC를 선택한 후 호출되는 이벤트
-        /// 마지막 NPC를 스토리 NPC로 교체
+        /// 마지막 NPC를 일반 스토리 NPC로 교체 (AfterStory 전용 제외)
         /// </summary>
         /// <param name="selectedNPCs">선택된 NPC 프리팹 리스트</param>
         private void OnNPCsSelected(List<GameObject> selectedNPCs)
         {
-            if (!replaceLastNPCWithStory)
-            {
-                Debug.Log("[StoryNPCSpawnHelper] 스토리 NPC 교체가 비활성화되어 있습니다.");
-                return;
-            }
-
             if (selectedNPCs == null || selectedNPCs.Count == 0)
             {
                 Debug.LogWarning("[StoryNPCSpawnHelper] 선택된 NPC가 없습니다!");
@@ -108,11 +98,18 @@ namespace RecipeAboutLife.NPC
                 return;
             }
 
-            // 현재 스테이지의 스토리 NPC 가져오기
+            // 일반 스토리 NPC 확인 (isAfterStoryOnly = false)
+            if (!storyNPCConfig.HasStoryNPCForStage(currentStageID, afterStoryOnly: false))
+            {
+                Debug.LogWarning($"[StoryNPCSpawnHelper] Stage {currentStageID}에 일반 스토리 NPC가 없습니다!");
+                return;
+            }
+
+            // 현재 스테이지의 일반 스토리 NPC 프리팹 가져오기 (5번째 손님으로 스폰될 NPC)
             GameObject storyNPCPrefab = storyNPCConfig.GetStoryNPCForStage(currentStageID);
             if (storyNPCPrefab == null)
             {
-                Debug.LogWarning($"[StoryNPCSpawnHelper] Stage {currentStageID}에 스토리 NPC가 설정되지 않았습니다!");
+                Debug.LogWarning($"[StoryNPCSpawnHelper] Stage {currentStageID}의 스토리 NPC 프리팹이 없습니다!");
                 return;
             }
 
@@ -143,16 +140,6 @@ namespace RecipeAboutLife.NPC
         }
 
         /// <summary>
-        /// 스토리 NPC 교체 활성화/비활성화
-        /// </summary>
-        /// <param name="enabled">활성화 여부</param>
-        public void SetStoryNPCReplacementEnabled(bool enabled)
-        {
-            replaceLastNPCWithStory = enabled;
-            Debug.Log($"[StoryNPCSpawnHelper] 스토리 NPC 교체: {(enabled ? "활성화" : "비활성화")}");
-        }
-
-        /// <summary>
         /// StoryNPCConfig 설정
         /// </summary>
         /// <param name="config">스토리 NPC 설정</param>
@@ -171,17 +158,25 @@ namespace RecipeAboutLife.NPC
         {
             Debug.Log("=== StoryNPCSpawnHelper State ===");
             Debug.Log($"Current Stage ID: {currentStageID}");
-            Debug.Log($"Replace Last NPC: {replaceLastNPCWithStory}");
             Debug.Log($"StoryNPCConfig: {(storyNPCConfig != null ? storyNPCConfig.name : "NULL")}");
 
-            if (storyNPCConfig != null && storyNPCConfig.HasStoryNPCForStage(currentStageID))
+            if (storyNPCConfig != null)
             {
-                GameObject storyNPC = storyNPCConfig.GetStoryNPCForStage(currentStageID);
-                Debug.Log($"Story NPC for Stage {currentStageID}: {(storyNPC != null ? storyNPC.name : "NULL")}");
+                bool hasRegularStoryNPC = storyNPCConfig.HasStoryNPCForStage(currentStageID, afterStoryOnly: false);
+                bool hasAfterStoryOnlyNPC = storyNPCConfig.HasStoryNPCForStage(currentStageID, afterStoryOnly: true);
+
+                Debug.Log($"Has Regular Story NPC for Stage {currentStageID}: {hasRegularStoryNPC}");
+                Debug.Log($"Has AfterStory Only NPC for Stage {currentStageID}: {hasAfterStoryOnlyNPC}");
+
+                if (hasRegularStoryNPC)
+                {
+                    GameObject storyNPC = storyNPCConfig.GetStoryNPCForStage(currentStageID);
+                    Debug.Log($"Regular Story NPC: {(storyNPC != null ? storyNPC.name : "NULL")}");
+                }
             }
             else
             {
-                Debug.LogWarning($"No Story NPC configured for Stage {currentStageID}");
+                Debug.LogWarning("StoryNPCConfig is not assigned!");
             }
         }
 #endif

@@ -476,7 +476,7 @@ namespace RecipeAboutLife.Cooking
             if (stickDraggable == null || stickObject == null) return;
             
             // 마우스/터치 위치로 즉시 이동
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 worldPosition = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.z = stickObject.transform.position.z;
             
             // 꼬치를 마우스 위치로 이동
