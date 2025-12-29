@@ -1,0 +1,1482 @@
+fileFormatVersion: 2
+guid: 7636179df796ba648b32cf78e35891f8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3013531749944573419
+    second: fryBubbles03_0
+  - first:
+      213: 2715420984807106998
+    second: fryBubbles03_1
+  - first:
+      213: -8940857957949233341
+    second: fryBubbles03_2
+  - first:
+      213: -116898497639816366
+    second: fryBubbles03_3
+  - first:
+      213: -5278657412577046336
+    second: fryBubbles03_4
+  - first:
+      213: -5663907319411624144
+    second: fryBubbles03_5
+  - first:
+      213: -9134913139248050064
+    second: fryBubbles03_6
+  - first:
+      213: 6941038943736799531
+    second: fryBubbles03_7
+  - first:
+      213: 8885535233306962743
+    second: fryBubbles03_8
+  - first:
+      213: 7341400380809232487
+    second: fryBubbles03_9
+  - first:
+      213: -2776478844437571376
+    second: fryBubbles03_10
+  - first:
+      213: 880033320370104225
+    second: fryBubbles03_11
+  - first:
+      213: -7623615208754924483
+    second: fryBubbles03_12
+  - first:
+      213: -572216756789167394
+    second: fryBubbles03_13
+  - first:
+      213: 3033406095860266146
+    second: fryBubbles03_14
+  - first:
+      213: 1570945941564787763
+    second: fryBubbles03_15
+  - first:
+      213: 3503477582279379939
+    second: fryBubbles03_16
+  - first:
+      213: 9027621332278278372
+    second: fryBubbles03_17
+  - first:
+      213: -5760357063578686924
+    second: fryBubbles03_18
+  - first:
+      213: -4063263333851053704
+    second: fryBubbles03_19
+  - first:
+      213: 1888236362524817649
+    second: fryBubbles03_20
+  - first:
+      213: -5094870172725331204
+    second: fryBubbles03_21
+  - first:
+      213: 2348295445347353005
+    second: fryBubbles03_22
+  - first:
+      213: 4578627047564217637
+    second: fryBubbles03_23
+  - first:
+      213: -8807246930588108825
+    second: fryBubbles03_24
+  - first:
+      213: -8303333542839058617
+    second: fryBubbles03_25
+  - first:
+      213: 7269100122708969915
+    second: fryBubbles03_26
+  - first:
+      213: -2749991846952925129
+    second: fryBubbles03_27
+  - first:
+      213: 3979485642035961191
+    second: fryBubbles03_28
+  - first:
+      213: -1134423550306646014
+    second: fryBubbles03_29
+  - first:
+      213: -4807307396299110127
+    second: fryBubbles03_30
+  - first:
+      213: -5399657181142720480
+    second: fryBubbles03_31
+  - first:
+      213: 3514112890463792460
+    second: fryBubbles03_32
+  - first:
+      213: 7062288800291825247
+    second: fryBubbles03_33
+  - first:
+      213: 2502273759450139874
+    second: fryBubbles03_34
+  - first:
+      213: -1592670349424154777
+    second: fryBubbles03_35
+  - first:
+      213: -4538383841693548498
+    second: fryBubbles03_36
+  - first:
+      213: 4870097151214901456
+    second: fryBubbles03_37
+  - first:
+      213: 6544563668334037303
+    second: fryBubbles03_38
+  - first:
+      213: -7975027116821121006
+    second: fryBubbles03_39
+  - first:
+      213: 7938294086641136940
+    second: fryBubbles03_40
+  - first:
+      213: -7020785032320393687
+    second: fryBubbles03_41
+  - first:
+      213: 3457560472882324363
+    second: fryBubbles03_42
+  - first:
+      213: -2633123059397483715
+    second: fryBubbles03_43
+  - first:
+      213: 9204291297872129800
+    second: fryBubbles03_44
+  - first:
+      213: 4329880031689993089
+    second: fryBubbles03_45
+  - first:
+      213: 7151827881268559018
+    second: fryBubbles03_46
+  - first:
+      213: 737145155745878732
+    second: fryBubbles03_47
+  - first:
+      213: 3590863608257950046
+    second: fryBubbles03_48
+  - first:
+      213: -1641759543113569950
+    second: fryBubbles03_49
+  - first:
+      213: 1496417575119083609
+    second: fryBubbles03_50
+  - first:
+      213: 1121422497521945037
+    second: fryBubbles03_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fryBubbles03_0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 1305
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512413df6d8cd26d0800000000000000
+      internalID: -3013531749944573419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_1
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 1127
+        width: 283
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b9a11faffc1fa520800000000000000
+      internalID: 2715420984807106998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_2
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 1225
+        width: 68
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3472635de01bbe380800000000000000
+      internalID: -8940857957949233341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_3
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 1174
+        width: 98
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 253e66d8f61b06ef0800000000000000
+      internalID: -116898497639816366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_4
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 1247
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c0dc500d017eb6b0800000000000000
+      internalID: -5278657412577046336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_5
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 1186
+        width: 49
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0373cb93d42c561b0800000000000000
+      internalID: -5663907319411624144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_6
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 1144
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 070521116e44a3180800000000000000
+      internalID: -9134913139248050064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 1133
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b21a595e426835060800000000000000
+      internalID: 6941038943736799531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_8
+      rect:
+        serializedVersion: 2
+        x: 462
+        y: 1154
+        width: 36
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73baa749733cf4b70800000000000000
+      internalID: 8885535233306962743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_9
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1096
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7604d0cffb4e1e560800000000000000
+      internalID: 7341400380809232487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_10
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 1120
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d859ee8337f779d0800000000000000
+      internalID: -2776478844437571376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 1080
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a7ea2b64a1863c00800000000000000
+      internalID: 880033320370104225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 980
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34b5e9fb5a733690800000000000000
+      internalID: -7623615208754924483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_13
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 991
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda3e0534e31f08f0800000000000000
+      internalID: -572216756789167394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_14
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 971
+        width: 28
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a47143c5c2d81a20800000000000000
+      internalID: 3033406095860266146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_15
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 960
+        width: 111
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33c8f48b20f1dc510800000000000000
+      internalID: 1570945941564787763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_16
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 932
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb8e428c4ade9030800000000000000
+      internalID: 3503477582279379939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_17
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 896
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e87f2575cd884d70800000000000000
+      internalID: 9027621332278278372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_18
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 815
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43aeaf535c91f00b0800000000000000
+      internalID: -5760357063578686924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_19
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 790
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87140f4a6836c97c0800000000000000
+      internalID: -4063263333851053704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_20
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 764
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f87448a7fc543a10800000000000000
+      internalID: 1888236362524817649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_21
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 778
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfa39f952926b49b0800000000000000
+      internalID: -5094870172725331204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_22
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 752
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da1c8970442d69020800000000000000
+      internalID: 2348295445347353005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_23
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 667
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52d8f098a0d8a8f30800000000000000
+      internalID: 4578627047564217637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_24
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 645
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e77525549f56c580800000000000000
+      internalID: -8807246930588108825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_25
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 600
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74ffd7fb222a4cc80800000000000000
+      internalID: -8303333542839058617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_26
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 542
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb901da5c0801e460800000000000000
+      internalID: 7269100122708969915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_27
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 439
+        width: 31
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 738862b3cf016d9d0800000000000000
+      internalID: -2749991846952925129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_28
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 423
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76d12527b19f93730800000000000000
+      internalID: 3979485642035961191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_29
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 382
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 208822b9ac7b140f0800000000000000
+      internalID: -1134423550306646014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_30
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 311
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 119cb7da463094db0800000000000000
+      internalID: -4807307396299110127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_31
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 236
+        width: 42
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 020e91107609015b0800000000000000
+      internalID: -5399657181142720480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_32
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 237
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4d27b82e03a4c030800000000000000
+      internalID: 3514112890463792460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_33
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 203
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f562d9a0f3a420260800000000000000
+      internalID: 7062288800291825247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_34
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 131
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec8ec20abcd9b220800000000000000
+      internalID: 2502273759450139874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_35
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 123
+        width: 30
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 767a64a61c2b5e9e0800000000000000
+      internalID: -1592670349424154777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_36
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 151
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20cb7df0fb6401c0800000000000000
+      internalID: -4538383841693548498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_37
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 76
+        width: 56
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d85ecf5e8f069340800000000000000
+      internalID: 4870097151214901456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_38
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 74
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7394af45bf5f2da50800000000000000
+      internalID: 6544563668334037303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_39
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 83
+        width: 45
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 218f4cb3713035190800000000000000
+      internalID: -7975027116821121006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_40
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 87
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2534d4b96c7a2e60800000000000000
+      internalID: 7938294086641136940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_41
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 86
+        width: 23
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92ed928f539219e90800000000000000
+      internalID: -7020785032320393687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_42
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 91
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b83259f5ee8bbff20800000000000000
+      internalID: 3457560472882324363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_43
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 27
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3329b24784457bd0800000000000000
+      internalID: -2633123059397483715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_44
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 41
+        width: 33
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80f23e24b263cbf70800000000000000
+      internalID: 9204291297872129800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_45
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 59
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18b60f8b2f2d61c30800000000000000
+      internalID: 4329880031689993089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_46
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 27
+        width: 39
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac3fb5e095604360800000000000000
+      internalID: 7151827881268559018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_47
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 25
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc212241d9dda3a00800000000000000
+      internalID: 737145155745878732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_48
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 0
+        width: 47
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e51b71f2d6f45d130800000000000000
+      internalID: 3590863608257950046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_49
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 38
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 269ab1ad46c4739e0800000000000000
+      internalID: -1641759543113569950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_50
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 8
+        width: 25
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 958df903bd754c410800000000000000
+      internalID: 1496417575119083609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fryBubbles03_51
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 12
+        width: 26
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc94de7e1d7109f00800000000000000
+      internalID: 1121422497521945037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      fryBubbles03_0: -3013531749944573419
+      fryBubbles03_1: 2715420984807106998
+      fryBubbles03_10: -2776478844437571376
+      fryBubbles03_11: 880033320370104225
+      fryBubbles03_12: -7623615208754924483
+      fryBubbles03_13: -572216756789167394
+      fryBubbles03_14: 3033406095860266146
+      fryBubbles03_15: 1570945941564787763
+      fryBubbles03_16: 3503477582279379939
+      fryBubbles03_17: 9027621332278278372
+      fryBubbles03_18: -5760357063578686924
+      fryBubbles03_19: -4063263333851053704
+      fryBubbles03_2: -8940857957949233341
+      fryBubbles03_20: 1888236362524817649
+      fryBubbles03_21: -5094870172725331204
+      fryBubbles03_22: 2348295445347353005
+      fryBubbles03_23: 4578627047564217637
+      fryBubbles03_24: -8807246930588108825
+      fryBubbles03_25: -8303333542839058617
+      fryBubbles03_26: 7269100122708969915
+      fryBubbles03_27: -2749991846952925129
+      fryBubbles03_28: 3979485642035961191
+      fryBubbles03_29: -1134423550306646014
+      fryBubbles03_3: -116898497639816366
+      fryBubbles03_30: -4807307396299110127
+      fryBubbles03_31: -5399657181142720480
+      fryBubbles03_32: 3514112890463792460
+      fryBubbles03_33: 7062288800291825247
+      fryBubbles03_34: 2502273759450139874
+      fryBubbles03_35: -1592670349424154777
+      fryBubbles03_36: -4538383841693548498
+      fryBubbles03_37: 4870097151214901456
+      fryBubbles03_38: 6544563668334037303
+      fryBubbles03_39: -7975027116821121006
+      fryBubbles03_4: -5278657412577046336
+      fryBubbles03_40: 7938294086641136940
+      fryBubbles03_41: -7020785032320393687
+      fryBubbles03_42: 3457560472882324363
+      fryBubbles03_43: -2633123059397483715
+      fryBubbles03_44: 9204291297872129800
+      fryBubbles03_45: 4329880031689993089
+      fryBubbles03_46: 7151827881268559018
+      fryBubbles03_47: 737145155745878732
+      fryBubbles03_48: 3590863608257950046
+      fryBubbles03_49: -1641759543113569950
+      fryBubbles03_5: -5663907319411624144
+      fryBubbles03_50: 1496417575119083609
+      fryBubbles03_51: 1121422497521945037
+      fryBubbles03_6: -9134913139248050064
+      fryBubbles03_7: 6941038943736799531
+      fryBubbles03_8: 8885535233306962743
+      fryBubbles03_9: 7341400380809232487
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
