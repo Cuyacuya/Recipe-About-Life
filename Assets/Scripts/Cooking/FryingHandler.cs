@@ -139,6 +139,10 @@ namespace RecipeAboutLife.Cooking
                 if (manager != null)
                 {
                     fryingPos += manager.fryingHotdogOffset;
+                    
+                    // 튀김 스케일 적용
+                    transform.localScale = manager.fryingScale;
+                    Debug.Log($"[FryingHandler] 튀김 스케일 적용: {manager.fryingScale}");
                 }
                 d.MoveTo(fryingPos);
                 d.SetRotation(90);

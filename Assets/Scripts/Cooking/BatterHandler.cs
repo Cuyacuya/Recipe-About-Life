@@ -206,7 +206,11 @@ namespace RecipeAboutLife.Cooking
             if (newSprite != null)
             {
                 spriteRenderer.sprite = newSprite;
-                Debug.Log($"[BatterHandler] 스프라이트 변경: 반죽 {currentStage}단계");
+                
+                // 반죽 스케일 적용
+                transform.localScale = manager.batterScale;
+                
+                Debug.Log($"[BatterHandler] 스프라이트 변경: 반죽 {currentStage}단계, 스케일: {manager.batterScale}");
             }
         }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5236175002473733304}
   - component: {fileID: 1931009381599653771}
   m_Layer: 0
-  m_Name: stick
+  m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -4.252, y: -0.18, z: 0}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalScale: {x: 0.028, y: 0.028, z: 0.028}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}

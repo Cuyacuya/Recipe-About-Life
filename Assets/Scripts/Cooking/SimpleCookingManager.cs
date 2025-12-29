@@ -48,6 +48,11 @@ namespace RecipeAboutLife.Cooking
         [Header("=== Frying Effect ===")]
         public GameObject fryingBubblePrefab; // 보글보글 이펙트
 
+        [Header("=== Hotdog Scale Settings ===")]
+        public Vector3 ingredientCompleteScale = new Vector3(1f, 1f, 1f);  // 도마 위 재료 끼운 꼬치
+        public Vector3 batterScale = new Vector3(1f, 1f, 1f);              // 반죽 공통
+        public Vector3 fryingScale = new Vector3(1f, 1f, 1f);              // 튀김 공통
+
         [Header("=== Topping Settings ===")]
         public Sprite sugarOverlaySprite;      // 설탕 오버레이 스프라이트
         public Vector3 sugarPositionOffset = new Vector3(0f, 0f, 0f);  // 설탕 위치 오프셋
@@ -61,6 +66,11 @@ namespace RecipeAboutLife.Cooking
         public GameObject ingredientPopup;  // 재료 선택 팝업
         public GameObject toppingPopup;     // 토핑 팝업
 
+        [Header("=== Serving Settings ===")]
+        public SimpleDropZone servingWindow;  // 창문 드롭존
+        public AudioClip servingSound;        // 제공 사운드
+        private AudioSource audioSource;
+
         [Header("=== Current State (Debug) ===")]
         [SerializeField] private CookingPhase currentPhase = CookingPhase.None;
         [SerializeField] private GameObject currentHotdog;  // 현재 만들고 있는 핫도그
@@ -70,6 +80,7 @@ namespace RecipeAboutLife.Cooking
 
         // 이벤트
         public event Action<CookingPhase> OnPhaseChanged;
+        public event Action OnHotdogServed;  // 요리 제공 완료 이벤트 (외부 시스템 연동용)
 
         public CookingPhase CurrentPhase => currentPhase;
         public GameObject CurrentHotdog => currentHotdog;
@@ -79,6 +90,13 @@ namespace RecipeAboutLife.Cooking
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+            
+            // AudioSource 초기화
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         private void Start()
@@ -201,6 +219,56 @@ namespace RecipeAboutLife.Cooking
             {
                 toppingPopup.SetActive(false);
                 Debug.Log("[SimpleCookingManager] 토핑 팝업 닫힘");
+            }
+        }
+
+        /// <summary>
+        /// 요리 제공 (핫도그를 창문에 드롭했을 때)
+        /// </summary>
+        public void ServeHotdog()
+        {
+            if (currentHotdog == null)
+            {
+                Debug.LogWarning("[SimpleCookingManager] 제공할 핫도그가 없습니다!");
+                return;
+            }
+
+            // 완성 정보 로그
+            Debug.Log("[SimpleCookingManager] ========== 요리 제공 완료! ==========");
+            Debug.Log($"  재료1: {hotdogData.filling1}");
+            Debug.Log($"  재료2: {hotdogData.filling2}");
+            Debug.Log($"  반죽 단계: {hotdogData.batterStage}");
+            Debug.Log($"  튀김 상태: {hotdogData.fryingState}");
+            Debug.Log($"  설탕: {(hotdogData.hasSugar ? "O" : "X")}");
+            Debug.Log($"  케첩: {(hotdogData.hasKetchup ? "O" : "X")}");
+            Debug.Log($"  머스타드: {(hotdogData.hasMustard ? "O" : "X")}");
+            Debug.Log("[SimpleCookingManager] =====================================");
+
+            // 사운드 재생
+            PlayServingSound();
+
+            // 핫도그 제거
+            Destroy(currentHotdog);
+            currentHotdog = null;
+
+            // Phase 초기화
+            currentPhase = CookingPhase.None;
+
+            // 요리 제공 완료 이벤트 발생 (외부 시스템 연동용)
+            OnHotdogServed?.Invoke();
+
+            Debug.Log("[SimpleCookingManager] 새 요리를 시작하려면 StartCooking()을 호출하세요.");
+        }
+
+        /// <summary>
+        /// 제공 사운드 재생
+        /// </summary>
+        private void PlayServingSound()
+        {
+            if (servingSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(servingSound);
+                Debug.Log("[SimpleCookingManager] 제공 사운드 재생");
             }
         }
 

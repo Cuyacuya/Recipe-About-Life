@@ -30,7 +30,8 @@ namespace RecipeAboutLife.Cooking
             FryingStation,  // 튀김기
             CoolingRack,    // 식힘망
             StickDropZone,  // 팝업 내 꼬치 드롭존
-            SugarTray       // 설탕 트레이 (토핑 팝업)
+            SugarTray,      // 설탕 트레이 (토핑 팝업)
+            ServingWindow   // 창문 (요리 제공)
         }
 
         private void Awake()

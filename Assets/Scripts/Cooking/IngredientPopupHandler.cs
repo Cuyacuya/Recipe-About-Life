@@ -230,6 +230,10 @@ namespace RecipeAboutLife.Cooking
             }
             draggable.isDraggable = true;
             Debug.Log("[IngredientPopupHandler] 스틱 드래그 활성화");
+
+            // 재료 완료 후 스케일 적용
+            stick.transform.localScale = manager.ingredientCompleteScale;
+            Debug.Log($"[IngredientPopupHandler] 재료 완료 스케일 적용: {manager.ingredientCompleteScale}");
             
             // Collider2D 확인 (없으면 드래그 감지 불가)
             Collider2D collider = stick.GetComponent<Collider2D>();

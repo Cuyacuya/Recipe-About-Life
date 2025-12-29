@@ -50,6 +50,7 @@ namespace RecipeAboutLife.Cooking
         private float mustardRemaining = 1f;      // 남은 머스타드량 (0~1)
         private ToppingType currentTopping = ToppingType.None;
         private bool hasSugar = false;
+        private Vector3 hotdogOriginalPosition;   // 핫도그 원래 위치 저장
 
         private void Start()
         {
@@ -143,6 +144,13 @@ namespace RecipeAboutLife.Cooking
             else
             {
                 Debug.LogError("[ToppingPopupHandler] ❌ hotdogDraggable이 Inspector에서 할당되지 않았습니다!");
+            }
+
+            // 핫도그 원래 위치 저장
+            if (hotdogSprite != null)
+            {
+                hotdogOriginalPosition = hotdogSprite.transform.position;
+                Debug.Log($"[ToppingPopupHandler] 핫도그 원래 위치 저장: {hotdogOriginalPosition}");
             }
 
             // 핫도그 스프라이트 설정 (현재 튀김 상태 이미지)
@@ -336,9 +344,9 @@ namespace RecipeAboutLife.Cooking
                 ApplySugar();
             }
 
-            // 핫도그 원래 위치로 복귀
-            if (hotdogDisplay != null)
-                draggable.MoveTo(hotdogDisplay.position);
+            // 핫도그 원래 위치로 복귀 (저장된 위치 사용)
+            draggable.MoveTo(hotdogOriginalPosition);
+            Debug.Log($"[ToppingPopupHandler] 핫도그 원래 위치로 복귀: {hotdogOriginalPosition}");
         }
 
         /// <summary>
