@@ -348,8 +348,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB300\uD654\uAC00 \uC5EC\uAE30 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 591b64e0887978446aa88e946807c36f, type: 2}
-  m_sharedMaterial: {fileID: -1665003600193778562, guid: 591b64e0887978446aa88e946807c36f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
+  m_sharedMaterial: {fileID: -1665003600193778562, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
