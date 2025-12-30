@@ -23,8 +23,8 @@ namespace RecipeAboutLife.Cooking
         private Vector3 originalPosition;
         private int originalSortingOrder;
         private SpriteRenderer spriteRenderer;
-        private Camera mainCamera;
-        
+        private UnityEngine.Camera mainCamera;
+
         // 자식 SpriteRenderer들의 원래 Sorting Order 저장
         private Dictionary<SpriteRenderer, int> childOriginalSortingOrders = new Dictionary<SpriteRenderer, int>();
 
@@ -33,7 +33,7 @@ namespace RecipeAboutLife.Cooking
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            mainCamera = Camera.main;
+            mainCamera = UnityEngine.Camera.main;
         }
 
         private void OnMouseDown()

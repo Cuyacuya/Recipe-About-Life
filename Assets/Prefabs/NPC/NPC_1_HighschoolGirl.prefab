@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -100
+  m_SortingOrder: -11
   m_Sprite: {fileID: 4538865358077604940, guid: e65094404484a9c4eafe9b4f1f4ea2d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_text: "\uB300\uD654\uAC00 \uC5EC\uAE30 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
-  m_sharedMaterial: {fileID: -1665003600193778562, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
+  m_sharedMaterial: {fileID: 4259873853838953978, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

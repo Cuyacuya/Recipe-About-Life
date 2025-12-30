@@ -60,7 +60,7 @@ namespace RecipeAboutLife.Cooking
             }
 
             // 마우스 위치에 꼬치 생성
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
 
             currentStick = Instantiate(manager.stickPrefab, mousePos, Quaternion.Euler(0, 0, 90)); // 세로로 생성

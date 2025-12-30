@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using RecipeAboutLife.Events;
 using RecipeAboutLife.Cooking;
+using RecipeAboutLife.Orders;
+using RecipeAboutLife.Utilities;
 
 namespace RecipeAboutLife.Managers
 {
@@ -9,6 +11,8 @@ namespace RecipeAboutLife.Managers
     /// 점수 및 재화 관리 시스템
     /// 5명의 NPC에게 음식을 제공하고 재화를 획득
     /// 목표 재화 달성 시 플레이어 대화 잠금 해제
+    ///
+    /// SimpleCookingManager와 직접 연동하여 주문 검증 및 보상 계산
     /// </summary>
     public class ScoreManager : MonoBehaviour
     {
@@ -60,6 +64,17 @@ namespace RecipeAboutLife.Managers
         private List<NPCRewardData> npcRewards = new List<NPCRewardData>();
 
         // ==========================================
+        // Order Bridge Integration
+        // ==========================================
+
+        [Header("주문 관리 (OrderBridge 통합)")]
+        [SerializeField]
+        private OrderData activeOrder;
+
+        [SerializeField]
+        private bool isOrderServed = false;
+
+        // ==========================================
         // Events
         // ==========================================
 
@@ -103,9 +118,23 @@ namespace RecipeAboutLife.Managers
             InitializeNPCRewards();
         }
 
+        private void Start()
+        {
+            // SimpleCookingManager 이벤트 구독 (Awake에서는 Instance가 없을 수 있음)
+            if (SimpleCookingManager.Instance != null)
+            {
+                SimpleCookingManager.Instance.OnHotdogServed += OnHotdogServed;
+                Debug.Log("[ScoreManager] SimpleCookingManager.OnHotdogServed 구독 완료");
+            }
+            else
+            {
+                Debug.LogWarning("[ScoreManager] SimpleCookingManager.Instance를 찾을 수 없습니다!");
+            }
+        }
+
         private void OnEnable()
         {
-            // 요리 완료 이벤트 구독
+            // 요리 완료 이벤트 구독 (내부 이벤트)
             GameEvents.OnRecipeCompleted += OnRecipeCompleted;
         }
 
@@ -113,6 +142,11 @@ namespace RecipeAboutLife.Managers
         {
             // 이벤트 구독 해제
             GameEvents.OnRecipeCompleted -= OnRecipeCompleted;
+
+            if (SimpleCookingManager.Instance != null)
+            {
+                SimpleCookingManager.Instance.OnHotdogServed -= OnHotdogServed;
+            }
         }
 
         // ==========================================
@@ -142,6 +176,189 @@ namespace RecipeAboutLife.Managers
         }
 
         // ==========================================
+        // Order Management (OrderBridge 통합)
+        // ==========================================
+
+        /// <summary>
+        /// 활성 주문 설정 (NPCOrderController에서 호출)
+        /// </summary>
+        public void SetActiveOrder(OrderData order)
+        {
+            if (order == null)
+            {
+                Debug.LogError("[ScoreManager] Cannot set null order!");
+                return;
+            }
+
+            activeOrder = order;
+            isOrderServed = false;
+
+            Debug.Log($"[ScoreManager] Active order set: {order.OrderName}\n{order.GetOrderDescription()}");
+        }
+
+        /// <summary>
+        /// 주문 초기화
+        /// </summary>
+        public void ClearOrder()
+        {
+            activeOrder = null;
+            isOrderServed = false;
+            Debug.Log("[ScoreManager] Order cleared");
+        }
+
+        /// <summary>
+        /// 핫도그 서빙 이벤트 처리
+        /// SimpleCookingManager.OnHotdogServed 이벤트 발생 시 호출됨
+        /// </summary>
+        private void OnHotdogServed()
+        {
+            // 중복 서빙 방지
+            if (isOrderServed)
+            {
+                Debug.LogWarning("[ScoreManager] Order already served! Ignoring duplicate.");
+                return;
+            }
+
+            // HotdogData 가져오기
+            if (SimpleCookingManager.Instance == null)
+            {
+                Debug.LogError("[ScoreManager] SimpleCookingManager.Instance is null!");
+                return;
+            }
+
+            HotdogData hotdog = SimpleCookingManager.Instance.CurrentHotdogData;
+            if (hotdog == null)
+            {
+                Debug.LogError("[ScoreManager] CurrentHotdogData is null!");
+                return;
+            }
+
+            Debug.Log($"[ScoreManager] Hotdog served:\n" +
+                     $"  Filling: {hotdog.filling1} + {hotdog.filling2}\n" +
+                     $"  Batter: {hotdog.batterStage}\n" +
+                     $"  Frying: {hotdog.fryingState} ({hotdog.fryingTime:F1}s)\n" +
+                     $"  Sugar: {hotdog.hasSugar}\n" +
+                     $"  Ketchup: {hotdog.hasKetchup}\n" +
+                     $"  Mustard: {hotdog.hasMustard}");
+
+            // HotdogData → HotdogRecipe 변환 + 검증
+            HotdogRecipe recipe = CreateRecipeFromHotdog(hotdog);
+
+            // 서빙 완료 표시
+            isOrderServed = true;
+
+            // GameEvents.OnRecipeCompleted 발생
+            // → OnRecipeCompleted()가 호출되어 보상 계산 진행
+            GameEvents.TriggerRecipeCompleted(recipe);
+
+            Debug.Log($"[ScoreManager] Recipe created and event triggered!\n" +
+                     $"  Quality: {recipe.quality:F1}/100\n" +
+                     $"  Matches Order: {recipe.matchesOrder}");
+        }
+
+        /// <summary>
+        /// HotdogData를 HotdogRecipe로 변환 + OrderData와 비교
+        /// </summary>
+        private HotdogRecipe CreateRecipeFromHotdog(HotdogData hotdog)
+        {
+            HotdogRecipe recipe = new HotdogRecipe
+            {
+                hasStick = true,
+                batterAmount = hotdog.batterStage * 33f,
+                fryingTime = hotdog.fryingTime,
+                fryingColor = ConvertFryingState(hotdog.fryingState),
+                hasSugar = hotdog.hasSugar
+            };
+
+            // 소스 추가
+            if (hotdog.hasKetchup)
+            {
+                recipe.sauces.Add(Cooking.SauceType.Ketchup);
+                recipe.sauceAmounts[Cooking.SauceType.Ketchup] = 50f;
+            }
+
+            if (hotdog.hasMustard)
+            {
+                recipe.sauces.Add(Cooking.SauceType.Mustard);
+                recipe.sauceAmounts[Cooking.SauceType.Mustard] = 50f;
+            }
+
+            // 주문이 있으면 검증
+            if (activeOrder != null)
+            {
+                ValidationResult result = OrderValidator.Validate(hotdog, activeOrder);
+
+                recipe.quality = result.quality;
+                recipe.matchesOrder = result.isMatch;
+                recipe.fillingType = DetermineFillingTypeFromOrder(activeOrder);
+
+                Debug.Log($"[ScoreManager] Order validation:\n" +
+                         $"  Ingredient: {result.ingredientMatch}\n" +
+                         $"  Topping: {result.toppingMatch}\n" +
+                         $"  Sauce: {result.sauceMatch}\n" +
+                         $"  Match: {result.isMatch}\n" +
+                         $"  Quality: {result.quality:F1}/100");
+            }
+            else
+            {
+                // 주문 없이 요리한 경우
+                recipe.quality = 50f;
+                recipe.matchesOrder = false;
+                recipe.fillingType = DetermineFillingTypeFromStrings(hotdog.filling1, hotdog.filling2);
+
+                Debug.LogWarning("[ScoreManager] No active order! Default quality applied.");
+            }
+
+            return recipe;
+        }
+
+        /// <summary>
+        /// FryingState → FryingColor 변환
+        /// </summary>
+        private FryingColor ConvertFryingState(FryingState state)
+        {
+            switch (state)
+            {
+                case FryingState.Raw: return FryingColor.Raw;
+                case FryingState.Yellow: return FryingColor.Yellow;
+                case FryingState.Golden: return FryingColor.Golden;
+                case FryingState.Brown: return FryingColor.Brown;
+                case FryingState.Burnt: return FryingColor.Burnt;
+                default: return FryingColor.Golden;
+            }
+        }
+
+        /// <summary>
+        /// OrderData로부터 FillingType 결정
+        /// </summary>
+        private Cooking.FillingType DetermineFillingTypeFromOrder(OrderData order)
+        {
+            if (order.FillingSlot1 == Orders.FillingType.HalfSausage &&
+                order.FillingSlot2 == Orders.FillingType.HalfSausage)
+                return Cooking.FillingType.Sausage;
+
+            if (order.FillingSlot1 == Orders.FillingType.HalfCheese &&
+                order.FillingSlot2 == Orders.FillingType.HalfCheese)
+                return Cooking.FillingType.Cheese;
+
+            return Cooking.FillingType.Mixed;
+        }
+
+        /// <summary>
+        /// 문자열로부터 FillingType 결정
+        /// </summary>
+        private Cooking.FillingType DetermineFillingTypeFromStrings(string fill1, string fill2)
+        {
+            if (fill1 == "Sausage" && fill2 == "Sausage")
+                return Cooking.FillingType.Sausage;
+
+            if (fill1 == "Cheese" && fill2 == "Cheese")
+                return Cooking.FillingType.Cheese;
+
+            return Cooking.FillingType.Mixed;
+        }
+
+        // ==========================================
         // Recipe Completion Handler
         // ==========================================
 
@@ -157,15 +374,8 @@ namespace RecipeAboutLife.Managers
                 return;
             }
 
-            // 보상 계산 (RecipeConfigSO 필요)
-            RecipeConfigSO config = FindRecipeConfig();
-            if (config == null)
-            {
-                Debug.LogError("[ScoreManager] RecipeConfigSO를 찾을 수 없습니다!");
-                return;
-            }
-
-            int reward = recipe.CalculateReward(config);
+            // 보상 계산 (RecipeConfigSO 없이 직접 계산)
+            int reward = recipe.CalculateReward(null);
 
             // NPC 보상 데이터 저장
             NPCRewardData npcData = npcRewards[currentNPCIndex];
@@ -282,37 +492,6 @@ namespace RecipeAboutLife.Managers
         }
 
         // ==========================================
-        // Helper Methods
-        // ==========================================
-
-        /// <summary>
-        /// RecipeConfigSO 찾기
-        /// </summary>
-        private RecipeConfigSO FindRecipeConfig()
-        {
-            CookingManager cookingManager = CookingManager.Instance;
-            if (cookingManager != null)
-            {
-                // CookingManager에서 config 가져오기 (reflection 사용)
-                var field = typeof(CookingManager).GetField("recipeConfig",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (field != null)
-                {
-                    return field.GetValue(cookingManager) as RecipeConfigSO;
-                }
-            }
-
-            // 대체: Resources에서 찾기
-            RecipeConfigSO[] configs = Resources.FindObjectsOfTypeAll<RecipeConfigSO>();
-            if (configs.Length > 0)
-            {
-                return configs[0];
-            }
-
-            return null;
-        }
-
-        // ==========================================
         // Public API
         // ==========================================
 
@@ -324,6 +503,9 @@ namespace RecipeAboutLife.Managers
             totalReward = 0;
             currentNPCIndex = 0;
             isDialogueUnlocked = false;
+
+            // 주문 초기화
+            ClearOrder();
 
             InitializeNPCRewards();
 
@@ -401,16 +583,8 @@ namespace RecipeAboutLife.Managers
                 matchesOrder = true
             };
 
-            // RecipeConfig 찾기
-            RecipeConfigSO config = FindRecipeConfig();
-            if (config == null)
-            {
-                Debug.LogError("[TestButton] RecipeConfigSO를 찾을 수 없습니다!");
-                return;
-            }
-
             // 최고 보상 계산 (100 * 1.0 * 1.5 = 150원)
-            int reward = perfectRecipe.CalculateReward(config);
+            int reward = perfectRecipe.CalculateReward(null);
 
             // NPC 보상 데이터 저장
             NPCRewardData npcData = npcRewards[currentNPCIndex];
@@ -476,7 +650,7 @@ namespace RecipeAboutLife.Managers
                 return;
             }
 
-            CustomerOrder currentOrder = orderController.GetCustomerOrder();
+            Orders.OrderData currentOrder = orderController.GetCurrentOrder();
             if (currentOrder == null)
             {
                 Debug.LogError("[TestButton] 현재 주문이 없습니다!");
@@ -486,16 +660,8 @@ namespace RecipeAboutLife.Managers
             // 주문에 맞는 완벽한 레시피 생성
             HotdogRecipe perfectRecipe = CreatePerfectRecipe(currentOrder);
 
-            // RecipeConfig 찾기
-            RecipeConfigSO config = FindRecipeConfig();
-            if (config == null)
-            {
-                Debug.LogError("[TestButton] RecipeConfigSO를 찾을 수 없습니다!");
-                return;
-            }
-
             // 최고 보상 계산
-            int reward = perfectRecipe.CalculateReward(config);
+            int reward = perfectRecipe.CalculateReward(null);
 
             // NPC 보상 데이터 저장
             NPCRewardData npcData = npcRewards[currentNPCIndex];
@@ -507,7 +673,7 @@ namespace RecipeAboutLife.Managers
             // 총 재화 증가
             totalReward += reward;
 
-            Debug.Log($"[TestButton] NPC {currentNPCIndex + 1} 완벽 서빙! 주문: {currentOrder.GetDescription()}, 보상: {reward}원 (총: {totalReward}원)");
+            Debug.Log($"[TestButton] NPC {currentNPCIndex + 1} 완벽 서빙! 주문: {currentOrder.GetOrderDescription()}, 보상: {reward}원 (총: {totalReward}원)");
 
             // 이벤트 발생
             OnNPCRewarded?.Invoke(currentNPCIndex + 1, reward);
@@ -552,16 +718,19 @@ namespace RecipeAboutLife.Managers
         /// <summary>
         /// 주문에 완벽히 맞는 레시피 생성
         /// </summary>
-        private HotdogRecipe CreatePerfectRecipe(CustomerOrder order)
+        private HotdogRecipe CreatePerfectRecipe(Orders.OrderData order)
         {
+            // FillingType 결정 (OrderData → HotdogRecipe)
+            Cooking.FillingType fillingType = DetermineFillingType(order.FillingSlot1, order.FillingSlot2);
+
             HotdogRecipe recipe = new HotdogRecipe
             {
                 hasStick = true,
-                fillingType = order.filling,
+                fillingType = fillingType,
                 batterAmount = 100f, // 완벽한 반죽 양
                 fryingTime = 8f, // Golden 구간 (7-9초)
                 fryingColor = Cooking.FryingColor.Golden,
-                hasSugar = order.requiresSugar,
+                hasSugar = order.NeedSugar,
                 quality = 100f,
                 matchesOrder = true
             };
@@ -570,30 +739,49 @@ namespace RecipeAboutLife.Managers
             recipe.sauces = new System.Collections.Generic.List<Cooking.SauceType>();
             recipe.sauceAmounts = new System.Collections.Generic.Dictionary<Cooking.SauceType, float>();
 
-            foreach (var sauceReq in order.sauces)
+            foreach (var sauceReq in order.SauceRequirements)
             {
-                recipe.sauces.Add(sauceReq.type);
+                // Orders.SauceType → Cooking.SauceType 변환
+                Cooking.SauceType cookingSauceType = sauceReq.SauceType == Orders.SauceType.Ketchup
+                    ? Cooking.SauceType.Ketchup
+                    : Cooking.SauceType.Mustard;
+
+                recipe.sauces.Add(cookingSauceType);
 
                 // 소스 양을 정확히 맞춤
-                float amount = GetPerfectSauceAmount(sauceReq.amount);
-                recipe.sauceAmounts[sauceReq.type] = amount;
+                float amount = GetPerfectSauceAmount(sauceReq.MinAmount);
+                recipe.sauceAmounts[cookingSauceType] = amount;
             }
 
             return recipe;
         }
 
         /// <summary>
+        /// OrderData FillingType → HotdogRecipe FillingType 변환
+        /// </summary>
+        private Cooking.FillingType DetermineFillingType(Orders.FillingType slot1, Orders.FillingType slot2)
+        {
+            if (slot1 == Orders.FillingType.HalfSausage && slot2 == Orders.FillingType.HalfSausage)
+                return Cooking.FillingType.Sausage;
+
+            if (slot1 == Orders.FillingType.HalfCheese && slot2 == Orders.FillingType.HalfCheese)
+                return Cooking.FillingType.Cheese;
+
+            return Cooking.FillingType.Mixed;
+        }
+
+        /// <summary>
         /// SauceAmount에 맞는 완벽한 소스 양 반환
         /// </summary>
-        private float GetPerfectSauceAmount(Cooking.SauceAmount amount)
+        private float GetPerfectSauceAmount(Orders.SauceAmount amount)
         {
             switch (amount)
             {
-                case Cooking.SauceAmount.Low:
+                case Orders.SauceAmount.Low:
                     return 20f; // Low: 0-33%, 중간값 사용
-                case Cooking.SauceAmount.Medium:
+                case Orders.SauceAmount.Medium:
                     return 50f; // Medium: 34-66%, 중간값 사용
-                case Cooking.SauceAmount.High:
+                case Orders.SauceAmount.High:
                     return 85f; // High: 67-100%, 중간값 사용
                 default:
                     return 50f;

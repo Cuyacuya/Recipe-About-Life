@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -100
+  m_SortingOrder: -11
   m_Sprite: {fileID: -8428079742956928466, guid: 8c988202d4041c14b9c5220be72d9c9b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 909e3926104cc9a4b8c8ca14751370c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueSet: {fileID: 11400000, guid: 58b730f2248fa384db1f7a438108bada, type: 2}
+  dialogueSet: {fileID: 0}
   dialogueController: {fileID: 0}
   dialogueBubbleUI: {fileID: 202190400865630005}
 --- !u!1 &5104607974786410163
@@ -349,13 +349,13 @@ MonoBehaviour:
   m_text: "\uB300\uD654\uAC00 \uC5EC\uAE30 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
-  m_sharedMaterial: {fileID: -1665003600193778562, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
+  m_sharedMaterial: {fileID: 4259873853838953978, guid: 740bfef70c7af4147b80de4f2779feb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
