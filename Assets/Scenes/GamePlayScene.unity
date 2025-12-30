@@ -5548,7 +5548,7 @@ MonoBehaviour:
   day1Background: {fileID: 0}
   day2Background: {fileID: 0}
   day3Background: {fileID: 0}
-  moneyPanel: {fileID: 0}
+  moneyPanel: {fileID: 2085814502}
   moneyBackground: {fileID: 825619117}
   moneyText: {fileID: 1733576385}
   moneyFormat: '{0}'
