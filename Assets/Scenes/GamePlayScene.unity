@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 120247627}
   - component: {fileID: 120247628}
   - component: {fileID: 120247629}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GaugeOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2461,7 +2461,7 @@ GameObject:
   - component: {fileID: 612147147}
   - component: {fileID: 612147148}
   - component: {fileID: 612147149}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GaugeFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4289,7 +4289,7 @@ GameObject:
   - component: {fileID: 1002599897}
   - component: {fileID: 1002599899}
   - component: {fileID: 1002599898}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7601,7 +7601,7 @@ GameObject:
   - component: {fileID: 1779662169}
   - component: {fileID: 1779662168}
   - component: {fileID: 1779662167}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ToppingUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7668,7 +7668,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1779662169
 Canvas:
   m_ObjectHideFlags: 0
@@ -7678,8 +7678,8 @@ Canvas:
   m_GameObject: {fileID: 1779662165}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 2
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -7690,7 +7690,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 200
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!1 &1804192013
 GameObject:
@@ -8548,7 +8548,7 @@ GameObject:
   - component: {fileID: 1962455936}
   - component: {fileID: 1962455937}
   - component: {fileID: 1962455938}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GaugeBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8817,7 +8817,7 @@ GameObject:
   - component: {fileID: 2002593043}
   - component: {fileID: 2002593042}
   - component: {fileID: 2002593041}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9092,7 +9092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2063613862}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: GaugeBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
