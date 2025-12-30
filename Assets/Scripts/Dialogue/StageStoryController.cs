@@ -44,7 +44,7 @@ namespace RecipeAboutLife.Dialogue
 
         [Header("현재 스테이지")]
         [SerializeField]
-        [Tooltip("현재 스테이지 번호 (1, 2, 3...)")]
+        [Tooltip("현재 스테이지 번호 (1, 2, 3...) - Start()에서 자동 로드")]
         private int currentStageID = 1;
 
         [Header("대화 설정")]
@@ -120,7 +120,13 @@ namespace RecipeAboutLife.Dialogue
                 Destroy(gameObject);
                 return;
             }
+        }
 
+        private void Start()
+        {
+            // 로비에서 선택한 스테이지 인덱스 로드
+            currentStageID = PlayerPrefs.GetInt("SelectedStageIndex", 1);
+            Debug.Log($"[StageStoryController] 선택된 스테이지 로드: {currentStageID}");
         }
 
         private void OnEnable()

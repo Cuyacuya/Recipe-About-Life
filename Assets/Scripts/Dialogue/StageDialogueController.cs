@@ -114,11 +114,10 @@ namespace RecipeAboutLife.Dialogue
         /// </summary>
         private void OnStageCompleted(bool isSuccess)
         {
-            // TODO: 실제로는 현재 스테이지 ID를 가져와야 함
-            // 지금은 하드코딩된 Stage 1로 테스트
-            int currentStageID = 1;
+            // 로비에서 선택한 스테이지 인덱스 로드
+            int currentStageID = PlayerPrefs.GetInt("SelectedStageIndex", 1);
 
-            Debug.Log($"[StageDialogueController] 스테이지 완료! (성공: {isSuccess})");
+            Debug.Log($"[StageDialogueController] 스테이지 {currentStageID} 완료! (성공: {isSuccess})");
 
             // 스테이지 종료 대화 시작
             StartStageFinalDialogue(currentStageID, isSuccess);
