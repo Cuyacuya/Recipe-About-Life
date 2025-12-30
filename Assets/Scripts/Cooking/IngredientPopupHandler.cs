@@ -52,19 +52,19 @@ namespace RecipeAboutLife.Cooking
             currentDragging = null;
             Debug.Log("[IngredientPopupHandler] 팝업 열림 - 재료 선택 시작");
 
-            // 일시정지 버튼 비활성화
+            // 메인 UI 숨김 (MoneyPanel, PauseButton, DayImage)
             if (GameUIManager.Instance != null)
             {
-                GameUIManager.Instance.DisablePauseButton();
+                GameUIManager.Instance.HideMainUI();
             }
         }
 
         private void OnDisable()
         {
-            // 팝업 닫힐 때 일시정지 버튼 활성화
+            // 팝업 닫힐 때 메인 UI 표시
             if (GameUIManager.Instance != null)
             {
-                GameUIManager.Instance.EnablePauseButton();
+                GameUIManager.Instance.ShowMainUI();
             }
         }
 

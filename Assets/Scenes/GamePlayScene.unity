@@ -163,8 +163,9 @@ GameObject:
   m_Component:
   - component: {fileID: 36521149}
   - component: {fileID: 36521148}
+  - component: {fileID: 36521150}
   m_Layer: 0
-  m_Name: BG_gamePlayBG01_0
+  m_Name: GamePlayBG02_Day1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,6 +241,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &36521150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36521147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b769f38395c524685abb3f57bc0b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  day1Sprite: {fileID: 8286727131347998951, guid: 252b95a73ac7ee845b4ae3b3f20be358, type: 3}
+  day2Sprite: {fileID: 3241480774077484461, guid: c3486b5794a0d9a48a02ab3898adbe95, type: 3}
+  day3Sprite: {fileID: 2058935420505126140, guid: 2de4b5068efae904ebc410bdf48bbdf4, type: 3}
 --- !u!1 &120247626
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 320795453}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.79, y: 5.81, z: -0.19941436}
+  m_LocalPosition: {x: 4.7, y: 6.08, z: -0.19941436}
   m_LocalScale: {x: 0.43, y: 0.43, z: 0.43}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -790,8 +806,9 @@ GameObject:
   m_Component:
   - component: {fileID: 388946056}
   - component: {fileID: 388946055}
+  - component: {fileID: 388946057}
   m_Layer: 0
-  m_Name: BG_gamePlay01
+  m_Name: GamePlayBG01_Day1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -867,6 +884,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &388946057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388946054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b769f38395c524685abb3f57bc0b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  day1Sprite: {fileID: 21300000, guid: 369fd5f39090a254e9dcdf5c697ae104, type: 3}
+  day2Sprite: {fileID: 7153873382599412237, guid: 12c18e89f0946ba46be079e596eda43f, type: 3}
+  day3Sprite: {fileID: 6354193766761040823, guid: e2f23a2261d521d4d8c2489f443d37c3, type: 3}
 --- !u!1 &464455926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,8 +1794,8 @@ MonoBehaviour:
   fryingBrown: {fileID: -8347864020164364860, guid: 09ee912732491754d865138d4f6abd59, type: 3}
   fryingBurnt: {fileID: -8036899729789964083, guid: 74b9efb748b8c294c96862328a764cd8, type: 3}
   fryingHotdogOffset: {x: 0, y: -0.3, z: 0}
-  fryingEffectOffset: {x: 0, y: -0.83, z: 0}
-  fryingBubblePrefab: {fileID: 1278092318397962874, guid: f1a49289576bff049936dc987237ad42, type: 3}
+  fryingEffectOffset: {x: 0, y: -0.27, z: 0}
+  fryingBubblePrefab: {fileID: 2750205502813802659, guid: 92384243a49fe0d44b9d623df2e8b7e5, type: 3}
   ingredientCompleteScale: {x: 0.028, y: 0.028, z: 1}
   batterScale: {x: 0.028, y: 0.028, z: 1}
   fryingScale: {x: 0.028, y: 0.028, z: 1}
@@ -1778,7 +1810,7 @@ MonoBehaviour:
   toppingPopup: {fileID: 2022404058}
   servingWindow: {fileID: 1140389086}
   servingSound: {fileID: 0}
-  currentPhase: 0
+  currentPhase: 1
   currentHotdog: {fileID: 0}
 --- !u!1 &690779220
 GameObject:
@@ -2618,17 +2650,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.2028481}
+  m_Offset: {x: 0.00000011920929, y: 0.9381938}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9.56, y: 10.47}
+    oldSize: {x: 6.83, y: 7.63}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 9.56, y: 8.064305}
+  m_Size: {x: 6.92033, y: 5.610238}
   m_EdgeRadius: 0
 --- !u!212 &995769662
 SpriteRenderer:
@@ -2674,7 +2706,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 52
-  m_Sprite: {fileID: 7761073260631446090, guid: 10052648331aa4a4ca0f5755134c6376, type: 3}
+  m_Sprite: {fileID: -6899587701979947749, guid: 40cf8832b4688b94ca082d5baf38c95d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2694,9 +2726,9 @@ Transform:
   m_GameObject: {fileID: 995769659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.22, y: 4.19, z: -0.19941436}
-  m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: -4.8, y: 3.91, z: -0.19941436}
+  m_LocalScale: {x: 1.12, y: 0.64, z: 0.64}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2022404060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4547,7 +4579,7 @@ Transform:
   m_GameObject: {fileID: 1771637740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: 5.7, z: -0.19941436}
+  m_LocalPosition: {x: 1.83, y: 5.7, z: -0.19941436}
   m_LocalScale: {x: 0.43, y: 0.43, z: 0.43}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5476,7 +5508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -902.68, y: -559.19}
+  m_AnchoredPosition: {x: -901.91, y: -559.19}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2010731747
@@ -5512,6 +5544,10 @@ MonoBehaviour:
   day1Sprite: {fileID: 2630216506923216271, guid: ada572ccaeded9440bdac5c065ab6291, type: 3}
   day2Sprite: {fileID: -454031554985337817, guid: e3a07a32262f66a4da7ddad9cf069c67, type: 3}
   day3Sprite: {fileID: 4622688200782238888, guid: 00ea66ba72de4f64f9a3af71541e387a, type: 3}
+  backgroundRenderer: {fileID: 0}
+  day1Background: {fileID: 0}
+  day2Background: {fileID: 0}
+  day3Background: {fileID: 0}
   moneyPanel: {fileID: 0}
   moneyBackground: {fileID: 825619117}
   moneyText: {fileID: 1733576385}
@@ -6066,6 +6102,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 155198200}
   - {fileID: 388946056}
+  - {fileID: 36521149}
   - {fileID: 803346911}
   - {fileID: 2116977845}
   - {fileID: 1435913289}
@@ -6075,7 +6112,6 @@ SceneRoots:
   - {fileID: 363638319}
   - {fileID: 1987638181}
   - {fileID: 2022404060}
-  - {fileID: 36521149}
   - {fileID: 1140389088}
   - {fileID: 585741560}
   - {fileID: 2010731749}

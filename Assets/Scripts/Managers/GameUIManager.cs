@@ -18,6 +18,16 @@ public class GameUIManager : MonoBehaviour
     public Sprite day2Sprite;
     public Sprite day3Sprite;
 
+    [Header("=== Background (Day별 배경) ===")]
+    [Tooltip("배경 오브젝트의 SpriteRenderer (BG_gamePlay01)")]
+    public SpriteRenderer backgroundRenderer;
+    [Tooltip("Day 1 배경 스프라이트")]
+    public Sprite day1Background;
+    [Tooltip("Day 2 배경 스프라이트")]
+    public Sprite day2Background;
+    [Tooltip("Day 3 배경 스프라이트")]
+    public Sprite day3Background;
+
     [Header("=== Money UI ===")]
     public GameObject moneyPanel;           // MoneyPanel 전체 (표시/숨김 대상)
     public Image moneyBackground;
@@ -41,6 +51,7 @@ public class GameUIManager : MonoBehaviour
 
     private GameManager gameManager;
     private Coroutine hideMoneyCoroutine;
+    private bool isPopupOpen = false;  // 팝업 열림 상태 추적
 
     private void Awake()
     {
@@ -146,24 +157,56 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     private void UpdateDayUI(int day)
     {
-        if (dayImage == null) return;
-
-        Sprite sprite = day switch
+        // Day 이미지 업데이트
+        if (dayImage != null)
         {
-            1 => day1Sprite,
-            2 => day2Sprite,
-            3 => day3Sprite,
-            _ => day1Sprite
+            Sprite sprite = day switch
+            {
+                1 => day1Sprite,
+                2 => day2Sprite,
+                3 => day3Sprite,
+                _ => day1Sprite
+            };
+
+            if (sprite != null)
+            {
+                dayImage.sprite = sprite;
+                Debug.Log($"[GameUIManager] Day UI 업데이트: Day {day}");
+            }
+            else
+            {
+                Debug.LogWarning($"[GameUIManager] Day {day} 스프라이트가 할당되지 않았습니다!");
+            }
+        }
+
+        // 배경 스프라이트 업데이트
+        UpdateBackgroundForDay(day);
+    }
+
+    /// <summary>
+    /// Day별 배경 스프라이트 업데이트
+    /// (DayBackground.cs를 사용하는 경우 이 기능은 선택적)
+    /// </summary>
+    private void UpdateBackgroundForDay(int day)
+    {
+        // backgroundRenderer가 할당되지 않았으면 무시 (DayBackground.cs 사용 시)
+        if (backgroundRenderer == null)
+        {
+            return;
+        }
+
+        Sprite bgSprite = day switch
+        {
+            1 => day1Background,
+            2 => day2Background,
+            3 => day3Background,
+            _ => day1Background
         };
 
-        if (sprite != null)
+        if (bgSprite != null)
         {
-            dayImage.sprite = sprite;
-            Debug.Log($"[GameUIManager] Day UI 업데이트: Day {day}");
-        }
-        else
-        {
-            Debug.LogWarning($"[GameUIManager] Day {day} 스프라이트가 할당되지 않았습니다!");
+            backgroundRenderer.sprite = bgSprite;
+            Debug.Log($"[GameUIManager] 배경 스프라이트 변경: Day {day}");
         }
     }
 
@@ -220,6 +263,13 @@ public class GameUIManager : MonoBehaviour
     {
         if (moneyPanel == null) return;
 
+        // 팝업이 열려있으면 표시하지 않음
+        if (isPopupOpen)
+        {
+            Debug.Log("[GameUIManager] 팝업이 열려있어 MoneyPanel 표시 안 함");
+            return;
+        }
+
         // 기존 숨김 코루틴 중지
         if (hideMoneyCoroutine != null)
         {
@@ -262,6 +312,13 @@ public class GameUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(moneyDisplayDuration);
         
+        // 팝업이 열려있으면 숨기지 않음
+        if (isPopupOpen)
+        {
+            hideMoneyCoroutine = null;
+            yield break;
+        }
+
         if (moneyPanel != null)
         {
             moneyPanel.SetActive(false);
@@ -277,6 +334,13 @@ public class GameUIManager : MonoBehaviour
     public void ShowMoneyPanel(float duration)
     {
         if (moneyPanel == null) return;
+
+        // 팝업이 열려있으면 표시하지 않음
+        if (isPopupOpen)
+        {
+            Debug.Log("[GameUIManager] 팝업이 열려있어 MoneyPanel 표시 안 함");
+            return;
+        }
 
         // 기존 숨김 코루틴 중지
         if (hideMoneyCoroutine != null)
@@ -298,6 +362,13 @@ public class GameUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         
+        // 팝업이 열려있으면 숨기지 않음
+        if (isPopupOpen)
+        {
+            hideMoneyCoroutine = null;
+            yield break;
+        }
+
         if (moneyPanel != null)
         {
             moneyPanel.SetActive(false);
@@ -383,6 +454,17 @@ public class GameUIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 배경 스프라이트 수동 설정 (Inspector 미할당 시 사용)
+    /// </summary>
+    public void SetBackgroundSprites(Sprite bg1, Sprite bg2, Sprite bg3)
+    {
+        day1Background = bg1;
+        day2Background = bg2;
+        day3Background = bg3;
+        UpdateBackgroundForDay(gameManager.CurrentDay);
+    }
+
+    /// <summary>
     /// 일시정지 버튼 활성화/비활성화
     /// 팝업이 열려있을 때 비활성화
     /// </summary>
@@ -409,6 +491,81 @@ public class GameUIManager : MonoBehaviour
     public void DisablePauseButton()
     {
         SetPauseButtonInteractable(false);
+    }
+
+    /// <summary>
+    /// 메인 UI 숨김 (팝업 열릴 때 호출)
+    /// MoneyPanel, PauseButton, DayImage 모두 숨김
+    /// </summary>
+    public void HideMainUI()
+    {
+        // 팝업 열림 상태 설정
+        isPopupOpen = true;
+
+        // 진행 중인 MoneyPanel 숨김 코루틴 중지
+        if (hideMoneyCoroutine != null)
+        {
+            StopCoroutine(hideMoneyCoroutine);
+            hideMoneyCoroutine = null;
+        }
+
+        // MoneyPanel 숨김
+        if (moneyPanel != null)
+        {
+            moneyPanel.SetActive(false);
+        }
+
+        // 일시정지 버튼 숨김
+        if (pauseButton != null)
+        {
+            pauseButton.gameObject.SetActive(false);
+        }
+
+        // Day 이미지 숨김
+        if (dayImage != null)
+        {
+            dayImage.gameObject.SetActive(false);
+        }
+
+        Debug.Log("[GameUIManager] 메인 UI 숨김 (MoneyPanel, PauseButton, DayImage)");
+    }
+
+    /// <summary>
+    /// 메인 UI 표시 (팝업 닫힐 때 호출)
+    /// MoneyPanel, PauseButton, DayImage 모두 표시
+    /// </summary>
+    public void ShowMainUI()
+    {
+        // 팝업 닫힘 상태 설정
+        isPopupOpen = false;
+
+        // MoneyPanel 표시 (자동 숨김 타이머와 함께)
+        if (moneyPanel != null)
+        {
+            moneyPanel.SetActive(true);
+            
+            // 자동 숨김 타이머 시작
+            if (hideMoneyCoroutine != null)
+            {
+                StopCoroutine(hideMoneyCoroutine);
+            }
+            hideMoneyCoroutine = StartCoroutine(HideMoneyPanelAfterDelay());
+        }
+
+        // 일시정지 버튼 표시 및 활성화
+        if (pauseButton != null)
+        {
+            pauseButton.gameObject.SetActive(true);
+            pauseButton.interactable = true;
+        }
+
+        // Day 이미지 표시
+        if (dayImage != null)
+        {
+            dayImage.gameObject.SetActive(true);
+        }
+
+        Debug.Log("[GameUIManager] 메인 UI 표시 (MoneyPanel, PauseButton, DayImage)");
     }
 
     #endregion
