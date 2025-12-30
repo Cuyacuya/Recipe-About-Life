@@ -59,6 +59,9 @@ namespace RecipeAboutLife.Cooking
                 return;
             }
 
+            // 스틱 뽑는 소리 재생
+            AudioManager.Instance?.PlayStickPickup();
+
             // 마우스 위치에 꼬치 생성
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;

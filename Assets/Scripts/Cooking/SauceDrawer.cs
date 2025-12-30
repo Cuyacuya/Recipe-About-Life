@@ -28,6 +28,7 @@ namespace RecipeAboutLife.Cooking
 
         // 현재 그리기 상태
         private bool isDrawing = false;
+        private bool isActuallyDrawing = false;  // 실제로 드래그하며 그리는 중인지
         private ToppingType currentDrawingType = ToppingType.None;
         private Vector3 lastDotPosition;
 
@@ -50,6 +51,7 @@ namespace RecipeAboutLife.Cooking
 
             currentDrawingType = type;
             isDrawing = true;
+            isActuallyDrawing = false;
             lastDotPosition = Vector3.zero;
 
             Debug.Log($"[SauceDrawer] {type} 그리기 시작");
@@ -60,6 +62,13 @@ namespace RecipeAboutLife.Cooking
         /// </summary>
         public void StopDrawing()
         {
+            // 소리 정지
+            if (isActuallyDrawing)
+            {
+                AudioManager.Instance?.StopSauceLoop();
+                isActuallyDrawing = false;
+            }
+
             isDrawing = false;
             currentDrawingType = ToppingType.None;
             Debug.Log("[SauceDrawer] 그리기 중지");
@@ -86,14 +95,37 @@ namespace RecipeAboutLife.Cooking
                 
                 if (inArea)
                 {
+                    // 실제로 그리기 시작 - 소리 재생
+                    if (!isActuallyDrawing)
+                    {
+                        isActuallyDrawing = true;
+                        AudioManager.Instance?.PlaySauceLoop();
+                        Debug.Log("[SauceDrawer] 소스 뿌리기 시작 - 소리 재생");
+                    }
+                    
                     TryDrawDot(mousePos);
                 }
+                else
+                {
+                    // 영역 밖으로 나감 - 소리 정지
+                    if (isActuallyDrawing)
+                    {
+                        isActuallyDrawing = false;
+                        AudioManager.Instance?.StopSauceLoop();
+                        Debug.Log("[SauceDrawer] 영역 밖 - 소리 정지");
+                    }
+                }
             }
-            // 마우스를 떼도 그리기 모드 유지 (소스통 다시 클릭하거나 X 버튼으로 종료)
-            // else if (Input.GetMouseButtonUp(0))
-            // {
-            //     StopDrawing();
-            // }
+            else
+            {
+                // 마우스 버튼 뗌 - 소리 정지 (그리기 모드는 유지)
+                if (isActuallyDrawing)
+                {
+                    isActuallyDrawing = false;
+                    AudioManager.Instance?.StopSauceLoop();
+                    Debug.Log("[SauceDrawer] 드래그 종료 - 소리 정지");
+                }
+            }
         }
 
         /// <summary>
