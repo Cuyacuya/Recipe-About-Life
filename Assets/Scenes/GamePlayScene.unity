@@ -9064,7 +9064,7 @@ MonoBehaviour:
   ketchupFillSprite: {fileID: -3579608157285764922, guid: 5a2632273408b54418c10c521ce6c51b, type: 3}
   mustardFillSprite: {fileID: -4645749091923375373, guid: b045500966d2a5043a52b4090477fe40, type: 3}
   maxSauceAmount: 1
-  sauceDecreaseRate: 0.0057
+  sauceDecreaseRate: 0.0025
   closeButton: {fileID: 2002593041}
   mainCanvasCloseButton: {fileID: 1059067180}
   hotdogDraggable: {fileID: 1110596823}
