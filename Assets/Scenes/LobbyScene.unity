@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   truck: {fileID: 1554176835}
   truckMoveDistance: 500
-  transitionDuration: 1
+  transitionDuration: 2
   gamePlaySceneName: GamePlayScene
 --- !u!4 &264080152
 Transform:
