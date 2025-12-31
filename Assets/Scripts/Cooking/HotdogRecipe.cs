@@ -97,8 +97,8 @@ namespace RecipeAboutLife.Cooking
         /// <returns>보상 코인</returns>
         public int CalculateReward(RecipeConfigSO config)
         {
-            // 기본 보상: 100코인
-            int baseReward = 100;
+            // 기본 보상: 2000원 (테스트용 - 목표 4000원일 때 2개만 팔면 됨)
+            int baseReward = 2000;
 
             // 품질 배수: 0.0 ~ 1.0
             float qualityMultiplier = quality / 100f;

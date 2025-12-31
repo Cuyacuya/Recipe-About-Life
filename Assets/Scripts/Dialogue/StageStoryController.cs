@@ -241,8 +241,47 @@ namespace RecipeAboutLife.Dialogue
                 resultUI.OnConfirmClicked -= OnResultUIConfirmed;
             }
 
-            // 검은 화면 유지한 채로 GuideText → 페이드 아웃 → 스토리 대화 시작
+            // 실패 시 바로 로비로 이동
+            if (!success)
+            {
+                Debug.Log("[StageStoryController] 목표 미달성! 바로 로비로 이동");
+                StartCoroutine(TransitionToLobbyOnFail());
+                return;
+            }
+
+            // 성공 시 검은 화면 유지한 채로 GuideText → 페이드 아웃 → 스토리 대화 시작
             StartCoroutine(TransitionToStoryDialogue(success));
+        }
+
+        /// <summary>
+        /// 실패 시 로비로 이동 (페이드 아웃 없이 바로)
+        /// </summary>
+        private System.Collections.IEnumerator TransitionToLobbyOnFail()
+        {
+            UI.FadeUI fadeUI = UI.FadeUI.Instance;
+
+            // 결산 UI 숨김
+            UI.ResultUIController resultUI = UI.ResultUIController.Instance;
+            if (resultUI != null)
+            {
+                resultUI.Hide();
+            }
+
+            // 잠시 대기 (검은 화면 상태)
+            yield return new WaitForSeconds(0.5f);
+
+            // "다시 도전하세요!" 텍스트 표시
+            if (fadeUI != null)
+            {
+                fadeUI.ShowText("다시 도전하세요!");
+                yield return new WaitForSeconds(1.5f);
+                fadeUI.HideText();
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            // 로비 씬 로드
+            Debug.Log("[StageStoryController] 실패 → 로비 씬 로드");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
         }
 
         /// <summary>
