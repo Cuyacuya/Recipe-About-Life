@@ -585,8 +585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 650, y: 650}
+  m_AnchoredPosition: {x: -70, y: 0}
+  m_SizeDelta: {x: 885.7, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &875629080
 MonoBehaviour:
@@ -655,6 +655,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86567ec3a19a5bb42919b4136fd927f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDay: 1
+  maxDay: 3
+  dayGoals: 70170000401f000028230000
+  customersPerDay: 5
+  currentMoney: 0
+  todayEarnings: 0
+  customersServed: 0
+  isPaused: 0
 --- !u!4 &1159121378
 Transform:
   m_ObjectHideFlags: 0
