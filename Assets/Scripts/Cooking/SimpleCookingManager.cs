@@ -181,6 +181,21 @@ namespace RecipeAboutLife.Cooking
                 Debug.Log("[SimpleCookingManager] 토핑 팝업 닫음");
             }
 
+            // 5. IngredientPopup 하위의 Clone 오브젝트 삭제 (이전 손님 재료)
+            if (ingredientPopup != null)
+            {
+                // 역순으로 삭제 (자식 삭제 시 인덱스 변경 방지)
+                for (int i = ingredientPopup.transform.childCount - 1; i >= 0; i--)
+                {
+                    Transform child = ingredientPopup.transform.GetChild(i);
+                    if (child.name.Contains("(Clone)"))
+                    {
+                        Destroy(child.gameObject);
+                        Debug.Log($"[SimpleCookingManager] IngredientPopup 내 클론 삭제: {child.name}");
+                    }
+                }
+            }
+
             Debug.Log("[SimpleCookingManager] 이전 요리 정리 완료");
         }
 
