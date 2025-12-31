@@ -38,7 +38,11 @@ namespace RecipeAboutLife.Cooking
         public float sauceDecreaseRate = 0.05f;   // 드래그당 소스 감소량 (Inspector 조정)
 
         [Header("=== Close Button ===")]
-        public Button closeButton;                // X 버튼
+        public Button closeButton;                // X 버튼 (ToppingUICanvas 안)
+
+        [Header("=== Close Button (Main Canvas) ===")]
+        [Tooltip("메인 Canvas(Screen Space)에 있는 닫기 버튼 - 확실한 클릭 감지용")]
+        public GameObject mainCanvasCloseButton;  // 메인 Canvas의 닫기 버튼
 
         [Header("=== Hotdog Draggable (설탕용) ===")]
         public SimpleDraggable hotdogDraggable;   // 핫도그 드래그용
@@ -77,6 +81,13 @@ namespace RecipeAboutLife.Cooking
             // 게이지 바 초기 숨김
             if (gaugeBarObject != null)
                 gaugeBarObject.SetActive(false);
+
+            // 메인 Canvas 닫기 버튼 - 팝업이 비활성화 상태일 때만 숨김
+            // (OnEnable이 Start보다 먼저 호출되므로, 이미 활성화된 상태면 건드리지 않음)
+            if (mainCanvasCloseButton != null && !gameObject.activeInHierarchy)
+            {
+                mainCanvasCloseButton.SetActive(false);
+            }
         }
 
         private void OnDestroy()
@@ -101,35 +112,54 @@ namespace RecipeAboutLife.Cooking
             {
                 manager = SimpleCookingManager.Instance;
             }
-
-            // 버튼 이벤트 재등록 (팝업이 비활성화→활성화될 때 이벤트가 끊어질 수 있음)
-            if (closeButton != null)
-            {
-                closeButton.onClick.RemoveListener(OnCloseButtonClicked);
-                closeButton.onClick.AddListener(OnCloseButtonClicked);
-                Debug.Log("[ToppingPopupHandler] ✅ closeButton 이벤트 재등록 완료");
-            }
-            else
-            {
-                Debug.LogError("[ToppingPopupHandler] ❌ closeButton이 null입니다! Inspector에서 할당하세요!");
-            }
-
+            
             // 팝업 열릴 때 초기화
             InitializePopup();
 
-            // 메인 UI 숨김 (MoneyPanel, PauseButton, DayImage)
-            if (GameUIManager.Instance != null)
+            // 메인 UI 숨김 (즉시 + 지연 호출로 확실하게)
+            HideMainUIImmediate();
+            Invoke(nameof(HideMainUIImmediate), 0.1f);  // 0.1초 후 한번 더
+
+            // 메인 Canvas의 닫기 버튼 표시
+            if (mainCanvasCloseButton != null)
             {
-                GameUIManager.Instance.HideMainUI();
+                mainCanvasCloseButton.SetActive(true);
+                Debug.Log("[ToppingPopupHandler] 메인 Canvas 닫기 버튼 표시");
             }
         }
 
         private void OnDisable()
         {
+            // 지연 호출 취소
+            CancelInvoke(nameof(HideMainUIImmediate));
+
+            // 메인 Canvas의 닫기 버튼 숨김
+            if (mainCanvasCloseButton != null)
+            {
+                mainCanvasCloseButton.SetActive(false);
+                Debug.Log("[ToppingPopupHandler] 메인 Canvas 닫기 버튼 숨김");
+            }
+
             // 팝업 닫힐 때 메인 UI 표시
             if (GameUIManager.Instance != null)
             {
                 GameUIManager.Instance.ShowMainUI();
+            }
+        }
+
+        /// <summary>
+        /// 메인 UI 즉시 숨김
+        /// </summary>
+        private void HideMainUIImmediate()
+        {
+            if (GameUIManager.Instance != null)
+            {
+                GameUIManager.Instance.HideMainUI();
+                Debug.Log("[ToppingPopupHandler] HideMainUI 호출됨");
+            }
+            else
+            {
+                Debug.LogWarning("[ToppingPopupHandler] GameUIManager.Instance가 null!");
             }
         }
 
@@ -424,9 +454,9 @@ namespace RecipeAboutLife.Cooking
         }
 
         /// <summary>
-        /// X 버튼 클릭 - 완료
+        /// X 버튼 클릭 - 완료 (public으로 변경하여 Inspector 및 외부에서 호출 가능)
         /// </summary>
-        private void OnCloseButtonClicked()
+        public void OnCloseButtonClicked()
         {
             Debug.Log("[ToppingPopupHandler] ✅ 토핑 완료!");
 
@@ -438,6 +468,9 @@ namespace RecipeAboutLife.Cooking
 
             // 팝업 닫기
             manager?.HideToppingPopup();
+
+            // 직접 비활성화 (manager가 실패할 경우 대비)
+            gameObject.SetActive(false);
 
             // 다음 단계로
             manager?.NextPhase();

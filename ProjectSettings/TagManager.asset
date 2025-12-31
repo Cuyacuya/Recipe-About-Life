@@ -8,6 +8,7 @@ TagManager:
   - StickDropZone
   - Sausage
   - Cheese
+  - Hotdog
   layers:
   - Default
   - TransparentFX

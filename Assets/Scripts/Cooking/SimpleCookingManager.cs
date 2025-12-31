@@ -112,6 +112,9 @@ namespace RecipeAboutLife.Cooking
         [ContextMenu("Start Cooking")]
         public void StartCooking()
         {
+            // 이전 요리 정리
+            CleanupPreviousCooking();
+            
             hotdogData = new HotdogData();
             currentHotdog = null;
             
@@ -120,6 +123,80 @@ namespace RecipeAboutLife.Cooking
             
             ChangePhase(CookingPhase.StickPickup);
             Debug.Log("[SimpleCookingManager] === 요리 시작! ===");
+        }
+
+        /// <summary>
+        /// 이전 요리 관련 오브젝트 정리
+        /// </summary>
+        private void CleanupPreviousCooking()
+        {
+            Debug.Log("[SimpleCookingManager] 이전 요리 정리 시작...");
+
+            // 1. 현재 핫도그 오브젝트 삭제
+            if (currentHotdog != null)
+            {
+                Destroy(currentHotdog);
+                currentHotdog = null;
+                Debug.Log("[SimpleCookingManager] 이전 핫도그 오브젝트 삭제");
+            }
+
+            // 2. "Hotdog" 태그가 붙은 모든 오브젝트 삭제 (태그가 없으면 스킵)
+            try
+            {
+                GameObject[] hotdogs = GameObject.FindGameObjectsWithTag("Hotdog");
+                foreach (var hotdog in hotdogs)
+                {
+                    Destroy(hotdog);
+                    Debug.Log($"[SimpleCookingManager] 태그로 찾은 핫도그 삭제: {hotdog.name}");
+                }
+            }
+            catch (UnityException)
+            {
+                // "Hotdog" 태그가 정의되지 않은 경우 무시
+                Debug.Log("[SimpleCookingManager] 'Hotdog' 태그가 없음 - 스킵");
+            }
+
+            // 3. 이름에 "Stick" 또는 "Hotdog"이 포함된 동적 생성 오브젝트 찾아서 삭제
+            // (Prefab에서 생성된 인스턴스는 보통 "(Clone)" 접미사가 붙음)
+            GameObject[] allObjects = FindObjectsOfType<GameObject>();
+            foreach (var obj in allObjects)
+            {
+                if (obj != null && obj.name.Contains("(Clone)") && 
+                    (obj.name.Contains("Stick") || obj.name.Contains("Hotdog")))
+                {
+                    Destroy(obj);
+                    Debug.Log($"[SimpleCookingManager] 클론 오브젝트 삭제: {obj.name}");
+                }
+            }
+
+            // 4. 팝업 닫기
+            if (ingredientPopup != null && ingredientPopup.activeSelf)
+            {
+                ingredientPopup.SetActive(false);
+                Debug.Log("[SimpleCookingManager] 재료 팝업 닫음");
+            }
+            if (toppingPopup != null && toppingPopup.activeSelf)
+            {
+                toppingPopup.SetActive(false);
+                Debug.Log("[SimpleCookingManager] 토핑 팝업 닫음");
+            }
+
+            // 5. IngredientPopup 하위의 Clone 오브젝트 삭제 (이전 손님 재료)
+            if (ingredientPopup != null)
+            {
+                // 역순으로 삭제 (자식 삭제 시 인덱스 변경 방지)
+                for (int i = ingredientPopup.transform.childCount - 1; i >= 0; i--)
+                {
+                    Transform child = ingredientPopup.transform.GetChild(i);
+                    if (child.name.Contains("(Clone)"))
+                    {
+                        Destroy(child.gameObject);
+                        Debug.Log($"[SimpleCookingManager] IngredientPopup 내 클론 삭제: {child.name}");
+                    }
+                }
+            }
+
+            Debug.Log("[SimpleCookingManager] 이전 요리 정리 완료");
         }
 
         /// <summary>
