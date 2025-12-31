@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8d8d9cd02810f4ea0b00a05a49bd7b, type: 3}
+  m_Name: NPC_9_ShirtBoy
+  m_EditorClassIdentifier: 
+  npcID: 9
+  npcDisplayName: ShritBoy
+  description: 
+  npcOrder: {fileID: 11400000, guid: 88932508cf83cb142a540a46a455878d, type: 2}
+  dialogueGroups:
+  - type: 0
+    lines:
+    - speaker: 0
+      text: "\uC548\uB155\uD558\uC138\uC694."
+      displayDuration: 0
+  - type: 1
+    lines:
+    - speaker: 0
+      text: "\uD56B\uB3C4\uADF8 \uC8FC\uC138\uC694!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uD56B\uB3C4\uADF8\uB294 \uCCAB\uC785\uC740 \uB9DB\uC788\uC9C0\uB9CC
+        \uBA39\uC744\uC218\uB85D \uBB3C\uB824\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uBC18\uBC18 \uD56B\uB3C4\uADF8\uC5D0 \uC18C\uC2A4\uB4E4\uC744 \uBFCC\uB824\uC8FC\uC138\uC694!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uCF00\uCC39\uC740 \uB108\uBB34 \uB9CE\uC774 \uBFCC\uB9AC\uC9C0 \uB9D0\uC544\uC694!"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uB2EC\uCF64\uD55C \uC124\uD0D5\uB3C4 \uBFCC\uB824\uC8FC\uC138\uC694."
+      displayDuration: 0
+  - type: 2
+    lines:
+    - speaker: 0
+      text: "\uAC10\uC0AC\uD569\uB2C8\uB2E4! \uB9CE\uC774 \uD30C\uC138\uC694!"
+      displayDuration: 0
+  - type: 3
+    lines:
+    - speaker: 0
+      text: "\uC0AC\uC7A5\uB2D8. \uC774\uAC74 \uC81C\uAC12\uC5D0 \uB4DC\uB824\uC57C\uD558\uB098\uC694?"
+      displayDuration: 0

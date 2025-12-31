@@ -52,5 +52,6 @@ Assets/AssetStoreTools*
 *.ipa
 Build/
 
-# Visual Studio
+# Visual Studio cache
 .vs/
+

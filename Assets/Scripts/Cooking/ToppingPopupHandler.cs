@@ -101,7 +101,19 @@ namespace RecipeAboutLife.Cooking
             {
                 manager = SimpleCookingManager.Instance;
             }
-            
+
+            // 버튼 이벤트 재등록 (팝업이 비활성화→활성화될 때 이벤트가 끊어질 수 있음)
+            if (closeButton != null)
+            {
+                closeButton.onClick.RemoveListener(OnCloseButtonClicked);
+                closeButton.onClick.AddListener(OnCloseButtonClicked);
+                Debug.Log("[ToppingPopupHandler] ✅ closeButton 이벤트 재등록 완료");
+            }
+            else
+            {
+                Debug.LogError("[ToppingPopupHandler] ❌ closeButton이 null입니다! Inspector에서 할당하세요!");
+            }
+
             // 팝업 열릴 때 초기화
             InitializePopup();
 

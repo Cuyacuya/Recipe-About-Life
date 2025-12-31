@@ -1,0 +1,270 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections;
+
+namespace RecipeAboutLife.UI
+{
+    /// <summary>
+    /// 페이드 인/아웃 효과 UI
+    /// 화면 전환 시 검은 화면 페이드 효과 및 텍스트 표시
+    /// Singleton 패턴으로 전역 접근 가능
+    /// </summary>
+    public class FadeUI : MonoBehaviour
+    {
+        // ==========================================
+        // Singleton
+        // ==========================================
+
+        private static FadeUI _instance;
+        public static FadeUI Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindFirstObjectByType<FadeUI>();
+                }
+                return _instance;
+            }
+        }
+
+        // ==========================================
+        // UI References
+        // ==========================================
+
+        [Header("UI 참조")]
+        [SerializeField]
+        [Tooltip("페이드 패널 (검은색 전체 화면)")]
+        private GameObject fadePanel;
+
+        [SerializeField]
+        [Tooltip("페이드 이미지 (검은색 Image)")]
+        private Image fadeImage;
+
+        [SerializeField]
+        [Tooltip("중앙 텍스트 (예: '잠시만요')")]
+        private TextMeshProUGUI centerText;
+
+        // ==========================================
+        // State
+        // ==========================================
+
+        private Coroutine currentFadeCoroutine;
+
+        // ==========================================
+        // Lifecycle
+        // ==========================================
+
+        private void Awake()
+        {
+            // Singleton 설정
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            // 시작 시 완전히 투명하게 설정
+            if (fadeImage != null)
+            {
+                Color color = fadeImage.color;
+                color.a = 0f;
+                fadeImage.color = color;
+            }
+
+            // 텍스트 숨김
+            if (centerText != null)
+            {
+                centerText.gameObject.SetActive(false);
+            }
+
+            // 패널은 활성화 상태로 유지 (알파값으로 제어)
+            if (fadePanel != null)
+            {
+                fadePanel.SetActive(true);
+            }
+        }
+
+        // ==========================================
+        // Public API
+        // ==========================================
+
+        /// <summary>
+        /// 페이드 인 (화면이 어두워짐)
+        /// </summary>
+        /// <param name="duration">페이드 시간 (초), 0이면 기본값 1초</param>
+        /// <param name="onComplete">완료 콜백</param>
+        public void FadeIn(float duration = 0f, System.Action onComplete = null)
+        {
+            if (currentFadeCoroutine != null)
+            {
+                StopCoroutine(currentFadeCoroutine);
+            }
+
+            float targetDuration = duration > 0 ? duration : 1f;
+            currentFadeCoroutine = StartCoroutine(FadeCoroutine(0f, 1f, targetDuration, onComplete));
+        }
+
+        /// <summary>
+        /// 페이드 아웃 (화면이 밝아짐)
+        /// </summary>
+        /// <param name="duration">페이드 시간 (초), 0이면 기본값 1초</param>
+        /// <param name="onComplete">완료 콜백</param>
+        public void FadeOut(float duration = 0f, System.Action onComplete = null)
+        {
+            if (currentFadeCoroutine != null)
+            {
+                StopCoroutine(currentFadeCoroutine);
+            }
+
+            float targetDuration = duration > 0 ? duration : 1f;
+            currentFadeCoroutine = StartCoroutine(FadeCoroutine(1f, 0f, targetDuration, onComplete));
+        }
+
+        /// <summary>
+        /// 중앙 텍스트 표시
+        /// </summary>
+        /// <param name="text">표시할 텍스트</param>
+        public void ShowText(string text)
+        {
+            Debug.Log($"[FadeUI] ShowText 호출: '{text}'");
+
+            if (centerText != null)
+            {
+                centerText.text = text;
+                centerText.gameObject.SetActive(true);
+                Debug.Log($"[FadeUI] ✅ 텍스트 표시 완료 - Active: {centerText.gameObject.activeSelf}, Text: '{centerText.text}'");
+            }
+            else
+            {
+                Debug.LogError("[FadeUI] ❌ CenterText가 null입니다! Inspector에서 설정하세요.");
+            }
+        }
+
+        /// <summary>
+        /// 중앙 텍스트 숨김
+        /// </summary>
+        public void HideText()
+        {
+            Debug.Log("[FadeUI] HideText 호출");
+
+            if (centerText != null)
+            {
+                centerText.gameObject.SetActive(false);
+                Debug.Log("[FadeUI] ✅ 텍스트 숨김 완료");
+            }
+            else
+            {
+                Debug.LogError("[FadeUI] ❌ CenterText가 null입니다!");
+            }
+        }
+
+        /// <summary>
+        /// 즉시 검은 화면으로 설정
+        /// </summary>
+        public void SetBlack()
+        {
+            if (fadeImage != null)
+            {
+                Color color = fadeImage.color;
+                color.a = 1f;
+                fadeImage.color = color;
+            }
+        }
+
+        /// <summary>
+        /// 즉시 투명하게 설정
+        /// </summary>
+        public void SetTransparent()
+        {
+            if (fadeImage != null)
+            {
+                Color color = fadeImage.color;
+                color.a = 0f;
+                fadeImage.color = color;
+            }
+        }
+
+        /// <summary>
+        /// 현재 페이드 중인지 확인
+        /// </summary>
+        public bool IsFading()
+        {
+            return currentFadeCoroutine != null;
+        }
+
+        // ==========================================
+        // Private Methods
+        // ==========================================
+
+        /// <summary>
+        /// 페이드 코루틴
+        /// </summary>
+        private IEnumerator FadeCoroutine(float startAlpha, float endAlpha, float duration, System.Action onComplete)
+        {
+            if (fadeImage == null)
+            {
+                Debug.LogError("[FadeUI] FadeImage가 설정되지 않았습니다!");
+                yield break;
+            }
+
+            float elapsedTime = 0f;
+            Color color = fadeImage.color;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+                color.a = alpha;
+                fadeImage.color = color;
+                yield return null;
+            }
+
+            // 최종 알파값 설정
+            color.a = endAlpha;
+            fadeImage.color = color;
+
+            currentFadeCoroutine = null;
+
+            // 완료 콜백 호출
+            onComplete?.Invoke();
+
+            Debug.Log($"[FadeUI] 페이드 완료 (Alpha: {endAlpha})");
+        }
+
+        // ==========================================
+        // Debug
+        // ==========================================
+
+#if UNITY_EDITOR
+        [ContextMenu("Test: Fade In")]
+        private void TestFadeIn()
+        {
+            FadeIn(1f, () => Debug.Log("Fade In Complete!"));
+        }
+
+        [ContextMenu("Test: Fade Out")]
+        private void TestFadeOut()
+        {
+            FadeOut(1f, () => Debug.Log("Fade Out Complete!"));
+        }
+
+        [ContextMenu("Test: Show Text")]
+        private void TestShowText()
+        {
+            ShowText("잠시만요");
+        }
+
+        [ContextMenu("Test: Hide Text")]
+        private void TestHideText()
+        {
+            HideText();
+        }
+#endif
+    }
+}

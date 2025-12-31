@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8d8d9cd02810f4ea0b00a05a49bd7b, type: 3}
+  m_Name: NPC_4_CheckBoy
+  m_EditorClassIdentifier: 
+  npcID: 4
+  npcDisplayName: CheckBoy
+  description: 
+  npcOrder: {fileID: 11400000, guid: 88932508cf83cb142a540a46a455878d, type: 2}
+  dialogueGroups:
+  - type: 0
+    lines:
+    - speaker: 0
+      text: "\uC548\uB155\uD558\uC138\uC694. "
+      displayDuration: 0
+  - type: 1
+    lines:
+    - speaker: 0
+      text: "\uD56B\uB3C4\uADF8 \uBC18\uBC18\uC73C\uB85C \uC8FC\uC138\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC124\uD0D5 \uC880 \uB4EC\uBFCD \uBFCC\uB824\uC8FC\uC2DC\uAD6C\uC694."
+      displayDuration: 0
+  - type: 2
+    lines:
+    - speaker: 0
+      text: "\uC624 \uB418\uAC8C \uB9DB\uC788\uB124\uC694."
+      displayDuration: 0
+  - type: 3
+    lines:
+    - speaker: 0
+      text: "\uADF8\uB0E5\uC800\uB0E5 \uADF8\uB807\uAD70\uC694."
+      displayDuration: 0
+  - type: 9
+    lines:
+    - speaker: 0
+      text: "\uD478\uB4DC\uD2B8\uB7ED \uD558\uC2DC\uBA74 \uC5EC\uAE30\uC800\uAE30
+        \uB3CC\uC544\uB2E4\uB2C8\uC2DC\uACA0\uB124\uC694"
+      displayDuration: 0
+    - speaker: 1
+      text: "\uADF8\uB807\uAC8C\uAE4C\uC9C0 \uB2E4\uC591\uD558\uAC8C \uB2E4\uB2C8\uC9C4
+        \uC54A\uC544\uC694."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uADF8\uB0E5 \uC2DC\uAC00\uC9C0 \uB0B4\uBD80\uC5D0\uC11C\uB9CC \uC790\uC8FC
+        \uC774\uB3D9\uD558\uC8E0."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uADF8\uB798\uB3C4 \uBB54\uAC00 \uBD80\uB7FD\uB124\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC790\uC720\uB86D\uAC8C \uB2E4\uB2D0\uC218 \uC788\uB2E4\uB294\uAC8C"
+      displayDuration: 0
+    - speaker: 1
+      text: "\uBB50 \uBD80\uB7EC\uC6B8\uAC83 \uAE4C\uC9C0\uC57C..."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uD5E4\uD5E4 \uADF8\uB0E5 \uC81C\uC0DD\uAC01\uC774\uB2C8\uAE4C\uC694"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uD558\uB8E8 \uC885\uC77C \uACE8\uBC29 \uCEF4\uD4E8\uD130 \uC55E\uC5D0
+        \uC549\uC544\uC11C \uC218\uB9CC\uAC1C\uC758 \uAE00\uC790\uB97C \uC77D\uACE0"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uB9D0\uB3C4 \uC548\uB418\uB294 \uC774\uB860\uC744 \uC5B5\uC9C0\uB85C
+        \uC9DC\uB9DE\uCD94\uACE0 \uBCF4\uACE0\uC11C\uB97C \uB9CC\uB4E4\uC5B4\uC57C
+        \uD558\uACE0..."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uACFC\uD559\uC790 \uC774\uC2E0\uAC00\uC694"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC544\uB1E8 \uB300\uD559\uC6D0\uC0DD\uC774\uC5D0\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uAFC8\uC774 \uACFC\uD559\uC790\uAC00 \uB9DE\uAE34\uD55C\uB370"
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC9C0\uAE08 \uC81C \uC77C\uC774 \uC815\uB9D0 \uBBF8\uB798\uAC00 \uC788\uB294\uC9C0
+        \uC2A4\uC2A4\uB85C \uC790\uC2E0\uC774 \uC788\uB294\uC9C0\uAC00 \uC694\uC0C8
+        \uBAA8\uB974\uACA0\uB124\uC694."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uC800\uB3C4 \uADF8\uB7F0\uC801\uC774 \uC788\uC5C8\uC8E0."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uB0B4 \uBAA8\uB4E0\uAC78 \uC3DF\uC544\uBD80\uC5B4\uC11C \uC694\uB9AC\uB780\uAC83\uC744
+        \uC775\uD614\uB294\uB370"
+      displayDuration: 0
+    - speaker: 1
+      text: "\uC5B8\uC81C\uBD80\uD130\uC778\uAC00 \uC774\uAC8C \uC9C4\uC815 \uB0B4\uAC00
+        \uC0AC\uB791\uD558\uB294 \uC77C\uC774 \uB9DE\uB294\uC9C0\uC5D0 \uB300\uD55C
+        \uACE0\uBBFC."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uB531 \uB9DE\uC544\uC694. \uC81C\uAC00 \uC9C0\uAE08 \uADF8 \uC0C1\uD669\uC774\uC8E0.
+        \uC774\uAC8C \uB9DE\uB098 \uC2F6\uB124\uC694."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uD798\uB0B4\uC138\uC694. \uC798 \uB418\uC2E4\uAEBC\uC5D0\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uD558.. \uC8C4\uC1A1\uD574\uC694.. \uD478\uB150\uB9CC \uB298\uC5B4\uB1A8\uB124\uC694.
+        \uC218\uACE0\uD558\uC138\uC694."
+      displayDuration: 0
+    - speaker: 1
+      text: "\uC548\uB155\uD788\uAC00\uC138\uC694."
+      displayDuration: 0

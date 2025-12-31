@@ -35,11 +35,11 @@ namespace RecipeAboutLife.Cooking
         // 이벤트
         public System.Action<float> OnSauceUsed;  // 소스 사용량 콜백
 
-        private Camera mainCamera;
+        private UnityEngine.Camera mainCamera;
 
         private void Awake()
         {
-            mainCamera = Camera.main;
+            mainCamera = UnityEngine.Camera.main;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace RecipeAboutLife.Cooking
             {
                 if (mainCamera == null)
                 {
-                    mainCamera = Camera.main;
+                    mainCamera = UnityEngine.Camera.main;
                     if (mainCamera == null) return;
                 }
                 
