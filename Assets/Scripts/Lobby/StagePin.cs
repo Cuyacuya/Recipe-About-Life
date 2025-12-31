@@ -103,6 +103,40 @@ namespace RecipeAboutLife.Lobby
             }
         }
 
+        /// <summary>
+        /// 페이드 인 (검은색으로 변경)
+        /// </summary>
+        public void FadeToBlack(float duration)
+        {
+            if (spriteRenderer == null) return;
+            StartCoroutine(FadeColorCoroutine(spriteRenderer.color, Color.black, duration));
+        }
+
+        /// <summary>
+        /// 페이드 아웃 (원래 색으로 복귀)
+        /// </summary>
+        public void FadeToNormal(float duration)
+        {
+            if (spriteRenderer == null) return;
+            Color targetColor = isUnlocked ? Color.white : new Color(0.5f, 0.5f, 0.5f, 1f);
+            StartCoroutine(FadeColorCoroutine(spriteRenderer.color, targetColor, duration));
+        }
+
+        private IEnumerator FadeColorCoroutine(Color from, Color to, float duration)
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = elapsedTime / duration;
+                spriteRenderer.color = Color.Lerp(from, to, t);
+                yield return null;
+            }
+
+            spriteRenderer.color = to;
+        }
+
         private IEnumerator FloatAnimation()
         {
             float time = Random.Range(0f, Mathf.PI * 2f);

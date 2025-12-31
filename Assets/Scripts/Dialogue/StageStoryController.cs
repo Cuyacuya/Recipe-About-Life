@@ -805,26 +805,16 @@ namespace RecipeAboutLife.Dialogue
                 Debug.Log("[StageStoryController] 2. '로비로' 텍스트 표시");
                 fadeUI.ShowText("로비로");
 
-                // 3. 터치 입력 대기
-                Debug.Log("[StageStoryController] 3. 터치 입력 대기 중...");
-                waitingForInput = true;
-                inputReceived = false;
-
-                // 터치 입력이 올 때까지 무한 대기
-                while (!inputReceived)
-                {
-                    yield return null;
-                }
-
-                waitingForInput = false;
-                Debug.Log("[StageStoryController] 터치 입력 감지!");
+                // 3. 3초 대기 (클릭 대기 대신)
+                Debug.Log("[StageStoryController] 3. 3초 대기 중...");
+                yield return new WaitForSeconds(3f);
+                Debug.Log("[StageStoryController] 3초 대기 완료!");
 
                 // 4. 텍스트 숨김
                 fadeUI.HideText();
 
-                // 터치 후 1초 대기
-                yield return new WaitForSeconds(1f);
-                Debug.Log("[StageStoryController] 터치 후 1초 대기 완료");
+                // 추가 0.5초 대기
+                yield return new WaitForSeconds(0.5f);
 
                 // 5. 로비 씬 로드
                 Debug.Log("[StageStoryController] 4. 로비 씬 로드");
@@ -920,18 +910,10 @@ namespace RecipeAboutLife.Dialogue
             Sprite letterImage = stageData.GetAfterStoryImage();
             fadeUI.ShowImage(letterImage);
 
-            // 3. 클릭 대기
-            Debug.Log("[StageStoryController] 3. 클릭 대기 중...");
-            waitingForInput = true;
-            inputReceived = false;
-
-            while (!inputReceived)
-            {
-                yield return null;
-            }
-
-            waitingForInput = false;
-            Debug.Log("[StageStoryController] 클릭 감지!");
+            // 3. 3초 대기 (클릭 대기 대신)
+            Debug.Log("[StageStoryController] 3. 3초 대기 중...");
+            yield return new WaitForSeconds(3f);
+            Debug.Log("[StageStoryController] 3초 대기 완료!");
 
             // 4. 편지 이미지 숨김
             fadeUI.HideImage();

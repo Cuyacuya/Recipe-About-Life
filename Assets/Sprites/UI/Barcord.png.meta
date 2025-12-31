@@ -1,0 +1,1271 @@
+fileFormatVersion: 2
+guid: af5d8682aa71ba043847219c2dcc237c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1684091875303006221
+    second: Barcord_0
+  - first:
+      213: -8394869343803526999
+    second: Barcord_1
+  - first:
+      213: 5009490194101784918
+    second: Barcord_2
+  - first:
+      213: -8795469388095331429
+    second: Barcord_3
+  - first:
+      213: 1167649916525606280
+    second: Barcord_4
+  - first:
+      213: -8600270256137866895
+    second: Barcord_5
+  - first:
+      213: -5521749667845054908
+    second: Barcord_6
+  - first:
+      213: 7306421058087811577
+    second: Barcord_7
+  - first:
+      213: -8269468847696079597
+    second: Barcord_8
+  - first:
+      213: -3983987922364774482
+    second: Barcord_9
+  - first:
+      213: 8553236698965263509
+    second: Barcord_10
+  - first:
+      213: -3882308782947330465
+    second: Barcord_11
+  - first:
+      213: 1061316924601722951
+    second: Barcord_12
+  - first:
+      213: 5980511800959992943
+    second: Barcord_13
+  - first:
+      213: 6914725342013036811
+    second: Barcord_14
+  - first:
+      213: -1691563906943315208
+    second: Barcord_15
+  - first:
+      213: -323008332650386183
+    second: Barcord_16
+  - first:
+      213: 3104541473553011306
+    second: Barcord_17
+  - first:
+      213: 3818531369041929791
+    second: Barcord_18
+  - first:
+      213: -7269585833161302523
+    second: Barcord_19
+  - first:
+      213: -3504706288139738248
+    second: Barcord_20
+  - first:
+      213: -223509299945384000
+    second: Barcord_21
+  - first:
+      213: 8090591563894800742
+    second: Barcord_22
+  - first:
+      213: 1250604166084344313
+    second: Barcord_23
+  - first:
+      213: -196161000699086597
+    second: Barcord_24
+  - first:
+      213: 1409971563421141513
+    second: Barcord_25
+  - first:
+      213: -8726835027157325288
+    second: Barcord_26
+  - first:
+      213: -2446513770471468672
+    second: Barcord_27
+  - first:
+      213: -544616001951932485
+    second: Barcord_28
+  - first:
+      213: -3672651133315981310
+    second: Barcord_29
+  - first:
+      213: 4728854097404420588
+    second: Barcord_30
+  - first:
+      213: -5253587769675790659
+    second: Barcord_31
+  - first:
+      213: -4458760122112550370
+    second: Barcord_32
+  - first:
+      213: -6458391773697779830
+    second: Barcord_33
+  - first:
+      213: -6774866326998604699
+    second: Barcord_34
+  - first:
+      213: 212049901113645905
+    second: Barcord_35
+  - first:
+      213: -7281692577248465865
+    second: Barcord_36
+  - first:
+      213: -6438684362868215103
+    second: Barcord_37
+  - first:
+      213: -4670259393082739118
+    second: Barcord_38
+  - first:
+      213: 3438205665680979308
+    second: Barcord_39
+  - first:
+      213: -2547344066793726924
+    second: Barcord_40
+  - first:
+      213: -5369688930644812614
+    second: Barcord_41
+  - first:
+      213: -6396330830993135375
+    second: Barcord_42
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Barcord_0
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00ae8c43a81f5710800000000000000
+      internalID: 1684091875303006221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_1
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a036ca4fce6f7b80800000000000000
+      internalID: -8394869343803526999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_2
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6515d354ac8458540800000000000000
+      internalID: 5009490194101784918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_3
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 151
+        width: 24
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9361c1213730f580800000000000000
+      internalID: -8795469388095331429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_4
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 151
+        width: 24
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 885f580a963543010800000000000000
+      internalID: 1167649916525606280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 151
+        width: 20
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1717b8aa4c3b5a880800000000000000
+      internalID: -8600270256137866895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_6
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 151
+        width: 30
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44ed67dbeedce53b0800000000000000
+      internalID: -5521749667845054908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_7
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f9f1c2cd3f956560800000000000000
+      internalID: 7306421058087811577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_8
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3159ae385e1fc3d80800000000000000
+      internalID: -8269468847696079597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_9
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7400ab71806b8c0800000000000000
+      internalID: -3983987922364774482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_10
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 594c8a1f57333b670800000000000000
+      internalID: 8553236698965263509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_11
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f569b043bb44f1ac0800000000000000
+      internalID: -3882308782947330465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_12
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 151
+        width: 24
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 748eefcae1e8abe00800000000000000
+      internalID: 1061316924601722951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_13
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 151
+        width: 41
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f64804ffbcb0ff250800000000000000
+      internalID: 5980511800959992943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_14
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b091412101a06ff50800000000000000
+      internalID: 6914725342013036811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_15
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f295c3c69b5688e0800000000000000
+      internalID: -1691563906943315208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_16
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 151
+        width: 41
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fce1e002a1748bf0800000000000000
+      internalID: -323008332650386183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_17
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a625899850c851b20800000000000000
+      internalID: 3104541473553011306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_18
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 151
+        width: 24
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f362e677c062ef430800000000000000
+      internalID: 3818531369041929791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_19
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 151
+        width: 25
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50e553e533e3d1b90800000000000000
+      internalID: -7269585833161302523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_20
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8736a5d1338cc5fc0800000000000000
+      internalID: -3504706288139738248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_21
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 151
+        width: 41
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c752c4d97fe5ecf0800000000000000
+      internalID: -223509299945384000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_22
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 661c8bc592e874070800000000000000
+      internalID: 8090591563894800742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_23
+      rect:
+        serializedVersion: 2
+        x: 955
+        y: 151
+        width: 40
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f9b412fcd90b5110800000000000000
+      internalID: 1250604166084344313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_24
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf8bb82fb98174df0800000000000000
+      internalID: -196161000699086597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_25
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 151
+        width: 41
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90a8e15aaa9319310800000000000000
+      internalID: 1409971563421141513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_26
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 151
+        width: 40
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81ae9d097cd04e680800000000000000
+      internalID: -8726835027157325288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_27
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 151
+        width: 15
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08152fc10bc3c0ed0800000000000000
+      internalID: -2446513770471468672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_28
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf59a8b1a22178f0800000000000000
+      internalID: -544616001951932485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_29
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 151
+        width: 14
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 200e3c6b04f180dc0800000000000000
+      internalID: -3672651133315981310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_30
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 57
+        width: 54
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce1e07e3fb340a140800000000000000
+      internalID: 4728854097404420588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_31
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 58
+        width: 56
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db6432812c18717b0800000000000000
+      internalID: -5253587769675790659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_32
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 58
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1addceda4d4f12c0800000000000000
+      internalID: -4458760122112550370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_33
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 57
+        width: 54
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a87507c56ee2f56a0800000000000000
+      internalID: -6458391773697779830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_34
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 57
+        width: 53
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5642e7a68f6daf1a0800000000000000
+      internalID: -6774866326998604699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_35
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 57
+        width: 54
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15b1986f24a51f200800000000000000
+      internalID: 212049901113645905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_36
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 57
+        width: 54
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ca1895e2b32fa90800000000000000
+      internalID: -7281692577248465865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_37
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 57
+        width: 54
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c2b0628fa235a6a0800000000000000
+      internalID: -6438684362868215103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_38
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 58
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2563f5a73d7ef2fb0800000000000000
+      internalID: -4670259393082739118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_39
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 57
+        width: 50
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6576a726d5f6bf20800000000000000
+      internalID: 3438205665680979308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_40
+      rect:
+        serializedVersion: 2
+        x: 1005
+        y: 58
+        width: 56
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43c9f02511406acd0800000000000000
+      internalID: -2547344066793726924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_41
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 57
+        width: 50
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abc919e0e580b75b0800000000000000
+      internalID: -5369688930644812614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_42
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 57
+        width: 53
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f866c89ffaab37a0800000000000000
+      internalID: -6396330830993135375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Barcord_43
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1300
+        height: 389
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 119fb91703aead846b8e64b4b488678f
+      internalID: -761881992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ef4ed62529e3e0c44b794d16076d99f1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Barcord_0: 1684091875303006221
+      Barcord_1: -8394869343803526999
+      Barcord_10: 8553236698965263509
+      Barcord_11: -3882308782947330465
+      Barcord_12: 1061316924601722951
+      Barcord_13: 5980511800959992943
+      Barcord_14: 6914725342013036811
+      Barcord_15: -1691563906943315208
+      Barcord_16: -323008332650386183
+      Barcord_17: 3104541473553011306
+      Barcord_18: 3818531369041929791
+      Barcord_19: -7269585833161302523
+      Barcord_2: 5009490194101784918
+      Barcord_20: -3504706288139738248
+      Barcord_21: -223509299945384000
+      Barcord_22: 8090591563894800742
+      Barcord_23: 1250604166084344313
+      Barcord_24: -196161000699086597
+      Barcord_25: 1409971563421141513
+      Barcord_26: -8726835027157325288
+      Barcord_27: -2446513770471468672
+      Barcord_28: -544616001951932485
+      Barcord_29: -3672651133315981310
+      Barcord_3: -8795469388095331429
+      Barcord_30: 4728854097404420588
+      Barcord_31: -5253587769675790659
+      Barcord_32: -4458760122112550370
+      Barcord_33: -6458391773697779830
+      Barcord_34: -6774866326998604699
+      Barcord_35: 212049901113645905
+      Barcord_36: -7281692577248465865
+      Barcord_37: -6438684362868215103
+      Barcord_38: -4670259393082739118
+      Barcord_39: 3438205665680979308
+      Barcord_4: 1167649916525606280
+      Barcord_40: -2547344066793726924
+      Barcord_41: -5369688930644812614
+      Barcord_42: -6396330830993135375
+      Barcord_43: -761881992
+      Barcord_5: -8600270256137866895
+      Barcord_6: -5521749667845054908
+      Barcord_7: 7306421058087811577
+      Barcord_8: -8269468847696079597
+      Barcord_9: -3983987922364774482
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

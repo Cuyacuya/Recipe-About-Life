@@ -123,25 +123,25 @@ namespace RecipeAboutLife.UI
             // UI 업데이트
             if (totalRewardText != null)
             {
-                totalRewardText.text = $"획득 재화: {totalReward}원";
+                totalRewardText.text = $"판매 금액  {totalReward}원";
             }
 
             if (targetRewardText != null)
             {
-                targetRewardText.text = $"목표 재화: {targetReward}원";
+                targetRewardText.text = $"목표 금액  {targetReward}원";
             }
 
             if (resultMessageText != null)
             {
                 if (success)
                 {
-                    resultMessageText.text = "✅ 목표 달성!";
-                    resultMessageText.color = Color.green;
+                    resultMessageText.text = "목표 달성!";
+                    resultMessageText.color = Color.black;
                 }
                 else
                 {
-                    resultMessageText.text = "❌ 목표 미달성";
-                    resultMessageText.color = Color.red;
+                    resultMessageText.text = "목표 미달성";
+                    resultMessageText.color = Color.black;
                 }
             }
 

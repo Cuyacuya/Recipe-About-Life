@@ -19,25 +19,25 @@ namespace RecipeAboutLife.Cooking
         #region Score Constants
 
         /// <summary>재료 일치 점수 (x2 = 600)</summary>
-        public const int FILLING_MATCH = 300;
+        public const int FILLING_MATCH = 600;
 
         /// <summary>튀김 완벽 (Golden)</summary>
-        public const int FRYING_PERFECT = 500;
+        public const int FRYING_PERFECT = 1500;
 
         /// <summary>튀김 괜찮음 (Yellow/Brown)</summary>
-        public const int FRYING_GOOD = 300;
+        public const int FRYING_GOOD = 600;
 
         /// <summary>튀김 실패 (Raw/Burnt)</summary>
         public const int FRYING_BAD = 0;
 
         /// <summary>설탕 일치</summary>
-        public const int SUGAR_MATCH = 300;
+        public const int SUGAR_MATCH = 600;
 
         /// <summary>케첩 일치</summary>
-        public const int KETCHUP_MATCH = 150;
+        public const int KETCHUP_MATCH = 300;
 
         /// <summary>머스타드 일치</summary>
-        public const int MUSTARD_MATCH = 150;
+        public const int MUSTARD_MATCH = 300;
 
         /// <summary>최대 점수</summary>
         public const int MAX_SCORE = FILLING_MATCH * 2 + FRYING_PERFECT + SUGAR_MATCH + KETCHUP_MATCH + MUSTARD_MATCH; // 2000

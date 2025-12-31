@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace RecipeAboutLife.Lobby
 {
@@ -13,6 +14,9 @@ namespace RecipeAboutLife.Lobby
 
         [Header("트럭")]
         [SerializeField] private TruckController truck;
+
+        [Header("스테이지 핀")]
+        [SerializeField] private List<StagePin> stagePins = new List<StagePin>();
 
         [Header("트랜지션 설정")]
         [SerializeField] private float truckMoveDistance = 10f;
@@ -38,12 +42,30 @@ namespace RecipeAboutLife.Lobby
 
         private IEnumerator FadeOutOnStart()
         {
+            // 핀들 초기 색상을 검은색으로
+            foreach (var pin in stagePins)
+            {
+                if (pin != null)
+                {
+                    pin.FadeToBlack(0f); // 즉시 검은색
+                }
+            }
+
             var fadeUI = UI.FadeUI.Instance;
             if (fadeUI != null)
             {
                 fadeUI.SetBlack();
                 yield return new WaitForSeconds(0.2f);
+
+                // 화면과 핀 동시에 밝아짐
                 fadeUI.FadeOut(0.5f);
+                foreach (var pin in stagePins)
+                {
+                    if (pin != null)
+                    {
+                        pin.FadeToNormal(0.5f);
+                    }
+                }
             }
         }
 
@@ -95,6 +117,16 @@ namespace RecipeAboutLife.Lobby
             {
                 Debug.LogWarning("[Lobby] FadeUI가 없습니다!");
             }
+
+            // 핀들도 같이 검은색으로 페이드 (동시에)
+            foreach (var pin in stagePins)
+            {
+                if (pin != null)
+                {
+                    pin.FadeToBlack(transitionDuration);
+                }
+            }
+            Debug.Log($"[Lobby] → 핀 페이드 (시간: {transitionDuration}초)");
 
             // 트랜지션 완료 대기
             yield return new WaitForSeconds(transitionDuration);
