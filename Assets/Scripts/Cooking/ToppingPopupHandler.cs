@@ -133,6 +133,9 @@ namespace RecipeAboutLife.Cooking
             // 지연 호출 취소
             CancelInvoke(nameof(HideMainUIImmediate));
 
+            // 소스 선택 상태 초기화 (다음 손님을 위해)
+            ResetToppingState();
+
             // 메인 Canvas의 닫기 버튼 숨김
             if (mainCanvasCloseButton != null)
             {
@@ -145,6 +148,46 @@ namespace RecipeAboutLife.Cooking
             {
                 GameUIManager.Instance.ShowMainUI();
             }
+        }
+
+        /// <summary>
+        /// 토핑 상태 초기화 (다음 손님을 위해)
+        /// </summary>
+        private void ResetToppingState()
+        {
+            Debug.Log("[ToppingPopupHandler] 토핑 상태 초기화 시작...");
+
+            // 1. 현재 토핑 선택 해제
+            currentTopping = ToppingType.None;
+
+            // 2. 소스 잔량 초기화
+            ketchupRemaining = 1f;
+            mustardRemaining = 1f;
+
+            // 3. 게이지 바 숨김
+            if (gaugeBarObject != null)
+                gaugeBarObject.SetActive(false);
+
+            // 4. SauceDrawer 초기화
+            if (sauceDrawer != null)
+            {
+                sauceDrawer.StopDrawing();
+                sauceDrawer.ClearAllDots();
+            }
+
+            // 5. 설탕 상태 초기화
+            hasSugar = false;
+            canUseSugar = true;
+
+            // 6. 설탕 오버레이 숨김
+            if (sugarOverlay != null)
+                sugarOverlay.SetActive(false);
+
+            // 7. 핫도그 드래그 상태 초기화
+            if (hotdogDraggable != null)
+                hotdogDraggable.isDraggable = true;
+
+            Debug.Log("[ToppingPopupHandler] 토핑 상태 초기화 완료");
         }
 
         /// <summary>
