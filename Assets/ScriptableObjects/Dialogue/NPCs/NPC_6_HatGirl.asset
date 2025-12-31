@@ -28,14 +28,13 @@ MonoBehaviour:
       text: "\uD56B\uB3C4\uADF8 \uD558\uB098 \uC8FC\uC138\uC694."
       displayDuration: 0
     - speaker: 0
-      text: "\uB108\uBB34 \uBC14\uC0AD\uD55C \uD56B\uB3C4\uADF8\uB294 \uC785\uCC9C\uC7A5\uC774
-        \uAE4C\uC838 \uC544\uD30C\uC694!"
-      displayDuration: 0
-    - speaker: 0
       text: "\uC124\uD0D5\uC740 \uBFCC\uB9AC\uBA74 \uC548\uB3FC\uC694."
       displayDuration: 0
     - speaker: 0
-      text: "\uCF00\uCCA9\uC740 \uB9CE\uC774! \uBA38\uC2A4\uD0C0\uB4DC\uB294 \uC870\uAE08\uB9CC\uC694."
+      text: "\uCF00\uCCA9\uC740 \uB9CE\uC774! "
+      displayDuration: 0
+    - speaker: 0
+      text: "\uBA38\uC2A4\uD0C0\uB4DC\uB294 \uC870\uAE08\uB9CC\uC694."
       displayDuration: 0
   - type: 2
     lines:

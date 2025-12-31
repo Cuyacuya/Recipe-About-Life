@@ -25,14 +25,14 @@ MonoBehaviour:
   - type: 1
     lines:
     - speaker: 0
-      text: "\uD56B\uB3C4\uADF8 \uD558\uB098 \uBD80\uD0C1\uB4DC\uB824\uC694."
+      text: "\uC124\uD0D5\uBFCC\uB9B0 \uD56B\uB3C4\uADF8 \uD558\uB098 \uBD80\uD0C1\uB4DC\uB824\uC694."
+      displayDuration: 0
+    - speaker: 0
+      text: "\uC788\uB294 \uC18C\uC2A4\uB294 \uB2E4 \uBFCC\uB824\uC8FC\uC138\uC694"
       displayDuration: 0
     - speaker: 0
       text: "\uBBF8\uC548\uD55C\uB370 \uBA38\uC2A4\uD0C0\uB4DC\uB294 \uC880 \uBEB4\uC92C\uC73C\uBA74
         \uC88B\uACA0\uC5B4\uC694."
-      displayDuration: 0
-    - speaker: 0
-      text: "\uC81C\uAC00 \uBA38\uC2A4\uD0C0\uB4DC\uB97C \uC548 \uC88B\uC544\uD574\uC11C"
       displayDuration: 0
   - type: 2
     lines:
