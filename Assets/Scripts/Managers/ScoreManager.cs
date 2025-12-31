@@ -69,7 +69,7 @@ namespace RecipeAboutLife.Managers
 
         [Header("주문 관리 (OrderBridge 통합)")]
         [SerializeField]
-        private OrderData activeOrder;
+        private Orders.OrderData activeOrder;
 
         [SerializeField]
         private bool isOrderServed = false;
@@ -182,7 +182,7 @@ namespace RecipeAboutLife.Managers
         /// <summary>
         /// 활성 주문 설정 (NPCOrderController에서 호출)
         /// </summary>
-        public void SetActiveOrder(OrderData order)
+        public void SetActiveOrder(Orders.OrderData order)
         {
             if (order == null)
             {
@@ -331,7 +331,7 @@ namespace RecipeAboutLife.Managers
         /// <summary>
         /// OrderData로부터 FillingType 결정
         /// </summary>
-        private Cooking.FillingType DetermineFillingTypeFromOrder(OrderData order)
+        private Cooking.FillingType DetermineFillingTypeFromOrder(Orders.OrderData order)
         {
             if (order.FillingSlot1 == Orders.FillingType.HalfSausage &&
                 order.FillingSlot2 == Orders.FillingType.HalfSausage)
