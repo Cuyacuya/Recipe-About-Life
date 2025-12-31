@@ -1,7 +1,7 @@
 using UnityEngine;
 using RecipeAboutLife.Orders;
-using RecipeAboutLife.Cooking;
 using RecipeAboutLife.Events;
+using RecipeAboutLife.Managers;
 
 namespace RecipeAboutLife.NPC
 {
@@ -27,7 +27,6 @@ namespace RecipeAboutLife.NPC
 
         [Header("상태")]
         private OrderData currentOrder;
-        private CustomerOrder currentCustomerOrder;
         private bool hasOrder = false;
         private bool isWaitingForFood = false;
 
@@ -61,6 +60,52 @@ namespace RecipeAboutLife.NPC
                 {
                     Debug.LogError("[NPCOrderController] DialogueSet을 찾을 수 없습니다!");
                 }
+            }
+        }
+
+        private void OnEnable()
+        {
+            // 대화 종료 이벤트 구독
+            if (dialogueController != null)
+            {
+                dialogueController.OnDialogueEnded += OnDialogueEnded;
+            }
+        }
+
+        private void OnDisable()
+        {
+            // 이벤트 구독 해제
+            if (dialogueController != null)
+            {
+                dialogueController.OnDialogueEnded -= OnDialogueEnded;
+            }
+        }
+
+        /// <summary>
+        /// 대화 종료 이벤트 처리
+        /// </summary>
+        private void OnDialogueEnded(Dialogue.DialogueType dialogueType)
+        {
+            // Order 대화가 끝나면 요리 시스템 시작
+            if (dialogueType == Dialogue.DialogueType.Order)
+            {
+                StartCookingSystem();
+            }
+        }
+
+        /// <summary>
+        /// 요리 시스템 시작
+        /// </summary>
+        private void StartCookingSystem()
+        {
+            if (Cooking.SimpleCookingManager.Instance != null)
+            {
+                Cooking.SimpleCookingManager.Instance.StartCooking();
+                Debug.Log("[NPCOrderController] 요리 시스템 시작! 플레이어가 요리할 수 있습니다.");
+            }
+            else
+            {
+                Debug.LogError("[NPCOrderController] SimpleCookingManager를 찾을 수 없습니다!");
             }
         }
 
@@ -133,29 +178,23 @@ namespace RecipeAboutLife.NPC
         /// </summary>
         private void SendOrderToCookingSystem()
         {
-            // OrderData를 CustomerOrder로 변환
-            currentCustomerOrder = OrderDataConverter.ToCustomerOrder(currentOrder);
-
-            if (currentCustomerOrder == null)
+            if (currentOrder == null)
             {
-                Debug.LogError("[NPCOrderController] 주문 변환 실패!");
+                Debug.LogError("[NPCOrderController] No order data!");
                 return;
             }
 
-            // CookingManager에 주문 전달
-            if (CookingManager.Instance != null)
+            // ScoreManager에 주문 전달
+            if (ScoreManager.Instance != null)
             {
-                CookingManager.Instance.StartCooking(currentCustomerOrder);
+                ScoreManager.Instance.SetActiveOrder(currentOrder);
                 isWaitingForFood = true;
 
-                Debug.Log($"[NPCOrderController] 요리 시스템에 주문 전달: {currentOrder.OrderName}");
-
-                // 고객 도착 이벤트 발생
-                GameEvents.TriggerCustomerArrived(currentCustomerOrder);
+                Debug.Log($"[NPCOrderController] Order sent to ScoreManager: {currentOrder.OrderName}");
             }
             else
             {
-                Debug.LogError("[NPCOrderController] CookingManager를 찾을 수 없습니다!");
+                Debug.LogError("[NPCOrderController] ScoreManager not found!");
             }
         }
 
@@ -195,7 +234,6 @@ namespace RecipeAboutLife.NPC
         public void ClearOrder()
         {
             currentOrder = null;
-            currentCustomerOrder = null;
             hasOrder = false;
             isWaitingForFood = false;
 
@@ -211,14 +249,6 @@ namespace RecipeAboutLife.NPC
         public bool IsWaitingForFood()
         {
             return isWaitingForFood;
-        }
-
-        /// <summary>
-        /// CustomerOrder 가져오기
-        /// </summary>
-        public Cooking.CustomerOrder GetCustomerOrder()
-        {
-            return currentCustomerOrder;
         }
 
         /// <summary>

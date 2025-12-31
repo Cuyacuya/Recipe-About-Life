@@ -65,12 +65,10 @@ namespace RecipeAboutLife.Events
     public static class GameEvents
     {
         // ===== 요리 이벤트 =====
-        
-        /// <summary>
-        /// 요리 단계가 변경될 때 발생
-        /// </summary>
-        public static event Action<Cooking.CookingStepType> OnCookingStepChanged;
-        
+
+        // CookingStepType은 삭제됨 (food_system_v2에서 사용 안 함)
+        // public static event Action<Cooking.CookingStepType> OnCookingStepChanged;
+
         /// <summary>
         /// 레시피가 완성되었을 때 발생 (다른 시스템이 구독)
         /// </summary>
@@ -100,10 +98,8 @@ namespace RecipeAboutLife.Events
 
         // ===== NPC 이벤트 =====
 
-        /// <summary>
-        /// NPC가 주문 준비 완료 (말풍선 표시)
-        /// </summary>
-        public static event Action<Cooking.CustomerOrder> OnNPCOrderReady;
+        // CustomerOrder는 삭제됨 (OrderData 사용)
+        // public static event Action<Cooking.CustomerOrder> OnNPCOrderReady;
 
         /// <summary>
         /// NPC에게 음식 서빙 완료 (npcID, 정확도)
@@ -167,10 +163,11 @@ namespace RecipeAboutLife.Events
         // 이벤트 트리거 메서드들
         // ==========================================
 
-        public static void TriggerCookingStepChanged(Cooking.CookingStepType step)
-        {
-            OnCookingStepChanged?.Invoke(step);
-        }
+        // CookingStepType 삭제됨
+        // public static void TriggerCookingStepChanged(Cooking.CookingStepType step)
+        // {
+        //     OnCookingStepChanged?.Invoke(step);
+        // }
 
         public static void TriggerRecipeCompleted(Cooking.HotdogRecipe recipe)
         {
@@ -232,10 +229,11 @@ namespace RecipeAboutLife.Events
             OnSFXRequested?.Invoke(sfxName);
         }
 
-        public static void TriggerNPCOrderReady(Cooking.CustomerOrder order)
-        {
-            OnNPCOrderReady?.Invoke(order);
-        }
+        // CustomerOrder 삭제됨
+        // public static void TriggerNPCOrderReady(Cooking.CustomerOrder order)
+        // {
+        //     OnNPCOrderReady?.Invoke(order);
+        // }
 
         public static void TriggerNPCServed(int npcID, bool isCorrect)
         {
@@ -257,13 +255,13 @@ namespace RecipeAboutLife.Events
         /// </summary>
         public static void ClearAllEvents()
         {
-            OnCookingStepChanged = null;
+            // OnCookingStepChanged = null; // CookingStepType 삭제됨
             OnRecipeCompleted = null;
             OnRecipeDiscarded = null;
             OnQualityCalculated = null;
             OnCustomerArrived = null;
             OnAllCustomersServed = null;
-            OnNPCOrderReady = null;
+            // OnNPCOrderReady = null; // CustomerOrder 삭제됨
             OnNPCServed = null;
             OnStageDialogueStart = null;
             OnIngredientUnlocked = null;
