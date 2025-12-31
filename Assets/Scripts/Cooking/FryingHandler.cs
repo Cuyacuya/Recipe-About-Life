@@ -222,6 +222,10 @@ namespace RecipeAboutLife.Cooking
         {
             isFrying = true;
             StartBubbleEffect();
+            
+            // 튀김 소리 시작
+            AudioManager.Instance?.PlayFryingLoop();
+            
             Debug.Log($"[FryingHandler] 튀김 시작! (현재 {fryingTime:F1}초)");
         }
 
@@ -232,6 +236,10 @@ namespace RecipeAboutLife.Cooking
         {
             isFrying = false;
             StopBubbleEffect();
+            
+            // 튀김 소리 정지
+            AudioManager.Instance?.StopFryingLoop();
+            
             Debug.Log($"[FryingHandler] 튀김 종료! 최종: {currentState}");
         }
 

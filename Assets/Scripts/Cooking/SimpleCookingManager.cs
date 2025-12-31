@@ -80,7 +80,8 @@ namespace RecipeAboutLife.Cooking
 
         // 이벤트
         public event Action<CookingPhase> OnPhaseChanged;
-        public event Action OnHotdogServed;  // 요리 제공 완료 이벤트 (외부 시스템 연동용)
+        public event Action OnCookingStarted;   // 요리 시작 이벤트
+        public event Action OnHotdogServed;     // 요리 제공 완료 이벤트 (외부 시스템 연동용)
 
         public CookingPhase CurrentPhase => currentPhase;
         public GameObject CurrentHotdog => currentHotdog;
@@ -113,6 +114,10 @@ namespace RecipeAboutLife.Cooking
         {
             hotdogData = new HotdogData();
             currentHotdog = null;
+            
+            // 요리 시작 이벤트 발생
+            OnCookingStarted?.Invoke();
+            
             ChangePhase(CookingPhase.StickPickup);
             Debug.Log("[SimpleCookingManager] === 요리 시작! ===");
         }
@@ -244,6 +249,21 @@ namespace RecipeAboutLife.Cooking
             Debug.Log($"  머스타드: {(hotdogData.hasMustard ? "O" : "X")}");
             Debug.Log("[SimpleCookingManager] =====================================");
 
+            // 점수 계산
+            int earnedMoney = CalculateScore();
+            Debug.Log($"[SimpleCookingManager] 획득 금액: {earnedMoney}원");
+
+            // GameManager에 서빙 완료 알림
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AddMoney(earnedMoney);
+                GameManager.Instance.CompleteServing(earnedMoney);
+            }
+            else
+            {
+                Debug.LogWarning("[SimpleCookingManager] GameManager가 없습니다!");
+            }
+
             // 사운드 재생
             PlayServingSound();
 
@@ -261,15 +281,34 @@ namespace RecipeAboutLife.Cooking
         }
 
         /// <summary>
+        /// 점수 계산
+        /// </summary>
+        private int CalculateScore()
+        {
+            // 현재 주문 가져오기 (GameManager에서)
+            OrderData currentOrder = GameManager.Instance?.GetCurrentOrder();
+
+            if (currentOrder != null)
+            {
+                // 주문이 있으면 주문과 비교하여 점수 계산
+                return ScoreCalculator.Calculate(currentOrder, hotdogData);
+            }
+            else
+            {
+                // 주문이 없으면 기본 점수 계산 (테스트용)
+                Debug.Log("[SimpleCookingManager] 주문 데이터 없음 - 기본 점수 계산");
+                return ScoreCalculator.CalculateWithoutOrder(hotdogData);
+            }
+        }
+
+        /// <summary>
         /// 제공 사운드 재생
         /// </summary>
         private void PlayServingSound()
         {
-            if (servingSound != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(servingSound);
-                Debug.Log("[SimpleCookingManager] 제공 사운드 재생");
-            }
+            // AudioManager를 통해 서빙 사운드 재생
+            AudioManager.Instance?.PlayServing();
+            Debug.Log("[SimpleCookingManager] 제공 사운드 재생 (AudioManager)");
         }
 
 #if UNITY_EDITOR
