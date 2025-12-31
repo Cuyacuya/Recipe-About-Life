@@ -39,11 +39,41 @@ namespace RecipeAboutLife.Lobby
         {
             UpdateSprite();
             StartCoroutine(FloatAnimation());
+
+            // 디버그: 컴포넌트 상태 확인
+            var collider = GetComponent<BoxCollider2D>();
+            Debug.Log($"[StagePin] Stage {stageIndex} 초기화 - Collider: {(collider != null ? "있음" : "없음")}, Enabled: {(collider != null && collider.enabled)}");
+        }
+
+        private void Update()
+        {
+            // 마우스 클릭 감지 (UI에 막히지 않도록 직접 Raycast)
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 mousePos = UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+                if (hit.collider != null && hit.collider.gameObject == gameObject)
+                {
+                    Debug.Log($"[StagePin] ★★★ Stage {stageIndex} 클릭됨! ★★★");
+                    OnClicked?.Invoke(this);
+                }
+            }
         }
 
         private void OnMouseDown()
         {
-            Debug.Log($"[StagePin] Stage {stageIndex} 클릭!");
+            // 백업용 (UI가 없는 경우 작동)
+            Debug.Log($"[StagePin] (OnMouseDown) Stage {stageIndex} 클릭됨!");
+            OnClicked?.Invoke(this);
+        }
+
+        /// <summary>
+        /// UI Button의 OnClick에서 호출할 메서드
+        /// </summary>
+        public void OnButtonClick()
+        {
+            Debug.Log($"[StagePin] ★★★ Stage {stageIndex} 버튼 클릭! ★★★");
             OnClicked?.Invoke(this);
         }
 

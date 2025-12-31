@@ -116,21 +116,17 @@ TextureImporter:
       name: stage1_0
       rect:
         serializedVersion: 2
-        x: 131
-        y: 82
-        width: 783
-        height: 952
+        x: 130
+        y: 81
+        width: 785
+        height: 954
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: -343, y: 216}
-        - {x: -247, y: 216}
-        - {x: 294, y: 373}
-        - {x: -11, y: 480}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
       spriteID: cbfe7ce82e4698af0800000000000000
       internalID: -393672568197353540
@@ -142,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c6b0f8bc4faf8cf4fba6c9864ac78b9a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 

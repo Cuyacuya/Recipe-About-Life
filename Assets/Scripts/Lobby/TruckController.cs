@@ -4,69 +4,59 @@ using System.Collections;
 namespace RecipeAboutLife.Lobby
 {
     /// <summary>
-    /// 트럭 - 핀 위치로 이동
+    /// 트럭 컨트롤러 - 오른쪽으로 이동
     /// </summary>
-    [RequireComponent(typeof(SpriteRenderer))]
     public class TruckController : MonoBehaviour
     {
-        [Header("스프라이트")]
-        [SerializeField] private Sprite truckSprite;
-
         [Header("이동 설정")]
-        [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private float arrivalDistance = 0.1f;
+        [SerializeField] private float moveDistance = 10f;
+        [SerializeField] private float moveDuration = 1f;
 
-        private SpriteRenderer spriteRenderer;
         private bool isMoving = false;
-
         public bool IsMoving => isMoving;
-        public System.Action OnArrived;
 
-        private void Awake()
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            if (truckSprite != null)
-            {
-                spriteRenderer.sprite = truckSprite;
-            }
-        }
-
-        public void MoveToPosition(Vector3 targetPosition)
+        /// <summary>
+        /// 오른쪽으로 이동 시작
+        /// </summary>
+        public void MoveRight()
         {
             if (isMoving) return;
-            StartCoroutine(MoveCoroutine(targetPosition));
+            StartCoroutine(MoveRightCoroutine());
         }
 
-        private IEnumerator MoveCoroutine(Vector3 target)
+        /// <summary>
+        /// 오른쪽으로 이동 (거리, 시간 지정)
+        /// </summary>
+        public void MoveRight(float distance, float duration)
+        {
+            if (isMoving) return;
+            moveDistance = distance;
+            moveDuration = duration;
+            StartCoroutine(MoveRightCoroutine());
+        }
+
+        private IEnumerator MoveRightCoroutine()
         {
             isMoving = true;
-            Debug.Log($"[Truck] 이동 시작: {target}");
 
-            while (Vector3.Distance(transform.position, target) > arrivalDistance)
+            Vector3 startPos = transform.position;
+            Vector3 targetPos = startPos + Vector3.right * moveDistance;
+            float elapsed = 0f;
+
+            Debug.Log($"[Truck] 이동 시작: {startPos} → {targetPos}");
+
+            while (elapsed < moveDuration)
             {
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    target,
-                    moveSpeed * Time.deltaTime
-                );
+                elapsed += Time.deltaTime;
+                float t = Mathf.SmoothStep(0f, 1f, elapsed / moveDuration);
+                transform.position = Vector3.Lerp(startPos, targetPos, t);
                 yield return null;
             }
 
-            transform.position = target;
+            transform.position = targetPos;
             isMoving = false;
-            Debug.Log("[Truck] 도착!");
-            OnArrived?.Invoke();
-        }
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (spriteRenderer == null)
-                spriteRenderer = GetComponent<SpriteRenderer>();
-
-            if (spriteRenderer != null && truckSprite != null)
-                spriteRenderer.sprite = truckSprite;
+            Debug.Log("[Truck] 이동 완료!");
         }
-#endif
     }
 }
