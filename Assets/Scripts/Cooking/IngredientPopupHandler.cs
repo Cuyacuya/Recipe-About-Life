@@ -51,6 +51,21 @@ namespace RecipeAboutLife.Cooking
             ingredientCount = 0;
             currentDragging = null;
             Debug.Log("[IngredientPopupHandler] 팝업 열림 - 재료 선택 시작");
+
+            // 메인 UI 숨김 (MoneyPanel, PauseButton, DayImage)
+            if (GameUIManager.Instance != null)
+            {
+                GameUIManager.Instance.HideMainUI();
+            }
+        }
+
+        private void OnDisable()
+        {
+            // 팝업 닫힐 때 메인 UI 표시
+            if (GameUIManager.Instance != null)
+            {
+                GameUIManager.Instance.ShowMainUI();
+            }
         }
 
         /// <summary>
@@ -125,6 +140,9 @@ namespace RecipeAboutLife.Cooking
             if (dropZone != null && dropZone.zoneType == SimpleDropZone.ZoneType.StickDropZone)
             {
                 Debug.Log($"[IngredientPopupHandler] ✅ {currentIngredientType} 꼬치에 드롭 성공!");
+
+                // 재료 끼우는 소리 재생
+                AudioManager.Instance?.PlayIngredientAttach();
 
                 // 재료 위치 설정
                 Transform targetPos = ingredientCount == 0 ? ingredient1Pos : ingredient2Pos;

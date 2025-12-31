@@ -116,6 +116,21 @@ namespace RecipeAboutLife.Cooking
 
             // 팝업 열릴 때 초기화
             InitializePopup();
+
+            // 메인 UI 숨김 (MoneyPanel, PauseButton, DayImage)
+            if (GameUIManager.Instance != null)
+            {
+                GameUIManager.Instance.HideMainUI();
+            }
+        }
+
+        private void OnDisable()
+        {
+            // 팝업 닫힐 때 메인 UI 표시
+            if (GameUIManager.Instance != null)
+            {
+                GameUIManager.Instance.ShowMainUI();
+            }
         }
 
         /// <summary>
@@ -234,6 +249,8 @@ namespace RecipeAboutLife.Cooking
             if (sauceDrawer != null)
                 sauceDrawer.StartDrawing(type);
 
+            // 소스 소리는 실제로 드래그할 때 SauceDrawer에서 재생됨
+
             Debug.Log($"[ToppingPopupHandler] {type} 선택됨 - 그리기 시작");
         }
 
@@ -299,6 +316,8 @@ namespace RecipeAboutLife.Cooking
                 if (ketchupRemaining <= 0)
                 {
                     sauceDrawer?.StopDrawing();
+                    // 소스 소리 정지
+                    AudioManager.Instance?.StopSauceLoop();
                     Debug.Log("[ToppingPopupHandler] 케첩 소진!");
                 }
             }
@@ -316,6 +335,8 @@ namespace RecipeAboutLife.Cooking
                 if (mustardRemaining <= 0)
                 {
                     sauceDrawer?.StopDrawing();
+                    // 소스 소리 정지
+                    AudioManager.Instance?.StopSauceLoop();
                     Debug.Log("[ToppingPopupHandler] 머스타드 소진!");
                 }
             }
@@ -371,6 +392,9 @@ namespace RecipeAboutLife.Cooking
             hasSugar = true;
             canUseSugar = false;
 
+            // 설탕 묻히는 소리 재생
+            AudioManager.Instance?.PlaySugarApply();
+
             // 설탕 오버레이 표시
             if (sugarOverlay != null)
             {
@@ -405,6 +429,9 @@ namespace RecipeAboutLife.Cooking
         private void OnCloseButtonClicked()
         {
             Debug.Log("[ToppingPopupHandler] ✅ 토핑 완료!");
+
+            // 소스 소리 정지 (혹시 재생 중이라면)
+            AudioManager.Instance?.StopSauceLoop();
 
             // 메인 화면 핫도그에 토핑 반영
             ApplyToppingsToMainHotdog();

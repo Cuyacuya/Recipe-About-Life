@@ -104,6 +104,8 @@ namespace RecipeAboutLife.Cooking
                 if (!wasInZone)
                 {
                     Debug.Log("[BatterHandler] 반죽통 진입!");
+                    // 반죽 소리 시작
+                    AudioManager.Instance?.PlayBatteringLoop();
                 }
 
                 // 시간 누적
@@ -126,11 +128,22 @@ namespace RecipeAboutLife.Cooking
                     Debug.Log($"[BatterHandler] 반죽 {currentStage}단계! ({batterTime:F1}초)");
                 }
             }
+            else
+            {
+                // 반죽통에서 나감 - 소리 정지
+                if (wasInZone)
+                {
+                    AudioManager.Instance?.StopBatteringLoop();
+                }
+            }
         }
 
         private void OnDragEnded(SimpleDraggable d, SimpleDropZone dropZone)
         {
             if (!isActive) return;
+
+            // 반죽 소리 정지
+            AudioManager.Instance?.StopBatteringLoop();
 
             Debug.Log($"[BatterHandler] 드래그 종료 - 반죽 {currentStage}단계");
 
