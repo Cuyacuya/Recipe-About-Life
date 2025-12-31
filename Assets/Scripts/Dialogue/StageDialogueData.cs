@@ -38,6 +38,20 @@ namespace RecipeAboutLife.Dialogue
         public List<DialogueLine> finalFailDialogue = new List<DialogueLine>();
 
         // ==========================================
+        // AfterStory (편지 + 독백) - Stage 3 전용
+        // ==========================================
+
+        [Header("AfterStory 연출 (Stage 3 전용)")]
+        [Tooltip("AfterStory 연출 사용 여부")]
+        public bool hasAfterStory = false;
+
+        [Tooltip("편지 이미지 (검은 화면에서 표시)")]
+        public Sprite afterStoryImage;
+
+        [Tooltip("Player 독백 대화 (편지 이후)")]
+        public List<DialogueLine> afterStoryDialogue = new List<DialogueLine>();
+
+        // ==========================================
         // 초기화 (에디터에서 생성 시 자동 설정)
         // ==========================================
 
@@ -124,6 +138,38 @@ namespace RecipeAboutLife.Dialogue
         public bool HasFailDialogue()
         {
             return finalFailDialogue != null && finalFailDialogue.Count > 0;
+        }
+
+        /// <summary>
+        /// AfterStory가 설정되어 있는지 확인
+        /// </summary>
+        public bool HasAfterStory()
+        {
+            return hasAfterStory && afterStoryImage != null;
+        }
+
+        /// <summary>
+        /// AfterStory 독백이 있는지 확인
+        /// </summary>
+        public bool HasAfterStoryDialogue()
+        {
+            return hasAfterStory && afterStoryDialogue != null && afterStoryDialogue.Count > 0;
+        }
+
+        /// <summary>
+        /// AfterStory 이미지 가져오기
+        /// </summary>
+        public Sprite GetAfterStoryImage()
+        {
+            return afterStoryImage;
+        }
+
+        /// <summary>
+        /// AfterStory 독백 대화 가져오기
+        /// </summary>
+        public List<DialogueLine> GetAfterStoryDialogue()
+        {
+            return afterStoryDialogue;
         }
 
         /// <summary>

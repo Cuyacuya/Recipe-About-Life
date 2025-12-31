@@ -46,6 +46,10 @@ namespace RecipeAboutLife.UI
         [Tooltip("중앙 텍스트 (예: '잠시만요')")]
         private TextMeshProUGUI centerText;
 
+        [SerializeField]
+        [Tooltip("중앙 이미지 (편지 등)")]
+        private Image centerImage;
+
         // ==========================================
         // State
         // ==========================================
@@ -81,6 +85,12 @@ namespace RecipeAboutLife.UI
             if (centerText != null)
             {
                 centerText.gameObject.SetActive(false);
+            }
+
+            // 이미지 숨김
+            if (centerImage != null)
+            {
+                centerImage.gameObject.SetActive(false);
             }
 
             // 패널은 활성화 상태로 유지 (알파값으로 제어)
@@ -162,6 +172,56 @@ namespace RecipeAboutLife.UI
             {
                 Debug.LogError("[FadeUI] ❌ CenterText가 null입니다!");
             }
+        }
+
+        /// <summary>
+        /// 중앙 이미지 표시 (편지 등)
+        /// </summary>
+        /// <param name="sprite">표시할 스프라이트</param>
+        public void ShowImage(Sprite sprite)
+        {
+            Debug.Log("[FadeUI] ShowImage 호출");
+
+            if (centerImage != null && sprite != null)
+            {
+                centerImage.sprite = sprite;
+                centerImage.SetNativeSize(); // 원본 크기로 설정
+                centerImage.gameObject.SetActive(true);
+                Debug.Log("[FadeUI] ✅ 이미지 표시 완료");
+            }
+            else
+            {
+                if (centerImage == null)
+                    Debug.LogError("[FadeUI] ❌ CenterImage가 null입니다! Inspector에서 설정하세요.");
+                if (sprite == null)
+                    Debug.LogError("[FadeUI] ❌ Sprite가 null입니다!");
+            }
+        }
+
+        /// <summary>
+        /// 중앙 이미지 숨김
+        /// </summary>
+        public void HideImage()
+        {
+            Debug.Log("[FadeUI] HideImage 호출");
+
+            if (centerImage != null)
+            {
+                centerImage.gameObject.SetActive(false);
+                Debug.Log("[FadeUI] ✅ 이미지 숨김 완료");
+            }
+            else
+            {
+                Debug.LogError("[FadeUI] ❌ CenterImage가 null입니다!");
+            }
+        }
+
+        /// <summary>
+        /// 중앙 이미지가 표시 중인지 확인
+        /// </summary>
+        public bool IsImageVisible()
+        {
+            return centerImage != null && centerImage.gameObject.activeSelf;
         }
 
         /// <summary>

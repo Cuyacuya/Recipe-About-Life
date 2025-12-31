@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 using RecipeAboutLife.Managers;
 using RecipeAboutLife.NPC;
 
@@ -41,6 +43,11 @@ namespace RecipeAboutLife.Dialogue
         [SerializeField]
         [Tooltip("스토리 NPC 정보 (ScriptableObject)")]
         private StoryNPCConfig storyNPCConfig;
+
+        [Header("스테이지 대화 데이터")]
+        [SerializeField]
+        [Tooltip("스테이지별 대화 데이터 (AfterStory 포함)")]
+        private List<StageDialogueData> stageDialogueDataList = new List<StageDialogueData>();
 
         [Header("현재 스테이지")]
         [SerializeField]
@@ -577,10 +584,24 @@ namespace RecipeAboutLife.Dialogue
             // AfterStory 전용 NPC를 이미 진행했는지 확인
             if (isPlayingAfterStoryOnly)
             {
-                // Ajeossi AfterStory 완료 → 로비 이동
-                Debug.Log("[StageStoryController] AfterStory 전용 NPC 완료. 로비로 이동");
+                // Ajeossi AfterStory 완료 → 편지+독백 연출 확인
+                Debug.Log("[StageStoryController] AfterStory 전용 NPC 완료");
                 isPlayingAfterStoryOnly = false;
-                StartCoroutine(TransitionToLobbyCoroutine());
+
+                // StageDialogueData에 AfterStory 연출이 있는지 확인
+                StageDialogueData stageData = GetCurrentStageDialogueData();
+                if (stageData != null && stageData.HasAfterStory())
+                {
+                    // 편지 + 독백 연출 시작
+                    Debug.Log("[StageStoryController] ✅ AfterStory 연출 (편지+독백) 시작");
+                    StartCoroutine(PlayAfterStorySequence());
+                }
+                else
+                {
+                    // AfterStory 연출 없음 → 바로 로비 이동
+                    Debug.Log("[StageStoryController] AfterStory 연출 없음. 로비로 이동");
+                    StartCoroutine(TransitionToLobbyCoroutine());
+                }
                 return;
             }
 
@@ -597,9 +618,20 @@ namespace RecipeAboutLife.Dialogue
             }
             else
             {
-                // 로비 이동 시퀀스 시작 (패널은 페이드 인이 완료될 때까지 유지)
-                Debug.Log("[StageStoryController] AfterStory 전용 NPC 없음. 로비로 이동");
-                StartCoroutine(TransitionToLobbyCoroutine());
+                // AfterStory 전용 NPC 없음 → 편지+독백 연출 확인
+                StageDialogueData stageData = GetCurrentStageDialogueData();
+                if (stageData != null && stageData.HasAfterStory())
+                {
+                    // 편지 + 독백 연출 시작
+                    Debug.Log("[StageStoryController] ✅ AfterStory 연출 (편지+독백) 시작");
+                    StartCoroutine(PlayAfterStorySequence());
+                }
+                else
+                {
+                    // 로비 이동 시퀀스 시작 (패널은 페이드 인이 완료될 때까지 유지)
+                    Debug.Log("[StageStoryController] AfterStory 전용 NPC 없음. 로비로 이동");
+                    StartCoroutine(TransitionToLobbyCoroutine());
+                }
             }
         }
 
@@ -781,6 +813,169 @@ namespace RecipeAboutLife.Dialogue
             // {
             //     SceneLoader.Instance.LoadScene("Lobby");
             // }
+        }
+
+        /// <summary>
+        /// 현재 스테이지의 StageDialogueData 가져오기
+        /// </summary>
+        private StageDialogueData GetCurrentStageDialogueData()
+        {
+            if (stageDialogueDataList == null || stageDialogueDataList.Count == 0)
+            {
+                return null;
+            }
+
+            return stageDialogueDataList.FirstOrDefault(s => s.stageID == currentStageID);
+        }
+
+        // ==========================================
+        // AfterStory 연출 (편지 + 독백)
+        // ==========================================
+
+        /// <summary>
+        /// AfterStory 연출 시작 (편지 이미지 → 독백)
+        /// </summary>
+        private System.Collections.IEnumerator PlayAfterStorySequence()
+        {
+            StageDialogueData stageData = GetCurrentStageDialogueData();
+            if (stageData == null || !stageData.HasAfterStory())
+            {
+                Debug.LogWarning("[StageStoryController] AfterStory 데이터가 없습니다!");
+                yield break;
+            }
+
+            UI.FadeUI fadeUI = UI.FadeUI.Instance;
+            if (fadeUI == null)
+            {
+                Debug.LogError("[StageStoryController] FadeUI를 찾을 수 없습니다!");
+                yield break;
+            }
+
+            Debug.Log("[StageStoryController] === AfterStory 연출 시작 ===");
+
+            // 1. 페이드 인 (검은 화면)
+            Debug.Log("[StageStoryController] 1. 페이드 인 시작");
+            bool fadeInComplete = false;
+            fadeUI.FadeIn(fadeDuration, () => fadeInComplete = true);
+
+            while (!fadeInComplete)
+            {
+                yield return null;
+            }
+            Debug.Log("[StageStoryController] 페이드 인 완료");
+
+            yield return new WaitForSeconds(0.5f);
+
+            // 대화 패널 숨기기
+            if (UI.NPCDialogueUI.Instance != null)
+            {
+                UI.NPCDialogueUI.Instance.Hide();
+            }
+            if (UI.PlayerDialogueUI.Instance != null)
+            {
+                UI.PlayerDialogueUI.Instance.Hide();
+            }
+
+            // 2. 편지 이미지 표시
+            Debug.Log("[StageStoryController] 2. 편지 이미지 표시");
+            Sprite letterImage = stageData.GetAfterStoryImage();
+            fadeUI.ShowImage(letterImage);
+
+            // 3. 클릭 대기
+            Debug.Log("[StageStoryController] 3. 클릭 대기 중...");
+            waitingForInput = true;
+            inputReceived = false;
+
+            while (!inputReceived)
+            {
+                yield return null;
+            }
+
+            waitingForInput = false;
+            Debug.Log("[StageStoryController] 클릭 감지!");
+
+            // 4. 편지 이미지 숨김
+            fadeUI.HideImage();
+            Debug.Log("[StageStoryController] 4. 편지 이미지 숨김");
+
+            yield return new WaitForSeconds(0.5f);
+
+            // 5. 독백 대화가 있으면 진행
+            if (stageData.HasAfterStoryDialogue())
+            {
+                Debug.Log("[StageStoryController] 5. 독백 대화 시작");
+
+                // Player 대화 패널 표시 (빈 텍스트)
+                if (UI.PlayerDialogueUI.Instance != null)
+                {
+                    UI.PlayerDialogueUI.Instance.Show("");
+                }
+
+                // 6. 페이드 아웃 (화면 밝아짐)
+                Debug.Log("[StageStoryController] 6. 페이드 아웃 시작");
+                bool fadeOutComplete = false;
+                fadeUI.FadeOut(fadeDuration, () => fadeOutComplete = true);
+
+                while (!fadeOutComplete)
+                {
+                    yield return null;
+                }
+                Debug.Log("[StageStoryController] 페이드 아웃 완료");
+
+                yield return new WaitForSeconds(0.5f);
+
+                // 7. Player 독백 재생
+                Debug.Log("[StageStoryController] 7. Player 독백 재생");
+                List<DialogueLine> monologue = stageData.GetAfterStoryDialogue();
+                yield return PlayMonologueCoroutine(monologue);
+            }
+
+            // 8. 페이드 인 → 로비 이동
+            Debug.Log("[StageStoryController] 8. 로비 이동 시퀀스 시작");
+            yield return TransitionToLobbyCoroutine();
+        }
+
+        /// <summary>
+        /// Player 독백 재생 코루틴
+        /// </summary>
+        private System.Collections.IEnumerator PlayMonologueCoroutine(List<DialogueLine> lines)
+        {
+            if (lines == null || lines.Count == 0)
+            {
+                Debug.LogWarning("[StageStoryController] 독백 대화가 없습니다!");
+                yield break;
+            }
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                DialogueLine line = lines[i];
+
+                // Player 대화만 표시 (독백이므로)
+                if (UI.PlayerDialogueUI.Instance != null)
+                {
+                    UI.PlayerDialogueUI.Instance.Show(line.text);
+                }
+
+                Debug.Log($"[StageStoryController] [독백] {line.text}");
+
+                // 터치 입력 대기
+                float displayTime = line.displayDuration > 0 ? line.displayDuration : lineDisplayTime;
+                yield return WaitForInputOrTime(displayTime);
+
+                // 다음 라인 전 짧은 간격
+                if (i < lines.Count - 1)
+                {
+                    yield return new WaitForSeconds(linePauseDuration);
+                }
+            }
+
+            // 독백 완료 후 패널 숨기기
+            if (UI.PlayerDialogueUI.Instance != null)
+            {
+                UI.PlayerDialogueUI.Instance.Hide();
+            }
+
+            Debug.Log("[StageStoryController] 독백 재생 완료");
         }
 
 
